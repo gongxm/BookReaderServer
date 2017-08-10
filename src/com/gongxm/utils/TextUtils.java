@@ -1,0 +1,52 @@
+package com.gongxm.utils;
+
+public class TextUtils {
+
+	/**
+	 * ÅÐ¶Ï×Ö·û´®²»ÊÇ¿Õ
+	 * 
+	 * @param strings
+	 * @return
+	 */
+	public static boolean notEmpty(String... strings) {
+		return !isEmpty(strings);
+	}
+
+	/**
+	 * ÅÐ¶ÏÒ»¸ö×Ö·û´®ÊÇ·ñÎª¿Õ
+	 * 
+	 * @param str
+	 * @return
+	 */
+	public static boolean isEmpty(String str) {
+		return (str == null || str.trim().length() == 0);
+	}
+
+	/**
+	 * ÅÐ¶Ï¶à¸ö×Ö·û´®ÊÇ·ñÓÐÎª¿ÕµÄ
+	 * 
+	 * @param strings
+	 * @return
+	 */
+	public static boolean isEmpty(String... strings) {
+		for (int i = 0; i < strings.length; i++) {
+			if (strings[i] == null || strings[i].trim().length() == 0) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	
+	/**
+	 * ÅÐ¶Ï×Ö·û´®ÊÇ·ñÊÇÊÖ»úºÅÂë
+	 * 
+	 * @param phone
+	 * @return
+	 */
+	public static boolean isPhone(String phone) {
+		String regex = "1[345678]\\d{9}";
+		return phone != null && phone.matches(regex);
+	}
+
+}
