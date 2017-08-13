@@ -43,16 +43,16 @@ public class RegistServlet extends HttpServlet {
 			response.setHeader("refresh", "2;url="+request.getContextPath()+"/regist.jsp");
 			return;
 		}
-		user=new User();
-		user.setUsername(username);
-		user.setPassword(MD5Util.MD5(password));
-		uService.addUser(user);
+		User newUser=new User();
+		newUser.setUsername(username);
+		newUser.setPassword(MD5Util.MD5(password));
+		uService.addUser(newUser);
 		writer.write("<h1 align='center'><font color='green' size=5>注册成功！2秒后转到登陆页面！</font><br/></h1>");
 		response.setHeader("refresh", "2;url="+request.getContextPath()+"/login.jsp");
 	}
 
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		super.doPost(req, resp);
+		doGet(req, resp);
 	}
 }

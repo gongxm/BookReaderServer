@@ -28,10 +28,10 @@ public abstract class BaseServlet extends HttpServlet {
 		InputStream is = request.getInputStream();
 		String requestJson = StringUtils.readStream(is, MyConstants.DEFAULT_ENCODING);
 		response.setContentType("application/json");
-		postRequest(response, requestJson);
+		postRequest(request,response, requestJson);
 	}
 
-	public abstract void postRequest(HttpServletResponse response, String requestJson) throws IOException;
+	public abstract void postRequest(HttpServletRequest request,HttpServletResponse response, String requestJson) throws IOException;
 
 	public void writeResult(HttpServletResponse response, String json) throws IOException {
 		PrintWriter out = response.getWriter();
