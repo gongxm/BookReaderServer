@@ -13,6 +13,7 @@ import com.gongxm.bean.User;
 import com.gongxm.services.UserService;
 import com.gongxm.utils.BeanFillUtils;
 import com.gongxm.utils.MD5Util;
+import com.gongxm.utils.MyConstants;
 import com.gongxm.utils.ServiceUtils;
 
 /**
@@ -45,6 +46,7 @@ public class RegistServlet extends HttpServlet {
 		}
 		User newUser=new User();
 		newUser.setUsername(username);
+		newUser.setPermissions(MyConstants.ROLE_USER);
 		newUser.setPassword(MD5Util.MD5(password));
 		uService.addUser(newUser);
 		writer.write("<h1 align='center'><font color='green' size=5>注册成功！2秒后转到登陆页面！</font><br/></h1>");

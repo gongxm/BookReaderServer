@@ -32,4 +32,9 @@ public class UserServiceImpl implements UserService {
 		udao.add(user);
 	}
 
+	@Override
+	public User findUser(String username, String password) {
+		return udao.findUser(username, password);
+	}
+
 }

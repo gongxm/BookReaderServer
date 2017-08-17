@@ -37,6 +37,7 @@ public class SetAllCharacterEncodingFilter implements Filter {
 
 	public void doFilter(ServletRequest req, ServletResponse resp, FilterChain chain)
 			throws IOException, ServletException {
+		System.out.println("-----------------SetAllCharacterEncodingFilter-----------------------");
 		HttpServletRequest request = null;
 		HttpServletResponse response = null;
 		try {

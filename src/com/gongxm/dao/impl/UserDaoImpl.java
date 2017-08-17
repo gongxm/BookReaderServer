@@ -33,4 +33,22 @@ public class UserDaoImpl extends BaseDao<User> implements UserDao {
 		return null;
 	}
 
+	@Override
+	public User findUser(String username, String password) {
+		Session session = null;
+		try {
+			session = HibernateUtil.getSession();
+			String sql = "from User where username=? and password=?";
+			User user= (User) session.createQuery(sql).setParameter(0, username).setParameter(1, password).uniqueResult();
+			return user;
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if (session != null) {
+				session.close();
+			}
+		}
+		return null;
+	}
+
 }
