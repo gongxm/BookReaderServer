@@ -11,7 +11,9 @@
 	<link rel="stylesheet" type="text/css" href="styles.css">
 	-->
 <script type="text/javascript">
-	
+	function rulesManagement(){
+		location.href = "${pageContext.request.contextPath}/rulesManagement";
+	}
 </script>
 
 
@@ -70,7 +72,7 @@ h1 {
 						<table class="table">
 							<tr>
 								<td>采集规则管理</td>
-								<td><input type="button" value="进入" onclick="reg()" /></td>
+								<td><input type="button" value="进入" onclick="rulesManagement()" /></td>
 							</tr>
 						</table>
 					</form>

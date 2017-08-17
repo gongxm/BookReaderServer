@@ -15,7 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.gongxm.bean.User;
 import com.gongxm.utils.MyConstants;
 
-@WebFilter(filterName="AdminFilter",urlPatterns="/admin")
+@WebFilter(filterName="AdminFilter",urlPatterns={"/admin","/regexManagement"})
 public class AdminFilter implements Filter {
 
 	@Override
@@ -46,7 +46,11 @@ public class AdminFilter implements Filter {
 			response.setHeader("refresh", "1;url="+request.getContextPath());
 			return;
 		}
-		request.getRequestDispatcher("/WEB-INF/admin.jsp").forward(request, response);
+		if(request.getRequestURI().contains("/admin")){
+			request.getRequestDispatcher("/WEB-INF/admin.jsp").forward(request, response);
+		}else{
+			chain.doFilter(request, response);
+		}
 	}
 
 	@Override

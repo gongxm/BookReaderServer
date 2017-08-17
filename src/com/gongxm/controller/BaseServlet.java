@@ -31,7 +31,7 @@ public abstract class BaseServlet extends HttpServlet {
 		postRequest(request,response, requestJson);
 	}
 
-	public abstract void postRequest(HttpServletRequest request,HttpServletResponse response, String requestJson) throws IOException;
+	public abstract void postRequest(HttpServletRequest request,HttpServletResponse response, String requestJson) throws ServletException, IOException;
 
 	public void writeResult(HttpServletResponse response, String json) throws IOException {
 		PrintWriter out = response.getWriter();

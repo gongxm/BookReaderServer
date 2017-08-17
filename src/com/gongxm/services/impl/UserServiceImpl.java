@@ -1,6 +1,7 @@
 package com.gongxm.services.impl;
 
 import com.gongxm.bean.User;
+import com.gongxm.dao.Dao;
 import com.gongxm.dao.UserDao;
 import com.gongxm.services.UserService;
 import com.gongxm.utils.DaoUtils;
@@ -9,7 +10,7 @@ import com.gongxm.utils.DaoUtils;
  * @author gongxm
  *
  */
-public class UserServiceImpl implements UserService {
+public class UserServiceImpl extends BaseService<User> implements UserService {
 	//µ¥Àý
 	private static final UserServiceImpl instance = new UserServiceImpl(); 
 	
@@ -35,6 +36,11 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public User findUser(String username, String password) {
 		return udao.findUser(username, password);
+	}
+
+	@Override
+	public Dao<User> getDao() {
+		return udao;
 	}
 
 }
