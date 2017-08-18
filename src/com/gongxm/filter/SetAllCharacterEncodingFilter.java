@@ -20,7 +20,7 @@ import com.gongxm.utils.MyConstants;
 /**
  * ±àÂë¹ýÂËÆ÷
  */
-@WebFilter(filterName="SetAllCharacterEncodingFilter",urlPatterns="/*",initParams={@WebInitParam(name = "encoding", value = "utf-8")})
+@WebFilter(filterName="SetAllCharacterEncodingFilter",urlPatterns="/*",initParams={@WebInitParam(name="encoding",value="UTF-8")})
 public class SetAllCharacterEncodingFilter implements Filter {
 	private FilterConfig config;
 
