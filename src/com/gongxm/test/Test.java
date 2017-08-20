@@ -22,6 +22,7 @@ public class Test extends BaseServlet{
 		rules.setStartStr("abc");
 		rules.setEndStr("cmd");
 		rules.setStartIndex(2);
+		rules.setRegex("1[3456789]\\d{9}");
 		rules.setEndIndex(20);
 		rules.setRepeat(false);
 		rules.setCurrent(true);

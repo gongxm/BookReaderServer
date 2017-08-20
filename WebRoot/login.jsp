@@ -56,8 +56,8 @@ td {
 						</tr>
 
 						<tr>
-							<td><a href="${pageContext.request.contextPath}">回到主页</a></td>
-							<td><a href="${pageContext.request.contextPath}/regist.jsp">还没有账号？去注册</a></td>
+							<td><a class="href_none" href="${pageContext.request.contextPath}">回到主页</a></td>
+							<td><a class="href_none" href="${pageContext.request.contextPath}/regist.jsp">还没有账号？去注册</a></td>
 						</tr>
 					</table>
 				</form>

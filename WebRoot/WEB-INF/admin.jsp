@@ -40,7 +40,7 @@
 
 
 		<div class="go_to_index">
-			<a href="${pageContext.request.contextPath}/">回到主页</a>
+			<a class="href_none" href="${pageContext.request.contextPath}/">回到主页</a>
 		</div>
 
 	</div>
