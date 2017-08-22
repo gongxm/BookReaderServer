@@ -7,13 +7,13 @@ import com.google.gson.Gson;
 public class GsonUtils {
 	private static Gson gson = new Gson();
 
-	// ¶ÔÏó×ªjson
+	// å¯¹è±¡è½¬json
 	public static <T> String toJson(T t) {
 		String json = gson.toJson(t);
 		return json;
 	}
 
-	// json×ª¶ÔÏó
+	// jsonè½¬å¯¹è±¡
 	public static <T> T fromJson(String json, Type type) {
 		T t = gson.fromJson(json, type);
 		return t;

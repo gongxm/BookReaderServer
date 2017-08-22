@@ -17,7 +17,7 @@ import com.gongxm.utils.MyConstants;
 import com.gongxm.utils.ServiceUtils;
 
 /**
- * 用户注册
+ * 锟矫伙拷注锟斤拷
  */
 @WebServlet("/registServlet")
 public class RegistServlet extends HttpServlet {
@@ -33,14 +33,14 @@ public class RegistServlet extends HttpServlet {
 		String repassword=request.getParameter("repassword");
 		User user=BeanFillUtils.fillBean(request);
 		if(!password.equals(repassword)){
-			writer.write("<h1 align='center'><font color='red' size=5>两次输入的密码不一致！2秒后转到注册页面！</font><br/></h1>");
+			writer.write("<h1 align='center'><font color='red' size=5>涓ゆ杈撳叆鐨勫瘑鐮佷笉鐩稿悓!</font><br/></h1>");
 			request.getSession().setAttribute("user", user);
 			response.setHeader("refresh", "2;url="+request.getContextPath()+"/regist.jsp");
 			return;
 		}
 		User oldUser=uService.findUserByName(username);
 		if(oldUser!=null){
-			writer.write("<h1 align='center'><font color='red' size=5>该用户名已存在，请使用其他用户名注册！2秒后转到注册页面！</font><br/></h1>");
+			writer.write("<h1 align='center'><font color='red' size=5>鐢ㄦ埛宸茶鍗犵敤!</font><br/></h1>");
 			response.setHeader("refresh", "2;url="+request.getContextPath()+"/regist.jsp");
 			return;
 		}
@@ -49,7 +49,7 @@ public class RegistServlet extends HttpServlet {
 		newUser.setPermissions(MyConstants.ROLE_USER);
 		newUser.setPassword(MD5Util.MD5(password));
 		uService.addUser(newUser);
-		writer.write("<h1 align='center'><font color='green' size=5>注册成功！2秒后转到登陆页面！</font><br/></h1>");
+		writer.write("<h1 align='center'><font color='green' size=5>娉ㄥ唽鎴愬姛!</font><br/></h1>");
 		response.setHeader("refresh", "2;url="+request.getContextPath()+"/login.jsp");
 	}
 

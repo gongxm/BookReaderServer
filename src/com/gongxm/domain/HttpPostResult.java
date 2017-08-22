@@ -3,7 +3,6 @@ package com.gongxm.domain;
 import java.io.InputStream;
 
 /**
- * POST请求的结果
  * 
  * @author simple
  *

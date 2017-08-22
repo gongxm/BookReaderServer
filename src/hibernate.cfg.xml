@@ -24,7 +24,7 @@
 		<!-- Enable Hibernate's automatic session context management -->
 		<property name="current_session_context_class">thread</property>
 		<!-- 可以将向数据库发送的sql显示出来 -->
-		<property name="hibernate.show_sql">true</property>
+		<property name="hibernate.show_sql">false</property>
 		<!-- 格式化sql -->
 		<property name="hibernate.format_sql">true</property>
 		<!-- hibernate的方言 -->

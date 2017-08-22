@@ -3,7 +3,6 @@ package com.gongxm.utils;
 public class TextUtils {
 
 	/**
-	 * 判断字符串不是空
 	 * 
 	 * @param strings
 	 * @return
@@ -13,7 +12,6 @@ public class TextUtils {
 	}
 
 	/**
-	 * 判断一个字符串是否为空
 	 * 
 	 * @param str
 	 * @return
@@ -23,7 +21,6 @@ public class TextUtils {
 	}
 
 	/**
-	 * 判断多个字符串是否有为空的
 	 * 
 	 * @param strings
 	 * @return
@@ -39,7 +36,6 @@ public class TextUtils {
 
 	
 	/**
-	 * 判断字符串是否是手机号码
 	 * 
 	 * @param phone
 	 * @return

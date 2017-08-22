@@ -2,7 +2,7 @@ package com.gongxm.utils;
 
 public class PrintTool {
 	/**
-	 * 同时打印多个数据
+	 * 鎵撳嵃淇℃伅宸ュ叿
 	 * @param param
 	 */
 	public static void println(Object...param){

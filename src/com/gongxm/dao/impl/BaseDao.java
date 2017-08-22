@@ -27,7 +27,7 @@ public class BaseDao<T> implements Dao<T> {
 			tx.commit();
 		} catch (Exception e) {
 			e.printStackTrace();
-			session.getTransaction().rollback();// »Ø¹ö
+			session.getTransaction().rollback();
 		} finally {
 			if (session != null) {
 				session.close();
@@ -45,7 +45,7 @@ public class BaseDao<T> implements Dao<T> {
 			tx.commit();
 		} catch (Exception e) {
 			e.printStackTrace();
-			session.getTransaction().rollback();// »Ø¹ö
+			session.getTransaction().rollback();
 		} finally {
 			if (session != null) {
 				session.close();
@@ -54,7 +54,7 @@ public class BaseDao<T> implements Dao<T> {
 	}
 
 	/**
-	 * ¸ù¾ÝÖ÷¼üÉ¾³ý
+	 * ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½É¾ï¿½ï¿½
 	 */
 	@Override
 	public void delete(Serializable id) {
@@ -66,7 +66,7 @@ public class BaseDao<T> implements Dao<T> {
 			tx.commit();
 		} catch (Exception e) {
 			e.printStackTrace();
-			session.getTransaction().rollback();// »Ø¹ö
+			session.getTransaction().rollback();
 		} finally {
 			if (session != null) {
 				session.close();
@@ -76,9 +76,6 @@ public class BaseDao<T> implements Dao<T> {
 
 	@Override
 	@SuppressWarnings("unchecked")
-	/**
-	 * ¸ù¾ÝÖ÷¼ü²éÑ¯
-	 */
 	public T findOne(Serializable id) {
 		Session session = HibernateUtil.getSession();
 		T bean = (T) session.get(clazz, id);

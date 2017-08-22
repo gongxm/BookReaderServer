@@ -27,7 +27,8 @@ public abstract class BaseServlet extends HttpServlet {
 	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		InputStream is = request.getInputStream();
 		String requestJson = StringUtils.readStream(is, MyConstants.DEFAULT_ENCODING);
-		response.setContentType("application/json");
+//		response.setContentType("application/json");
+		request.setCharacterEncoding(MyConstants.DEFAULT_ENCODING);
 		postRequest(request,response, requestJson);
 	}
 

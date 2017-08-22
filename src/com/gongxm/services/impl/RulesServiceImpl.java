@@ -9,7 +9,6 @@ import com.gongxm.services.RulesService;
 import com.gongxm.utils.DaoUtils;
 
 public class RulesServiceImpl extends BaseService<Rules> implements RulesService {
-	// µ¥Àý
 	private static final RulesServiceImpl instance = new RulesServiceImpl();
 	
 	private RulesDao rulesDao = DaoUtils.getRulesDao();

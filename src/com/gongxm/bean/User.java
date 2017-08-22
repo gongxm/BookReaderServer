@@ -52,4 +52,10 @@ public class User {
 		this.permissions = permissions;
 	}
 
+	@Override
+	public String toString() {
+		return "User [id=" + id + ", username=" + username + ", password=" + password + ", permissions=" + permissions
+				+ "]";
+	}
+
 }

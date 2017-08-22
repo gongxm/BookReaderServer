@@ -6,11 +6,6 @@ import java.io.InputStream;
 import java.util.Random;
 
 public class StringUtils {
-	/**
-	 * 把一个流里面的内容 转化成一个字符串
-	 * @param is 流里面的内容
-	 * @return null解析失败
-	 */
     public static String readStream(InputStream is, String encoding){
         try {
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
@@ -28,17 +23,11 @@ public class StringUtils {
     }
 
     /**
-     * 把一个流里面的内容 转化成一个字符串,默认使用utf-8编码
-     * @param is 流里面的内容
-     * @return null解析失败
      */
     public static String readStream(InputStream is){
         return readStream(is,MyConstants.DEFAULT_ENCODING);
     }
 	/**
-	 * 生成32位随机字符串
-	 * @param length
-	 * @return
 	 */
 	public static String getRandomStringByLength(int length) {  
         String base = "abcdefghijklmnopqrstuvwxyz0123456789";  

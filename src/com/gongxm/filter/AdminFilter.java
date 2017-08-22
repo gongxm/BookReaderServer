@@ -34,15 +34,18 @@ public class AdminFilter implements Filter {
 		} catch (Exception e) {
 			throw new RuntimeException("non http request or response");
 		}
+		request.setCharacterEncoding(MyConstants.DEFAULT_ENCODING);
+		response.setCharacterEncoding(MyConstants.DEFAULT_ENCODING);
+		response.setContentType("text/html;charset=" + MyConstants.DEFAULT_ENCODING);
 		
 		User user=(User) request.getSession().getAttribute("user");
 		if(user==null){
-			response.getWriter().write("对不起，您还没有登陆，请先登陆再操作！即将转到登陆页面！");
+			response.getWriter().write("<h1 align='center'><font color='red' size=5>鎮ㄨ繕娌℃湁鐧婚檰,鍗冲皢杞埌鐧婚檰椤甸潰!</font></h1>");
 			response.setHeader("refresh", "1;url="+request.getContextPath()+"/login.jsp");
 			return;
 		}
 		if(!MyConstants.ROLE_ROOT.equals(user.getPermissions())){
-			response.getWriter().write("对不起，您的权限不足，无法进行该操作！即将转到主页！");
+			response.getWriter().write("<h1 align='center'><font color='blue' size=5>鎮ㄧ殑鏉冮檺涓嶈冻,鏃犳硶鎿嶄綔,鍗冲皢杞埌棣栭〉!</font></h1>");
 			response.setHeader("refresh", "1;url="+request.getContextPath());
 			return;
 		}

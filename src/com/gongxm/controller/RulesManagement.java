@@ -13,7 +13,7 @@ import com.gongxm.services.RulesService;
 import com.gongxm.utils.ServiceUtils;
 
 /**
- * 采集规则管理
+ * 瑙勫垯绠＄悊椤甸潰
  */
 @WebServlet("/rulesManagement")
 public class RulesManagement extends BaseServlet {

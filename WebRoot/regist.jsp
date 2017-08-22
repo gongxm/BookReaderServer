@@ -7,27 +7,7 @@
 <meta http-equiv="pragma" content="no-cache">
 <meta http-equiv="cache-control" content="no-cache">
 <meta http-equiv="expires" content="0">
-<style type="text/css">
-.table2 {
-	border: 1px solid #f3f3f3;
-	width: 100%;
-	height: 80%;
-	border: 0;
-	cellspacing: 0;
-	cellpadding: 0;
-}
-
-.table {
-	border: 1px solid #f3c3c3;
-	width: 500px;
-}
-
-td {
-	border: 1px solid #c3f3c3;
-	width: 30%;
-}
-</style>
-
+<link rel="stylesheet" type="text/css" href="css/main.css">
 
 <script type="text/javascript">
 	function checkUserName() {
@@ -62,7 +42,7 @@ td {
 
 			};
 			xhr.open('get',
-					"${pageContext.request.contextPath}/validateUserName?"
+					"${pageContext.request.contextPath}/validateUserName?username="
 							+ username)
 			xhr.send(null);
 			return true;
@@ -114,42 +94,40 @@ td {
 
 	<h1 align="center">用户注册</h1>
 
-	<table class="table2">
+	<table class="table_center">
 		<tr>
 			<td align="center">
 				<form name="regist"
 					action="${pageContext.request.contextPath}/registServlet"
 					onsubmit="return check()" method="post">
-					<table class="table">
+					<table class="table_inner" style="table-layout: fixed;">
 						<tr>
-							<td>用户名:</td>
-							<td><input id="username" type="text" name="username"
+							<td style="width: 120px" align="center">用户名:</td>
+							<td style="width: 120px" align="center"><input id="username" type="text" name="username"
 								value="${sessionScope.user.username}" onBlur="checkUserName()" />
 							</td>
-							<td><div id="user_name_tips"></div></td>
+							<td style="width: 200px" align="left"><div id="user_name_tips"></div></td>
 						</tr>
 						<tr>
-							<td>密码:</td>
-							<td><input id="password" type="password" name="password"
+							<td style="width: 120px" align="center">密码:</td>
+							<td style="width: 120px" align="center"><input id="password" type="password" name="password"
 								value="${sessionScope.user.password}" onBlur="checkPassword()" />
 							</td>
-							<td><div id="password_tips"></div></td>
+							<td style="width: 200px" align="left"><div id="password_tips"></div></td>
 						</tr>
 						<tr>
-							<td>确认密码:</td>
-							<td><input id="repassword" type="password" name="repassword"
+							<td style="width: 120px" align="center">确认密码:</td>
+							<td style="width: 120px" align="center"><input id="repassword" type="password" name="repassword"
 								onBlur="checkRePassword()" /></td>
 							<td><div id="repassword_tips"></div></td>
 						</tr>
 						<tr>
-							<td align="center"><input type="reset" value="清空" /></td>
-							<td align="center"><input type="submit" value="注册" /></td>
+							<td align="center" colspan="2"><input type="reset" value="清空" />       <input type="submit" value="注册" /></td>
 						</tr>
 						<tr>
-							<td align="center"><a
-								href="${pageContext.request.contextPath}">回到主页</a></td>
-							<td align="center"><a
-								href="${pageContext.request.contextPath}/login.jsp">已有账号，去登陆</a></td>
+							<td align="center" colspan="2"><a
+								href="${pageContext.request.contextPath}"><font color="#00f">回到主页</font></a>       <a
+								href="${pageContext.request.contextPath}/login.jsp"><font color="#f00" style="font-weight:bold;">已有账号,去登陆</font></a></td>
 						</tr>
 					</table>
 				</form>

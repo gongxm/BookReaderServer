@@ -28,14 +28,13 @@ public class ValidateUserName extends BaseServlet {
 		String username = request.getParameter("username");
 		UserService userService = ServiceUtils.getUserService();
 		User user = userService.findUserByName(username);
-		
-		ResponseResult result = new ResponseResult(MyConstants.FAILURE,"ÇëÇóÊ§°Ü");
+		ResponseResult result = new ResponseResult(MyConstants.FAILURE,"è¯·æ±‚å¤±è´¥");
 		
 		if(user!=null){
-			result.setErrmsg("¸ÃÓÃ»§ÃûÒÑ´æÔÚ!");
+			result.setErrmsg("è¯¥ç”¨æˆ·åå·²è¢«å ç”¨!");
 		}else{
 			result.setErrcode(MyConstants.SUCCESS);
-			result.setErrmsg("¹§Ï²Äú,¸ÃÓÃ»§Ãû¿ÉÒÔÊ¹ÓÃ!");
+			result.setErrmsg("æ­å–œæ‚¨,è¯¥ç”¨æˆ·åå¯ä»¥ä½¿ç”¨!");
 		}
 		String json = GsonUtils.toJson(result);
 		writeResult(response, json);

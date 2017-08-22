@@ -6,12 +6,12 @@ import com.gongxm.services.impl.RulesServiceImpl;
 import com.gongxm.services.impl.UserServiceImpl;
 
 public class ServiceUtils {
-	// 获取用户服务
+	//鑾峰彇鐢ㄦ埛鏈嶅姟
 	public static UserService getUserService() {
 		return UserServiceImpl.getInstance();
 	}
 
-	// 获取规则服务
+	// 鑾峰彇瑙勫垯鏈嶅姟
 	public static RulesService getRulesService() {
 		return RulesServiceImpl.getInstance();
 	}

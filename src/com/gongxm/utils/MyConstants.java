@@ -7,10 +7,9 @@ public class MyConstants {
 	public static final int SUCCESS = 1;
 	
 	
-	//½ÇÉ«¿ØÖÆ
-	public static final String ROLE_USER = "USER"; //ÆÕÍ¨ÓÃ»§
-	public static final String ROLE_ROOT = "ROOT"; //³¬¼¶¹ÜÀíÔ±
+	//ç”¨æˆ·æƒé™
+	public static final String ROLE_USER = "USER"; //æ™®é€šç”¨æˆ·
+	public static final String ROLE_ROOT = "ROOT"; //è¶…çº§ç®¡ç†å‘˜
 	
-	public static final String REMEMBER = "remember";//ÊÇ·ñ¼Ç×¡µÇÂ½×´Ì¬
-
+	public static final String REMEMBER = "remember";//æ˜¯å¦è®°ä½ç™»é™†çŠ¶æ€
 }

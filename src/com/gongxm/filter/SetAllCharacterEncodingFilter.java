@@ -18,7 +18,6 @@ import javax.servlet.http.HttpServletResponse;
 import com.gongxm.utils.MyConstants;
 
 /**
- * 编码过滤器
  */
 @WebFilter(filterName="SetAllCharacterEncodingFilter",urlPatterns="/*",initParams={@WebInitParam(name="encoding",value="UTF-8")})
 public class SetAllCharacterEncodingFilter implements Filter {
@@ -37,7 +36,6 @@ public class SetAllCharacterEncodingFilter implements Filter {
 
 	public void doFilter(ServletRequest req, ServletResponse resp, FilterChain chain)
 			throws IOException, ServletException {
-		System.out.println("-----------------SetAllCharacterEncodingFilter-----------------------");
 		HttpServletRequest request = null;
 		HttpServletResponse response = null;
 		try {
@@ -47,7 +45,6 @@ public class SetAllCharacterEncodingFilter implements Filter {
 			throw new RuntimeException("non http request or response");
 		}
 
-		// 获取配置文件中的编码：
 		String encoding = config.getInitParameter("encoding");
 		if (encoding == null || encoding.equals("")) {
 			encoding = MyConstants.DEFAULT_ENCODING;

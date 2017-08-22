@@ -16,7 +16,7 @@ import com.gongxm.utils.MD5Util;
 import com.gongxm.utils.MyConstants;
 import com.gongxm.utils.ServiceUtils;
 
-@WebServlet(description = "用户登陆", urlPatterns = { "/loginServlet" })
+@WebServlet(description = "鐢ㄦ埛鐧婚檰", urlPatterns = { "/loginServlet" })
 public class LoginServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
@@ -34,7 +34,7 @@ public class LoginServlet extends HttpServlet {
 		UserService uService = ServiceUtils.getUserService();
 		User user = uService.findUser(username, password);
 		if (user == null) {
-			writer.write("<h1 align='center'><font color='red' size=5>用户名或密码错误！1秒后回到登陆页面</font></h1>");
+			writer.write("<h1 align='center'><font color='red' size=5>鐧婚檰澶辫触,鐢ㄦ埛鍚嶆垨瀵嗙爜閿欒!</font></h1>");
 			response.setHeader("refresh", "1;url=" + request.getContextPath()
 					+ "/login.jsp");
 			return;
@@ -48,10 +48,10 @@ public class LoginServlet extends HttpServlet {
 		}
 		request.getSession().setAttribute("user", user);
 		if (MyConstants.ROLE_ROOT.equals(user.getPermissions())) {
-			writer.write("<h1 align='center'><font color='green' size=5>登陆成功！1秒后转到后台！</font></h1>");
+			writer.write("<h1 align='center'><font color='green' size=5>鐧婚檰鎴愬姛,鍗冲皢杞埌鍚庡彴绠＄悊椤甸潰...</font></h1>");
 			response.setHeader("refresh", "1;url=" + request.getContextPath() + "/admin");
 		} else {
-			writer.write("<h1 align='center'><font color='green' size=5>登陆成功！1秒后转到主页！</font></h1>");
+			writer.write("<h1 align='center'><font color='green' size=5>鐧婚檰鎴愬姛,鍗冲皢杞埌棣栭〉...</font></h1>");
 			response.setHeader("refresh", "1;url=" + request.getContextPath()
 					+ "/index.jsp");
 		}

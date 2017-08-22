@@ -28,7 +28,7 @@ public class UUIDUtils {
 	
 	
 	/**
-	 * 生成ID: C2B1-5079-400E-A7CF-B40C
+	 * 鏍煎紡: C2B1-5079-400E-A7CF-B40C
 	 * @return
 	 */
 	public static String createKey(){
@@ -38,7 +38,6 @@ public class UUIDUtils {
 	
 	
 	/**
-	 * 创建会所ID：　
 	 * @return
 	 */
 	public static String createClubId(){
@@ -48,7 +47,6 @@ public class UUIDUtils {
 	}
 	
 	/**
-	 * 创建项目ID：　
 	 * @return
 	 */
 	public static String createProjectId(){
@@ -58,7 +56,6 @@ public class UUIDUtils {
 	}
 
 	
-	//产生4位整数验证码
 	public static String createValidateCode() {
 		String time = TimeUtils.getMillisTime();
 		String validateCode = time.substring(9);

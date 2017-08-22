@@ -1,5 +1,7 @@
 package com.gongxm.bean;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -9,26 +11,27 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "rules")
-public class Rules {
+public class Rules implements Serializable{
+	private static final long serialVersionUID = 1L;
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	@Column
-	private String url; // 采集地址
+	private String url;
 	@Column
-	private int startIndex; // 开始位置
+	private int startIndex; 
 	@Column
-	private int endIndex; // 结束位置
+	private int endIndex; 
 	@Column
-	private String startStr; // 采集开始区域
+	private String startStr; 
 	@Column
-	private String endStr; // 采集结束区域
+	private String endStr; 
 	@Column
-	private String regex; // 需要采集内容的正则
+	private String regex; 
 	@Column
-	private boolean isRepeat; // 是否循环匹配
+	private boolean isRepeat; 
 	@Column
-	private boolean isCurrent; // 是否当前地址就是采集地址
+	private boolean isCurrent; 
 
 	public Rules() {
 	}

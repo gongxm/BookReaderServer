@@ -6,15 +6,13 @@ import com.gongxm.dao.UserDao;
 import com.gongxm.services.UserService;
 import com.gongxm.utils.DaoUtils;
 /**
- * ÓÃ»§Ïà¹Ø·þÎñ
+ * ï¿½Ã»ï¿½ï¿½ï¿½Ø·ï¿½ï¿½ï¿½
  * @author gongxm
  *
  */
 public class UserServiceImpl extends BaseService<User> implements UserService {
-	//µ¥Àý
 	private static final UserServiceImpl instance = new UserServiceImpl(); 
 	
-	//»ñÈ¡ÓÃ»§DAO
 	private static final UserDao udao = DaoUtils.getUserDao();
 	
 	private UserServiceImpl(){}

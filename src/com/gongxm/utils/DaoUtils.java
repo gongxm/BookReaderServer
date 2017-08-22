@@ -7,12 +7,12 @@ import com.gongxm.dao.impl.UserDaoImpl;
 
 public class DaoUtils {
 	
-	//获取用户Dao
+	//鐢ㄦ埛Dao
 	public static UserDao getUserDao(){
 		return UserDaoImpl.getInstance();
 	}
 
-	//获取规则Dao
+	//瑙勫垯Dao
 	public static RulesDao getRulesDao(){
 		return RulesDaoImpl.getInstance();
 	}
