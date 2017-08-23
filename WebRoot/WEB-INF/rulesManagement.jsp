@@ -20,7 +20,7 @@ td {
 		<tr>
 			<td align="center">
 
-				<form id="rules-form" action="${pageContext.request.contextPath}/addRules" method="post" onsubmit="return addRules()">
+				<form id="rules-form" action="${pageContext.request.contextPath}/operateRules?operate=add" method="post" onsubmit="return addRules()">
 
 					<table class="table_inner" style="table-layout: fixed;">
 						<tr>
@@ -49,8 +49,8 @@ td {
 										test="${rules.repeat==false}">否</c:if></td>
 								<td align="center"><c:if test="${rules.current}">是</c:if> <c:if
 										test="${rules.current==false}">否</c:if></td>
-								<td align="center"><input type="button" value="编辑">
-									<input type="button" value="删除"></td>
+								<td align="center"><input type="button" value="编辑" onclick="editRules(this)">
+									<input type="button" value="删除" onclick="deleteRules(this)"></td>
 							</tr>
 						</c:forEach>
 
