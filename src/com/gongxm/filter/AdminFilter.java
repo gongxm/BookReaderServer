@@ -15,7 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.gongxm.bean.User;
 import com.gongxm.utils.MyConstants;
 
-@WebFilter(filterName="AdminFilter",urlPatterns={"/admin","/rulesManagement"})
+@WebFilter(filterName="AdminFilter",urlPatterns={"/admin","/rulesManagement","/collectManagement"})
 public class AdminFilter implements Filter {
 
 	@Override

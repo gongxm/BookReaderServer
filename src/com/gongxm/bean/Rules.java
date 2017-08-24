@@ -11,27 +11,29 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "rules")
-public class Rules implements Serializable{
+public class Rules implements Serializable {
 	private static final long serialVersionUID = 1L;
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	@Column
+	private String rulesName;
+	@Column
 	private String url;
 	@Column
-	private int startIndex; 
+	private int startIndex;
 	@Column
-	private int endIndex; 
+	private int endIndex;
 	@Column
-	private String startStr; 
+	private String startStr;
 	@Column
-	private String endStr; 
+	private String endStr;
 	@Column
-	private String regex; 
+	private String regex;
 	@Column
-	private boolean isRepeat; 
+	private boolean isRepeat;
 	@Column
-	private boolean isCurrent; 
+	private boolean isCurrent;
 
 	public Rules() {
 	}
@@ -42,6 +44,14 @@ public class Rules implements Serializable{
 
 	public void setId(int id) {
 		this.id = id;
+	}
+
+	public String getRulesName() {
+		return rulesName;
+	}
+
+	public void setRulesName(String rulesName) {
+		this.rulesName = rulesName;
 	}
 
 	public String getUrl() {

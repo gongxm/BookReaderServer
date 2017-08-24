@@ -6,6 +6,10 @@ function checkElement(id) {
 		if (value == "请输入URL") {
 			node.value = "";
 		}
+	} else if (id == "rulesName") {
+		if (value == "请输入规则名称") {
+			node.value = "";
+		}
 	} else if (id == "startIndex") {
 		if (value == "请输入startIndex") {
 			node.value = "";
@@ -37,6 +41,10 @@ function reCheckElement(id) {
 		if (value == "") {
 			node.value = "请输入URL";
 		}
+	} else if (id == "rulesName") {
+		if (value == "") {
+			node.value = "请输入规则名称";
+		}
 	} else if (id == "startIndex") {
 		if (value == "") {
 			node.value = "请输入startIndex";
@@ -67,6 +75,12 @@ function checkData(id) {
 	if (id == "url") {
 		if (value == "请输入URL") {
 			alert("请输入采集URL!");
+		} else {
+			return value;
+		}
+	} else if (id == "rulesName") {
+		if (value == "请输入规则名称") {
+			alert("请输入规则名称");
 		} else {
 			return value;
 		}
@@ -119,6 +133,11 @@ function addRules() {
 	if (url == undefined) {
 		return false;
 	}
+	var rulesName = checkData("rulesName");
+	if (rulesName == undefined) {
+		return false;
+	}
+
 	var startIndex = checkData("startIndex");
 	if (startIndex == undefined) {
 		return false;
@@ -176,40 +195,45 @@ function editRules(node) {
 	if (value == "编辑") {
 		node.value = "完成";
 		var id = tdArr[0].innerText;
-		var url = tdArr[1].innerText;
-		var startIndex = tdArr[2].innerText;
-		var endIndex = tdArr[3].innerText;
-		var startStr = tdArr[4].innerText;
-		var endStr = tdArr[5].innerText;
-		var regex = tdArr[6].innerText;
-		var repeat = tdArr[7].innerText;
-		var current = tdArr[8].innerText;
+		var rulesName = tdArr[1].innerText;
+		var url = tdArr[2].innerText;
+		var startIndex = tdArr[3].innerText;
+		var endIndex = tdArr[4].innerText;
+		var startStr = tdArr[5].innerText;
+		var endStr = tdArr[6].innerText;
+		var regex = tdArr[7].innerText;
+		var repeat = tdArr[8].innerText;
+		var current = tdArr[9].innerText;
+		
 		tdArr[0].innerHTML = id;
-		tdArr[1].innerHTML = "<input type='text' id='mUrl' value='" + url
+		tdArr[1].innerHTML = "<input type='text' id='mRulesName' value='"
+				+ rulesName + "'>";
+		tdArr[2].innerHTML = "<input type='text' id='mUrl' value='" + url
 				+ "'>";
-		tdArr[2].innerHTML = "<input type='text' id='mStartIndex' value='"
+		tdArr[3].innerHTML = "<input type='text' id='mStartIndex' value='"
 				+ startIndex + "'>";
-		tdArr[3].innerHTML = "<input type='text' id='mEndIndex' value='"
+		tdArr[4].innerHTML = "<input type='text' id='mEndIndex' value='"
 				+ endIndex + "'>";
-		tdArr[4].innerHTML = "<input type='text' id='mStartStr' value='"
+		tdArr[5].innerHTML = "<input type='text' id='mStartStr' value='"
 				+ startStr + "'>";
-		tdArr[5].innerHTML = "<input type='text' id='mEndStr' value='" + endStr
+		tdArr[6].innerHTML = "<input type='text' id='mEndStr' value='" + endStr
 				+ "'>";
-		tdArr[6].innerHTML = "<input type='text' id='mRegex' value='" + regex
+		tdArr[7].innerHTML = "<input type='text' id='mRegex' value='" + regex
 				+ "'>";
 		if (repeat == '是') {
-			tdArr[7].innerHTML = "<select name='repeat' id='mRepeat'><option value='true' selected='selected'>是</option><option value='false'>否</option></select>";
+			tdArr[8].innerHTML = "<select name='repeat' id='mRepeat'><option value='true' selected='selected'>是</option><option value='false'>否</option></select>";
 		} else {
-			tdArr[7].innerHTML = "<select name='repeat' id='mRepeat'><option value='false' selected='selected'>否</option><option value='true'>是</option></select>";
+			tdArr[8].innerHTML = "<select name='repeat' id='mRepeat'><option value='false' selected='selected'>否</option><option value='true'>是</option></select>";
 		}
 		if (current == '是') {
-			tdArr[8].innerHTML = "<select name='current' id='mCurrent'><option value='true' selected='selected'>是</option><option value='false'>否</option></select>";
+			tdArr[9].innerHTML = "<select name='current' id='mCurrent'><option value='true' selected='selected'>是</option><option value='false'>否</option></select>";
 		} else {
-			tdArr[8].innerHTML = "<select name='current' id='mCurrent'><option value='false' selected='selected'>否</option><option value='true'>是</option></select>";
+			tdArr[9].innerHTML = "<select name='current' id='mCurrent'><option value='false' selected='selected'>否</option><option value='true'>是</option></select>";
 		}
 
 	} else {
 		var id = tdArr[0].innerText;
+		var rulesName = $("#mRulesName").val();
 		var url = $("#mUrl").val();
 		var startIndex = $("#mStartIndex").val();
 		var endIndex = $("#mEndIndex").val();
@@ -218,17 +242,20 @@ function editRules(node) {
 		var regex = $("#mRegex").val();
 		var repeat = $("#mRepeat").val();
 		var current = $("#mCurrent").val();
-		if (url == "" || startIndex == "" || endIndex == "" || startStr == ""
-				|| endStr == "" || regex == "") {
+		if (rulesName == "" || url == "" || startIndex == "" || endIndex == ""
+				|| startStr == "" || endStr == "" || regex == "") {
 			alert("数据不能为空！");
 			return;
 		}
+		
 		node.value = "编辑";
 		if (confirm("是否修改该规则？")) {
-			var value = "&url=" + url + "&startIndex=" + startIndex
-					+ "&endIndex=" + endIndex + "&startStr=" + startStr
-					+ "&endStr=" + endStr + "&regex=" + regex + "&repeat="
-					+ repeat + "&current=" + current;
+			var value = "&rulesName=" + encodeURIComponent(rulesName) + "&url=" + encodeURIComponent(url) + "&startIndex="
+			+ startIndex + "&endIndex=" + endIndex + "&startStr="
+			+ encodeURIComponent(startStr) + "&endStr="
+			+ encodeURIComponent(endStr) + "&regex="
+			+ encodeURIComponent(regex) + "&repeat=" + repeat + "&current="
+			+ current;
 			location.href = "/BookReaderServer/operateRules?operate=update&id="
 					+ id + value;
 		} else {
@@ -241,26 +268,29 @@ function deleteRules(node) {
 	var trNode = node.parentElement.parentElement;
 	var tdArr = trNode.children;
 	var id = tdArr[0].innerText;
-	var url = tdArr[1].innerText;
-	var startIndex = tdArr[2].innerText;
-	var endIndex = tdArr[3].innerText;
-	var startStr = tdArr[4].innerText;
-	var endStr = tdArr[5].innerText;
-	var regex = tdArr[6].innerText;
-	var repeatText = tdArr[7].innerText;
+	var rulesName = tdArr[1].innerText;
+	var url = tdArr[2].innerText;
+	var startIndex = tdArr[3].innerText;
+	var endIndex = tdArr[4].innerText;
+	var startStr = tdArr[5].innerText;
+	var endStr = tdArr[6].innerText;
+	var regex = tdArr[7].innerText;
+	var repeatText = tdArr[8].innerText;
 	var repeat = false;
 	if (repeatText == '是') {
 		repeat = true;
 	}
-	var currentText = tdArr[8].innerText;
+	var currentText = tdArr[9].innerText;
 	var current = false;
 	if (currentText == '是') {
 		current = true;
 	}
 	if (confirm("是否删除该规则？")) {
-		var value = "&url=" + url + "&startIndex=" + startIndex + "&endIndex="
-				+ endIndex + "&startStr=" + startStr + "&endStr=" + endStr
-				+ "&regex=" + regex + "&repeat=" + repeat + "&current="
+		var value = "&rulesName=" + encodeURIComponent(rulesName) +"&url=" + encodeURIComponent(url) + "&startIndex="
+				+ startIndex + "&endIndex=" + endIndex + "&startStr="
+				+ encodeURIComponent(startStr) + "&endStr="
+				+ encodeURIComponent(endStr) + "&regex="
+				+ encodeURIComponent(regex) + "&repeat=" + repeat + "&current="
 				+ current;
 		location.href = "/BookReaderServer/operateRules?operate=delete&id="
 				+ id + value;

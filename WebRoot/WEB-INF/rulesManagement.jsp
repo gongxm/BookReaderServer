@@ -8,11 +8,6 @@
 <link rel="stylesheet" type="text/css" href="css/main.css">
 <script type="text/javascript" src="js/jquery.js"></script>
 <script type="text/javascript" src="js/RulesManagement.js"></script>
-<style type="text/css">
-td {
-	border: 1px dotted #8000ff;
-}
-</style>
 </head>
 <body>
 	<h1>规则列表</h1>
@@ -22,66 +17,70 @@ td {
 
 				<form id="rules-form" action="${pageContext.request.contextPath}/operateRules?operate=add" method="post" onsubmit="return addRules()">
 
-					<table class="table_inner" style="table-layout: fixed;">
+					<table class="table_inner">
 						<tr>
-							<td style="width: 120px" align="center">规则ID</td>
-							<td style="width: 200px" align="center">采集URL</td>
-							<td style="width: 180px" align="center">开始索引</td>
-							<td style="width: 180px" align="center">结束索引</td>
-							<td style="width: 180px" align="center">开始区域</td>
-							<td style="width: 180px" align="center">结束区域</td>
-							<td style="width: 180px" align="center">正则表达式</td>
-							<td style="width: 80px" align="center">重复匹配</td>
-							<td style="width: 120px" align="center">采集当前页面</td>
-							<td style="width: 150px" align="center">操作</td>
+							<td class="inner_td" style="width: 120px" >规则ID</td>
+							<td class="inner_td" style="width: 120px" >规则名称</td>
+							<td class="inner_td" style="width: 200px" >采集URL</td>
+							<td class="inner_td" style="width: 120px" >开始索引</td>
+							<td class="inner_td" style="width: 120px" >结束索引</td>
+							<td class="inner_td" style="width: 180px" >开始区域</td>
+							<td class="inner_td" style="width: 180px" >结束区域</td>
+							<td class="inner_td" style="width: 180px">正则表达式</td>
+							<td class="inner_td" style="width: 80px">重复匹配</td>
+							<td class="inner_td" style="width: 120px">采集当前页面</td>
+							<td class="inner_td" style="width: 150px">操作</td>
 						</tr>
 
 						<c:forEach items="${rulesList}" var="rules" varStatus="vs">
 							<tr>
-								<td align="center">${rules.id}</td>
-								<td align="center">${rules.url}</td>
-								<td align="center">${rules.startIndex}</td>
-								<td align="center">${rules.endIndex}</td>
-								<td align="center">${rules.startStr}</td>
-								<td align="center">${rules.endStr}</td>
-								<td align="center">${rules.regex}</td>
-								<td align="center"><c:if test="${rules.repeat}">是</c:if> <c:if
+								<td class="inner_td">${rules.id}</td>
+								<td class="inner_td">${rules.rulesName}</td>
+								<td class="inner_td">${rules.url}</td>
+								<td class="inner_td">${rules.startIndex}</td>
+								<td class="inner_td">${rules.endIndex}</td>
+								<td class="inner_td">${rules.startStr}</td>
+								<td class="inner_td">${rules.endStr}</td>
+								<td class="inner_td">${rules.regex}</td>
+								<td class="inner_td"><c:if test="${rules.repeat}">是</c:if> <c:if
 										test="${rules.repeat==false}">否</c:if></td>
-								<td align="center"><c:if test="${rules.current}">是</c:if> <c:if
+								<td class="inner_td"><c:if test="${rules.current}">是</c:if> <c:if
 										test="${rules.current==false}">否</c:if></td>
-								<td align="center"><input type="button" value="编辑" onclick="editRules(this)">
+								<td class="inner_td"><input type="button" value="编辑" onclick="editRules(this)">
 									<input type="button" value="删除" onclick="deleteRules(this)"></td>
 							</tr>
 						</c:forEach>
 
 						<tr>
-							<td align="center">ID(自动增长)</td>
-							<td><input type="text" name="url" id="url" value="请输入URL"
+							<td class="inner_td">ID(自动增长)</td>
+							<td class="inner_td"><input type="text" style="width: 200px" name="rulesName" id="rulesName" value="请输入规则名称"
+								onblur="reCheckElement('rulesName')" onclick="checkElement('rulesName')" /></td>
+							<td class="inner_td"><input type="text" style="width: 200px" name="url" id="url" value="请输入URL"
 								onblur="reCheckElement('url')" onclick="checkElement('url')" /></td>
-							<td><input type="text" name="startIndex" id="startIndex"
+							<td class="inner_td"><input type="text" style="width: 120px" name="startIndex" id="startIndex"
 								value="请输入startIndex" onblur="reCheckElement('startIndex')"
 								onclick="checkElement('startIndex')" /></td>
-							<td><input type="text" name="endIndex" id="endIndex"
+							<td class="inner_td"><input type="text" style="width: 120px" name="endIndex" id="endIndex"
 								value="请输入endIndex" onblur="reCheckElement('endIndex')"
 								onclick="checkElement('endIndex')" /></td>
-							<td><input type="text" name="startStr" id="startStr"
-								value="请输入startStr" onblur="reCheckElement('startStr')"
+							<td class="inner_td"><input type="text" name="startStr" id="startStr"
+								value="请输入startStr" style="width: 180px" onblur="reCheckElement('startStr')"
 								onclick="checkElement('startStr')" /></td>
-							<td><input type="text" name="endStr" id="endStr"
+							<td class="inner_td"><input type="text" style="width: 180px" name="endStr" id="endStr"
 								value="请输入endStr" onblur="reCheckElement('endStr')"
 								onclick="checkElement('endStr')" /></td>
-							<td><input type="text" name="regex" id="regex"
+							<td class="inner_td"><input type="text" style="width: 180px" name="regex" id="regex"
 								value="请输入regex" onblur="reCheckElement('regex')"
 								onclick="checkElement('regex')" /></td>
-							<td align="center"><select name="repeat" id="repeat">
+							<td class="inner_td"><select name="repeat" id="repeat">
 									<option value="true">是</option>
 									<option value="false">否</option>
 							</select></td>
-							<td align="center"><select name="current" id="current">
+							<td class="inner_td"><select name="current" id="current">
 									<option value="false">否</option>
 									<option value="true">是</option>
 							</select></td>
-							<td align="center"><input id="bt-submit" type="submit"
+							<td class="inner_td"><input id="bt-submit" type="submit"
 								name="add" value="添加新规则"/></td>
 						</tr>
 						<tr>

@@ -14,35 +14,35 @@
 	function rulesManagement() {
 		location.href = "${pageContext.request.contextPath}/rulesManagement";
 	}
+	function collectManagement() {
+		location.href = "${pageContext.request.contextPath}/collectManagement";
+	}
 </script>
 
+<style type="text/css">
+</style>
 
 </head>
 <body>
 	<h1>网站后台</h1>
-	<div class="middle">
-
-		<table class="table_center">
-			<tr>
-				<td align="center">
-					<form action="xxx" method="post">
-						<table class="table_inner">
-							<tr>
-								<td>采集规则管理</td>
-								<td><input type="button" value="进入"
-									onclick="rulesManagement()" /></td>
-							</tr>
-						</table>
-					</form>
-				</td>
-			</tr>
-		</table>
+	<table class="table_center">
+		<tr>
+			<td align="center">
+				<table class="table_inner">
+					<tr>
+						<td class="inner_td" style="width: 100px"><input
+							type="button" value="采集规则管理" onclick="rulesManagement()" /></td>
+						<td class="inner_td" style="width: 100px"><input
+							type="button" value="采集管理" onclick="collectManagement()" /></td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+	</table>
 
 
-		<div class="go_to_index">
-			<a class="href_none" href="${pageContext.request.contextPath}/">回到主页</a>
-		</div>
-
+	<div class="go_to_index">
+		<a class="href_none" href="${pageContext.request.contextPath}/">回到主页</a>
 	</div>
 </body>
 </html>
