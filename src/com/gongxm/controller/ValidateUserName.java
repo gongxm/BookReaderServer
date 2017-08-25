@@ -7,7 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.gongxm.bean.User;
-import com.gongxm.domain.ResponseResult;
+import com.gongxm.domain.response.ResponseResult;
 import com.gongxm.services.UserService;
 import com.gongxm.utils.GsonUtils;
 import com.gongxm.utils.MyConstants;

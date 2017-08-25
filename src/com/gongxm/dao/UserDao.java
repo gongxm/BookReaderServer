@@ -8,4 +8,8 @@ public interface UserDao extends Dao<User> {
 
 	User findUser(String username, String password);
 
+	User findUserByThirdSession(String thirdSession);
+
+	User findUserByOpenId(String openid);
+
 }

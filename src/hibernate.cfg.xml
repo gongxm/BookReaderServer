@@ -38,5 +38,6 @@
 		<!-- 注册实体映射类 -->
 		<mapping class="com.gongxm.bean.User" />
 		<mapping class="com.gongxm.bean.Rules" />
+		<mapping class="com.gongxm.bean.Book" />
 	</session-factory>
 </hibernate-configuration>

@@ -1,4 +1,4 @@
-package com.gongxm.domain;
+package com.gongxm.domain.response;
 
 public class ResponseResult {
 	private int errcode;

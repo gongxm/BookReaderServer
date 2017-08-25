@@ -51,4 +51,40 @@ public class UserDaoImpl extends BaseDao<User> implements UserDao {
 		return null;
 	}
 
+	@Override
+	public User findUserByThirdSession(String thirdSession) {
+		Session session = null;
+		try {
+			session = HibernateUtil.getSession();
+			String sql = "from User where thirdSession=?";
+			User user= (User) session.createQuery(sql).setParameter(0, thirdSession).uniqueResult();
+			return user;
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if (session != null) {
+				session.close();
+			}
+		}
+		return null;
+	}
+
+	@Override
+	public User findUserByOpenId(String openid) {
+		Session session = null;
+		try {
+			session = HibernateUtil.getSession();
+			String sql = "from User where openid=?";
+			User user= (User) session.createQuery(sql).setParameter(0, openid).uniqueResult();
+			return user;
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if (session != null) {
+				session.close();
+			}
+		}
+		return null;
+	}
+
 }

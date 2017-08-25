@@ -6,7 +6,7 @@ import com.gongxm.dao.UserDao;
 import com.gongxm.services.UserService;
 import com.gongxm.utils.DaoUtils;
 /**
- * �û���ط���
+ * 用户服务
  * @author gongxm
  *
  */
@@ -39,6 +39,16 @@ public class UserServiceImpl extends BaseService<User> implements UserService {
 	@Override
 	public Dao<User> getDao() {
 		return udao;
+	}
+
+	@Override
+	public User findUserByThirdSession(String thirdSession) {
+		return udao.findUserByThirdSession(thirdSession);
+	}
+
+	@Override
+	public User findUserByOpenId(String openid) {
+		return udao.findUserByOpenId(openid);
 	}
 
 }

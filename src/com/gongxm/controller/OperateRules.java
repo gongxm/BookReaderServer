@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.beanutils.BeanUtils;
 
 import com.gongxm.bean.Rules;
-import com.gongxm.domain.ResponseResult;
+import com.gongxm.domain.response.ResponseResult;
 import com.gongxm.services.RulesService;
 import com.gongxm.utils.MyConstants;
 import com.gongxm.utils.ServiceUtils;
