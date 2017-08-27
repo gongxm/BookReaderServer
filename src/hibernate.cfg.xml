@@ -8,9 +8,12 @@
 	<session-factory>
 		<!-- 数据库连接配置 -->
 		<property name="connection.driver_class">com.mysql.jdbc.Driver</property>
-		<property name="connection.url">jdbc:mysql://localhost:3306/book_reader</property>
+		<property name="connection.url">jdbc:mysql://59a253e37f535.gz.cdb.myqcloud.com:5752/book_reader</property>
 		<property name="connection.username">root</property>
-		<property name="connection.password">root</property>
+		<property name="connection.password">99886128gxm</property>
+		<!-- <property name="connection.url">jdbc:mysql://localhost:3306/book_reader</property>
+		<property name="connection.username">root</property>
+		<property name="connection.password">root</property> -->
 
 		<!-- c3p0配置 -->
 		<property name="hibernate.c3p0.max_size">20</property>
@@ -39,5 +42,6 @@
 		<mapping class="com.gongxm.bean.User" />
 		<mapping class="com.gongxm.bean.Rules" />
 		<mapping class="com.gongxm.bean.Book" />
+		<mapping class="com.gongxm.bean.BookChapter" />
 	</session-factory>
 </hibernate-configuration>

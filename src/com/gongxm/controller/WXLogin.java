@@ -46,7 +46,7 @@ public class WXLogin extends BaseServlet {
 
 					int errcode = result.getErrcode();
 					UserService userService = ServiceUtils.getUserService();
-
+					
 					// 如果错误码为0, 创建一个用户
 					if (errcode == 0) {
 						String openid = result.getOpenid();

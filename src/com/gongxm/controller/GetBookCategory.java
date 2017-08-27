@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.gongxm.services.BookService;
+import com.gongxm.utils.GsonUtils;
 import com.gongxm.utils.ServiceUtils;
 
 @WebServlet("/getBookCategory")
@@ -22,6 +23,13 @@ public class GetBookCategory extends BaseServlet {
 		BookService bookService = ServiceUtils.getBookService();
 		
 		List<String> categories = bookService.getBookCategory();
+		
+		String json = "[]";
+		if(categories!=null) {
+			json = GsonUtils.toJson(categories);
+		}
+		
+		writeResult(response, json);
 	}
 
 }

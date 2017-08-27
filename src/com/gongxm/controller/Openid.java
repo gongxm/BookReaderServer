@@ -18,7 +18,6 @@ import com.gongxm.utils.StringConstants;
 import com.gongxm.utils.TextUtils;
 import com.gongxm.utils.WxAuthUtil;
 
-
 @WebServlet("/openid")
 public class Openid extends BaseServlet {
 
@@ -27,9 +26,10 @@ public class Openid extends BaseServlet {
 	 */
 	private static final long serialVersionUID = 1L;
 
-	public void postRequest(HttpServletRequest request, HttpServletResponse response, String requestJson) throws IOException {
+	public void postRequest(HttpServletRequest request, HttpServletResponse response, String requestJson)
+			throws IOException {
 		UserInfoParam userInfoParam = null;
-		ResponseResult result = new ResponseResult(MyConstants.FAILURE,"用户信息存储失败!");
+		ResponseResult result = new ResponseResult(MyConstants.FAILURE, "用户信息存储失败!");
 		try {
 			UserService userService = ServiceUtils.getUserService();
 			userInfoParam = GsonUtils.fromJson(requestJson, UserInfoParam.class);
@@ -37,14 +37,13 @@ public class Openid extends BaseServlet {
 			if (TextUtils.notEmpty(thirdSession)) {
 				try {
 					User user = userService.findUserByThirdSession(thirdSession);
-					if(user != null){
+					if (user != null) {
 						String encryptedData = userInfoParam.getEncryptedData();
 						String sessionKey = user.getSession_key();
 						String iv = userInfoParam.getIv();
 						String userInfo = WxAuthUtil.decodeUserInfo(encryptedData, iv, sessionKey);
-						if(userInfo!=null){
-							UserResult resultUser = new UserResult();
-							resultUser = GsonUtils.fromJson(userInfo, UserResult.class);
+						if (userInfo != null) {
+							UserResult resultUser = GsonUtils.fromJson(userInfo, UserResult.class);
 							user.setAvatarUrl(resultUser.getAvatarUrl());
 							user.setCity(resultUser.getCity());
 							user.setCountry(resultUser.getCountry());

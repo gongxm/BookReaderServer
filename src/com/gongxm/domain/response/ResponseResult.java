@@ -3,6 +3,7 @@ package com.gongxm.domain.response;
 public class ResponseResult {
 	private int errcode;
 	private String errmsg;
+	private Object result;
 
 	public ResponseResult() {
 	}
@@ -27,6 +28,14 @@ public class ResponseResult {
 
 	public void setErrmsg(String errmsg) {
 		this.errmsg = errmsg;
+	}
+
+	public Object getResult() {
+		return result;
+	}
+
+	public void setResult(Object result) {
+		this.result = result;
 	}
 
 }

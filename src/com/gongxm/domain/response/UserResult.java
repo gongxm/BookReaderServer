@@ -6,13 +6,12 @@ public class UserResult implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private String openId;
 
-	// �û�΢����Ϣ
 	private String nickName;// ": "NICKNAME",
 	private String gender;// ": GENDER,
 	private String city;// ": "CITY",
 	private String province;// ": "PROVINCE",
 	private String country;// ": "COUNTRY",
-	private String avatarUrl;// ": �û�ͷ��
+	private String avatarUrl;// ": LOGO
 
 	public UserResult() {
 	}
