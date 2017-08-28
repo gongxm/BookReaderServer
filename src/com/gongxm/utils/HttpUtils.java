@@ -24,12 +24,6 @@ import com.gongxm.domain.HttpPostResult;
 import com.gongxm.domain.MyX509TrustManager;
 
 /**************************************
- * @�汾 1.0
- * @���� gongxm
- * @ʱ�� 2016/8/3 22:23
- * @����
- * @��Ȩ���� gongxm
- * @����
  ***************************************/
 
 public class HttpUtils {
@@ -78,7 +72,6 @@ public class HttpUtils {
 	}
 
 	/**
-	 * 
 	 * @param url
 	 * @throws IOException
 	 */
@@ -89,6 +82,23 @@ public class HttpUtils {
 		conn.setRequestMethod("GET");
 		InputStream is = conn.getInputStream();
 		String result = StringUtils.readStream(is, MyConstants.DEFAULT_ENCODING);
+		return result;
+	}
+
+	/**
+	 * @param url
+	 * @throws IOException
+	 */
+	public static String executGet(String url,String charset) throws IOException {
+		if(TextUtils.isEmpty(charset)){
+			charset = MyConstants.DEFAULT_ENCODING;
+		}
+		HttpURLConnection conn = (HttpURLConnection) new URL(url).openConnection();
+		conn.setConnectTimeout(TIME_OUT);
+		conn.setReadTimeout(TIME_OUT);
+		conn.setRequestMethod("GET");
+		InputStream is = conn.getInputStream();
+		String result = StringUtils.readStream(is, charset);
 		return result;
 	}
 

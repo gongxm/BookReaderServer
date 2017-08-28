@@ -17,4 +17,7 @@ public class MyConstants {
 	public static final String APPID = "wx2f98d23529ff8780";
 	public static final String APP_SECRET = "9f4f5f9c8ca32ef4cb68e2959d77d24a";
 	public static final String GRANT_TYPE = "authorization_code";
+	
+	//书籍列表采集状态
+	public static final int BOOK_LIST_UNCOLLECT = 0;
 }

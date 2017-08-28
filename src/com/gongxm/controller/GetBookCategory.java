@@ -8,9 +8,12 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.gongxm.domain.response.ResponseResult;
 import com.gongxm.services.BookService;
 import com.gongxm.utils.GsonUtils;
+import com.gongxm.utils.MyConstants;
 import com.gongxm.utils.ServiceUtils;
+import com.gongxm.utils.StringConstants;
 
 @WebServlet("/getBookCategory")
 public class GetBookCategory extends BaseServlet {
@@ -22,12 +25,18 @@ public class GetBookCategory extends BaseServlet {
 			throws ServletException, IOException {
 		BookService bookService = ServiceUtils.getBookService();
 		
+		ResponseResult result = new ResponseResult(MyConstants.FAILURE, StringConstants.HTTP_REQUEST_ERROR);
+		
 		List<String> categories = bookService.getBookCategory();
 		
 		String json = "[]";
 		if(categories!=null) {
-			json = GsonUtils.toJson(categories);
+			result.setErrcode(MyConstants.SUCCESS);
+			result.setErrmsg(StringConstants.HTTP_REQUEST_SUCCESS);
+			result.setResult(categories);
+			json = GsonUtils.toJson(result);
 		}
+		
 		
 		writeResult(response, json);
 	}

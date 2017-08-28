@@ -43,5 +43,6 @@
 		<mapping class="com.gongxm.bean.Rules" />
 		<mapping class="com.gongxm.bean.Book" />
 		<mapping class="com.gongxm.bean.BookChapter" />
+		<mapping class="com.gongxm.bean.BookList" />
 	</session-factory>
 </hibernate-configuration>

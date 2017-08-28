@@ -1,5 +1,6 @@
 package com.gongxm.test;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -7,14 +8,17 @@ import org.junit.Test;
 
 import com.gongxm.bean.Book;
 import com.gongxm.bean.BookChapter;
+import com.gongxm.bean.BookList;
 import com.gongxm.bean.Rules;
 import com.gongxm.bean.User;
+import com.gongxm.runnable.BookInfoRunnable;
+import com.gongxm.services.BookListService;
 import com.gongxm.services.BookService;
 import com.gongxm.services.UserService;
+import com.gongxm.utils.CollectUtils;
 import com.gongxm.utils.GsonUtils;
-import com.gongxm.utils.MyConstants;
 import com.gongxm.utils.ServiceUtils;
-import com.gongxm.utils.StringConstants;
+import com.gongxm.utils.ThreadPoolUtil;
 
 public class MyTest {
 	@Test
@@ -81,5 +85,51 @@ public class MyTest {
 		}
 		System.out.println(GsonUtils.toJson(newList));
 	}
+	
+	
+	
+	
+	@Test
+	public void test6(){
+		
+	}
+	
+	public static void main(String[] args) throws IOException {
+		String url="http://www.88dushu.com/xiaoshuo/85/85614/";
+		String[] regexs={"<meta property=\"og:novel:book_name\" content=\".{1,20}\">",
+				"<meta property=\"og:novel:author\" content=\".{1,10}\">",
+				"<meta property=\"og:novel:category\" content=\".{2,8}\">",
+				"<meta property=\"og:novel:status\" content=\".{2,5}\">",
+				"<meta property=\"og:image\" content=\".{5,100}\">",
+				"og:description\" content=\".{10,500}",
+				"<li><a href=\"\\d+\\.(html){1}\">",
+				">.{1,20}</a></li>"
+				};
+		String startStr="<div class=\"mulu\">";
+		String endStr="<div id=\"footer\">";
+		String charset="gbk";
+		String concatUrl=url;
+		BookInfoRunnable task = new BookInfoRunnable(url,regexs,startStr,endStr,concatUrl,charset);
+		new Thread(task).start();
+		
+	}
+
+	private static void demo1() {
+		String book_source="www.88dushu.com";
+		String baseUrl="http://www.88dushu.com/sort2/(*)/";
+		String flag="(*)";
+		int startIndex=1;
+		int endIndex=53;
+		String startStr="<div class=\"booklist\">";
+		String endStr="<div class=\"pagelink\" id=\"pagelink\">";
+		String regex="/xiaoshuo/[0-9/]*/";
+		boolean repeat = true;
+		String charset = "gbk";
+		String concatUrl = "http://www.88dushu.com";
+		
+		CollectUtils.collectBookList(book_source,baseUrl, flag, startIndex, endIndex, startStr, endStr, regex, repeat,charset,concatUrl);
+	}
+	
+	
 
 }
