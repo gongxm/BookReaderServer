@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import com.gongxm.bean.Book;
 import com.gongxm.bean.BookList;
 import com.gongxm.services.BookListService;
 import com.gongxm.utils.HttpUtils;
@@ -51,19 +52,28 @@ public class BookListRunnable implements Runnable {
 					Pattern p = Pattern.compile(regex);
 					Matcher m = p.matcher(html);
 					if (repeat) {
-						int count = 0;
 						while (m.find()) {
-							count++;
-							String bookUrl = concatUrl + m.group();
-							BookList list = new BookList(book_source, bookUrl, MyConstants.BOOK_LIST_UNCOLLECT);
-							service.add(list);
+							synchronized (Book.class) {
+								String book_link = m.group();
+								book_link = TextUtils.dealWithText(book_link, regex);
+								String bookUrl = concatUrl + book_link;
+								BookList temp = service.findByBookLink(bookUrl);
+								if (temp == null) {
+									BookList list = new BookList(book_source, bookUrl, MyConstants.BOOK_LIST_UNCOLLECT);
+									service.add(list);
+								}
+							}
 						}
-						System.out.println(count);
 					} else {
 						if (m.find()) {
-							String bookUrl = concatUrl + m.group();
-							BookList list = new BookList(book_source, bookUrl, MyConstants.BOOK_LIST_UNCOLLECT);
-							service.add(list);
+							String book_link = m.group();
+							book_link = TextUtils.dealWithText(book_link, regex);
+							String bookUrl = concatUrl + book_link;
+							BookList temp = service.findByBookLink(bookUrl);
+							if (temp == null) {
+								BookList list = new BookList(book_source, bookUrl, MyConstants.BOOK_LIST_UNCOLLECT);
+								service.add(list);
+							}
 						}
 					}
 				}
@@ -72,7 +82,7 @@ public class BookListRunnable implements Runnable {
 			e.printStackTrace();
 		}
 
-		System.out.println("完成");
+		System.out.println("----完成----");
 	}
 
 }

@@ -45,4 +45,29 @@ public class TextUtils {
 		return phone != null && phone.matches(regex);
 	}
 
+	
+	
+	//去除两个字符串中首尾相同的内容
+	public static String dealWithText(String src,String reg){
+		int length =0;
+		for(int i=0;i<reg.length();i++){
+			if(src.charAt(i)!=reg.charAt(i)){
+				length=i;
+				break;
+			}
+		}
+		String str = src.substring(length);
+		length=0;
+		
+		str = new StringBuilder(str).reverse().toString();
+		reg = new StringBuilder(reg).reverse().toString();
+		for(int i=0;i<reg.length();i++){
+			if(str.charAt(i)!=reg.charAt(i)){
+				length=i;
+				break;
+			}
+		}
+		String result = str.substring(length);
+		return new StringBuilder(result).reverse().toString();
+	}
 }

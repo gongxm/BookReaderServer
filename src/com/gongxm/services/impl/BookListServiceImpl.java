@@ -46,5 +46,10 @@ public class BookListServiceImpl extends BaseService<BookList> implements BookLi
 	public long getAllUnCollectBookListCount() {
 		return dao.getAllUnCollectBookListCount();
 	}
+
+	@Override
+	public BookList findByBookLink(String bookUrl) {
+		return dao.findByBookLink(bookUrl);
+	}
 	
 }

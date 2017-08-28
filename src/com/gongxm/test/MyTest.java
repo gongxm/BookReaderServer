@@ -12,6 +12,7 @@ import com.gongxm.bean.BookList;
 import com.gongxm.bean.Rules;
 import com.gongxm.bean.User;
 import com.gongxm.runnable.BookInfoRunnable;
+import com.gongxm.services.BookChapterService;
 import com.gongxm.services.BookListService;
 import com.gongxm.services.BookService;
 import com.gongxm.services.UserService;
@@ -95,23 +96,40 @@ public class MyTest {
 	}
 	
 	public static void main(String[] args) throws IOException {
-		String url="http://www.88dushu.com/xiaoshuo/85/85614/";
+//		demo1();
+		demo2();
+//		demo3();
+	}
+
+	private static void demo3() {
+		String startStr = "<div class=\"yd_text2\">";
+		String endStr = "<div class=\"yd_ad1\">";
+		CollectUtils.collectBookChapter(4660,startStr,endStr);
+	}
+
+	private static void demo2() {
 		String[] regexs={"<meta property=\"og:novel:book_name\" content=\".{1,20}\">",
 				"<meta property=\"og:novel:author\" content=\".{1,10}\">",
 				"<meta property=\"og:novel:category\" content=\".{2,8}\">",
 				"<meta property=\"og:novel:status\" content=\".{2,5}\">",
 				"<meta property=\"og:image\" content=\".{5,100}\">",
-				"og:description\" content=\".{10,500}",
+				"og:description\" content=\".{10,1500}",
 				"<li><a href=\"\\d+\\.(html){1}\">",
-				">.{1,20}</a></li>"
+				"html\">.{1,50}</a></li>"
 				};
 		String startStr="<div class=\"mulu\">";
 		String endStr="<div id=\"footer\">";
 		String charset="gbk";
-		String concatUrl=url;
-		BookInfoRunnable task = new BookInfoRunnable(url,regexs,startStr,endStr,concatUrl,charset);
-		new Thread(task).start();
-		
+		try {
+			CollectUtils.collectBookInfo(null, regexs, startStr, endStr, charset);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		/*BookListService service = ServiceUtils.getBookListService();
+		BookList bookList = service.findOne(2);
+		String concatUrl=bookList.getBook_link();
+		BookInfoRunnable task = new BookInfoRunnable(bookList,regexs,startStr,endStr,concatUrl,charset);
+		new Thread(task).start();*/
 	}
 
 	private static void demo1() {
@@ -122,7 +140,7 @@ public class MyTest {
 		int endIndex=53;
 		String startStr="<div class=\"booklist\">";
 		String endStr="<div class=\"pagelink\" id=\"pagelink\">";
-		String regex="/xiaoshuo/[0-9/]*/";
+		String regex="<span class=\"sm\"><a href=\"(/xiaoshuo/)[0-9/]*\">";
 		boolean repeat = true;
 		String charset = "gbk";
 		String concatUrl = "http://www.88dushu.com";
@@ -130,6 +148,7 @@ public class MyTest {
 		CollectUtils.collectBookList(book_source,baseUrl, flag, startIndex, endIndex, startStr, endStr, regex, repeat,charset,concatUrl);
 	}
 	
-	
+	//查询重复记录
+	//select book_link ,count(*) as count  from book_list group by book_link having count>1; 
 
 }

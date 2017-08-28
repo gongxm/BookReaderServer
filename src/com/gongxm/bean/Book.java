@@ -1,11 +1,18 @@
 package com.gongxm.bean;
 
+import java.util.HashSet;
+import java.util.Set;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import org.hibernate.annotations.Type;
 
 @Entity
 @Table(name = "books")
@@ -18,13 +25,33 @@ public class Book {
 	@Column
 	private String author;
 	@Column
+	private String category;
+	@Column
 	private String cover;
+	@Column
+	private String status;
 	@Column
 	private String book_link;
 	@Column
+	@Type(type="text")
 	private String shortIntroduce;
 
+	@OneToMany(targetEntity = BookChapter.class, mappedBy = "book", cascade = CascadeType.ALL)
+	private Set<BookChapter> chapters = new HashSet<BookChapter>();
+
 	public Book() {
+	}
+
+	public Book(String book_name, String author, String category, String status, String cover, String shortIntroduce,
+			String book_link) {
+		super();
+		this.book_name = book_name;
+		this.category = category;
+		this.author = author;
+		this.cover = cover;
+		this.status = status;
+		this.shortIntroduce = shortIntroduce;
+		this.book_link = book_link;
 	}
 
 	public int getId() {
@@ -75,10 +102,34 @@ public class Book {
 		this.shortIntroduce = shortIntroduce;
 	}
 
+	public String getCategory() {
+		return category;
+	}
+
+	public void setCategory(String category) {
+		this.category = category;
+	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
+	public Set<BookChapter> getChapters() {
+		return chapters;
+	}
+
+	public void setChapters(Set<BookChapter> chapters) {
+		this.chapters = chapters;
+	}
+
 	@Override
 	public String toString() {
-		return "Book [id=" + id + ", book_name=" + book_name + ", author=" + author + ", cover=" + cover
-				+ ", book_link=" + book_link + ", shortIntroduce=" + shortIntroduce + "]";
+		return "Book [book_name=" + book_name + ", author=" + author + ", category=" + category + ", cover=" + cover
+				+ ", status=" + status + ", book_link=" + book_link + ", shortIntroduce=" + shortIntroduce + "]";
 	}
 
 }

@@ -3,11 +3,16 @@ package com.gongxm.utils;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
+import com.gongxm.bean.Book;
+import com.gongxm.bean.BookChapter;
 import com.gongxm.bean.BookList;
+import com.gongxm.runnable.BookChapterContentRunnable;
 import com.gongxm.runnable.BookInfoRunnable;
 import com.gongxm.runnable.BookListRunnable;
 import com.gongxm.services.BookListService;
+import com.gongxm.services.BookService;
 
 //数据采集工具
 public class CollectUtils {
@@ -32,9 +37,9 @@ public class CollectUtils {
 
 	}
 
-	// 书籍信息
+	// 书籍信息和章节列表
 	public static void collectBookInfo(String book_source, String[] regexs, String startStr, String endStr,
-			String concatUrl, String charset) throws IOException {
+		String charset) throws IOException {
 		BookListService service = ServiceUtils.getBookListService();
 		int currentPage = 1;
 		int pageSize = 20;
@@ -48,11 +53,11 @@ public class CollectUtils {
 				page = total / pageSize + 1;
 			}
 
-			while (currentPage < page) {
+			while (currentPage <= page) {
 				List<BookList> list = service.findUnCollectBookListBySource(book_source, currentPage, pageSize);
 				for (BookList bookList : list) {
-					BookInfoRunnable task = new BookInfoRunnable(bookList.getBook_link(), regexs, startStr, endStr,
-							concatUrl, charset);
+					BookInfoRunnable task = new BookInfoRunnable(bookList, regexs, startStr, endStr,
+							bookList.getBook_link(), charset);
 					ThreadPoolUtil.executeOnNewThread(task);
 				}
 				currentPage++;
@@ -66,21 +71,32 @@ public class CollectUtils {
 			} else {
 				page = total / pageSize + 1;
 			}
-			while (currentPage < page) {
+			while (currentPage <= page) {
 				List<BookList> list = service.findAllUnCollectBookList(currentPage, pageSize);
+				for (BookList bookList : list) {
+					BookInfoRunnable task = new BookInfoRunnable(bookList, regexs, startStr, endStr,
+							bookList.getBook_link(), charset);
+					ThreadPoolUtil.executeOnNewThread(task);
+				}
 				currentPage++;
 			}
 		}
 	}
 
-	// 书籍章节列表
-	public static void collectBookChapterList() {
-
-	}
 
 	// 书籍章节内容
-	public static void collectBookChapter() {
-
+	public static void collectBookChapter(int bookid,String startStr, String endStr) {
+		BookService bookService = ServiceUtils.getBookService();
+		Book book = bookService.findOne(bookid);
+		
+		Set<BookChapter> chapters = book.getChapters();
+		for (BookChapter chapter : chapters) {
+			System.out.println(chapter);
+			BookChapterContentRunnable task = new BookChapterContentRunnable(chapter,startStr,endStr);
+			ThreadPoolUtil.executeOnNewThread(task);
+			break;
+		}
+		
 	}
 
 }

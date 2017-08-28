@@ -96,4 +96,22 @@ public class BookListDaoImpl extends BaseDao<BookList> implements BookListDao {
 		}
 		return 0;
 	}
+
+	@Override
+	public BookList findByBookLink(String bookUrl) {
+		Session session = null;
+		try {
+			session = HibernateUtil.getSession();
+			String sql = "from BookList where book_link=?";
+			BookList list = (BookList) session.createQuery(sql).setParameter(0, bookUrl).uniqueResult();
+			return list;
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if (session != null) {
+				session.close();
+			}
+		}
+		return null;
+	}
 }

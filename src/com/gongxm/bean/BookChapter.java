@@ -1,32 +1,45 @@
 package com.gongxm.bean;
 
-import java.util.Date;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
+
 @Entity
-@Table(name = "book_chapters_list")
+@Table(name = "book_chapters")
 public class BookChapter {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	@Column
-	private String book_name;
-	@Column
-	private String book_link;
+	private int position;
 	@Column
 	private String chapter_name;
 	@Column
 	private String chapter_link;
+	@ManyToOne(targetEntity = Book.class)
+	@Cascade(value=CascadeType.SAVE_UPDATE)
+	@JoinColumn(name = "book_id")
+	private Book book;
 	@Column
-	private Date update_time;
+	private int status;// 采集状态
 
 	public BookChapter() {
+	}
+
+	public BookChapter(String chapter_name, String chapter_link, Book book, int position) {
+		super();
+		this.chapter_name = chapter_name;
+		this.chapter_link = chapter_link;
+		this.book = book;
+		this.position = position;
 	}
 
 	public BookChapter(int id, String chapter_name, String chapter_link) {
@@ -42,22 +55,6 @@ public class BookChapter {
 
 	public void setId(int id) {
 		this.id = id;
-	}
-
-	public String getBook_name() {
-		return book_name;
-	}
-
-	public void setBook_name(String book_name) {
-		this.book_name = book_name;
-	}
-
-	public String getBook_link() {
-		return book_link;
-	}
-
-	public void setBook_link(String book_link) {
-		this.book_link = book_link;
 	}
 
 	public String getChapter_name() {
@@ -76,12 +73,33 @@ public class BookChapter {
 		this.chapter_link = chapter_link;
 	}
 
-	public Date getUpdate_time() {
-		return update_time;
+	public Book getBook() {
+		return book;
 	}
 
-	public void setUpdate_time(Date update_time) {
-		this.update_time = update_time;
+	public void setBook(Book book) {
+		this.book = book;
+	}
+
+	public int getPosition() {
+		return position;
+	}
+
+	public void setPosition(int position) {
+		this.position = position;
+	}
+
+	public int getStatus() {
+		return status;
+	}
+
+	public void setStatus(int status) {
+		this.status = status;
+	}
+
+	@Override
+	public String toString() {
+		return "BookChapter [id=" + id + ", position=" + position + ", chapter_name=" + chapter_name + "]";
 	}
 
 }

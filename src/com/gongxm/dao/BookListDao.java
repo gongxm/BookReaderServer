@@ -14,5 +14,7 @@ public interface BookListDao extends Dao<BookList> {
 
 	long getAllUnCollectBookListCount();
 
+	BookList findByBookLink(String bookUrl);
+
 
 }

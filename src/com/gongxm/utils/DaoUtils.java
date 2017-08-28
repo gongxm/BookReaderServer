@@ -1,9 +1,11 @@
 package com.gongxm.utils;
 
+import com.gongxm.dao.BookChapterDao;
 import com.gongxm.dao.BookDao;
 import com.gongxm.dao.BookListDao;
 import com.gongxm.dao.RulesDao;
 import com.gongxm.dao.UserDao;
+import com.gongxm.dao.impl.BookChapterDaoImpl;
 import com.gongxm.dao.impl.BookDaoImpl;
 import com.gongxm.dao.impl.BookListDaoImpl;
 import com.gongxm.dao.impl.RulesDaoImpl;
@@ -28,5 +30,9 @@ public class DaoUtils {
 	//书籍Dao
 	public static BookListDao getBookListDao(){
 		return BookListDaoImpl.getInstance();
+	}
+	//书籍章节Dao
+	public static BookChapterDao getBookChapterDao(){
+		return BookChapterDaoImpl.getInstance();
 	}
 }

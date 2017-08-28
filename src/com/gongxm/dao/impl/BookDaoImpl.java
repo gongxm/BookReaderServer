@@ -62,7 +62,8 @@ public class BookDaoImpl extends BaseDao<Book> implements BookDao {
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Override
 	public List<BookChapter> findBookChapterList(String book_link) {
-		Session session = null;
+		//TODO BookChapter=========
+		/*Session session = null;
 		try {
 			session = HibernateUtil.getSession();
 			String sql = "select new BookChapter(id,chapter_name,chapter_link) from BookChapter where book_link=?";
@@ -75,7 +76,7 @@ public class BookDaoImpl extends BaseDao<Book> implements BookDao {
 			if (session != null) {
 				session.close();
 			}
-		}
+		}*/
 		return null;
 	}
 	

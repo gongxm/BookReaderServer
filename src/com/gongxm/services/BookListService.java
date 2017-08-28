@@ -14,4 +14,6 @@ public interface BookListService extends Service<BookList>{
 
 	long getAllUnCollectBookListCount();
 
+	BookList findByBookLink(String bookUrl);
+
 }

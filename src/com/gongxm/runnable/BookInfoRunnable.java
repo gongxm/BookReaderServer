@@ -6,19 +6,28 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import com.gongxm.bean.Book;
+import com.gongxm.bean.BookChapter;
+import com.gongxm.bean.BookList;
+import com.gongxm.services.BookChapterService;
+import com.gongxm.services.BookListService;
+import com.gongxm.services.BookService;
 import com.gongxm.utils.HttpUtils;
+import com.gongxm.utils.MyConstants;
+import com.gongxm.utils.ServiceUtils;
+import com.gongxm.utils.TextUtils;
 
 public class BookInfoRunnable implements Runnable {
 
 	private String charset;
 	private String endStr;
 	private String startStr;
-	private String url;
 	private String[] regexs;
 	private String concatUrl;
+	private BookList bookList;
 
-	public BookInfoRunnable(String url, String[] regexs, String startStr, String endStr, String concatUrl, String charset) {
-		this.url = url;
+	public BookInfoRunnable(BookList bookList, String[] regexs, String startStr, String endStr, String concatUrl, String charset) {
+		this.bookList = bookList;
 		this.regexs = regexs;
 		this.startStr = startStr;
 		this.endStr = endStr;
@@ -32,6 +41,7 @@ public class BookInfoRunnable implements Runnable {
 			return;
 		}
 		try {
+			String url = bookList.getBook_link();
 			String html = HttpUtils.executGet(url, charset);
 
 			// 标题
@@ -55,32 +65,52 @@ public class BookInfoRunnable implements Runnable {
 				Matcher m = p.matcher(html);
 				if(m.find()){
 					String text = m.group();
-					text = dealWithText(text, regex);
+					text = TextUtils.dealWithText(text, regex);
 					list.add(text);
 				}
 			}
 			
-			//列表正则
+			BookService bookService = ServiceUtils.getBookService();
+			
+			BookChapterService chapterService = ServiceUtils.getBookChapterService();
+			
+			Book book = new Book(list.get(0), list.get(1), list.get(2), list.get(3), list.get(4),list.get(5),url);
+			bookService.add(book);
+			//目录链接正则
 			String chapterLinkRegex = regexs[6];
-			//标题正则
+			//目录标题正则
 			String chapterTitleRegex = regexs[7];
 			String[] sArr = html.split(startStr);
 			if (sArr != null && sArr.length > 1) {
 				String[] sArr2 = sArr[1].split(endStr);
 				if (sArr2 != null && sArr2.length > 1) {
+					List<String> chapterLinkList = new ArrayList<>();
+					List<String> chapterTitleList = new ArrayList<>();
 					html = sArr2[0];
 					Pattern p = Pattern.compile(chapterLinkRegex);
 					Matcher m = p.matcher(html);
 					while(m.find()){
 						String chapterLink = m.group();
-						System.out.println(concatUrl+dealWithText(chapterLink, chapterLinkRegex));
+						chapterLinkList.add(concatUrl+TextUtils.dealWithText(chapterLink, chapterLinkRegex));
+//						System.out.println(concatUrl+TextUtils.dealWithText(chapterLink, chapterLinkRegex));
 					}
 					
 					Pattern p2 = Pattern.compile(chapterTitleRegex);
 					Matcher m2 = p2.matcher(html);
 					while(m2.find()){
 						String chapterTitle = m2.group();
-						System.out.println(dealWithText(chapterTitle, chapterTitleRegex));
+						chapterTitleList.add(TextUtils.dealWithText(chapterTitle, chapterTitleRegex));
+//						System.out.println(TextUtils.dealWithText(chapterTitle, chapterTitleRegex));
+					}
+					
+					if(chapterLinkList.size()==chapterTitleList.size()) {
+						for (int i = 0; i < chapterLinkList.size(); i++) {
+							BookChapter bookChapter = new BookChapter(chapterTitleList.get(i), chapterLinkList.get(i), book,i);
+							chapterService.add(bookChapter);
+							BookListService service = ServiceUtils.getBookListService();
+							bookList.setStatus(MyConstants.BOOK_LIST_COLLECTED);
+							service.update(bookList);
+						}
 					}
 				}
 			}
@@ -89,27 +119,6 @@ public class BookInfoRunnable implements Runnable {
 		}
 	}
 	
-	public String dealWithText(String src,String reg){
-		int length =0;
-		for(int i=0;i<reg.length();i++){
-			if(src.charAt(i)!=reg.charAt(i)){
-				length=i;
-				break;
-			}
-		}
-		String str = src.substring(length);
-		length=0;
-		
-		str = new StringBuilder(str).reverse().toString();
-		reg = new StringBuilder(reg).reverse().toString();
-		for(int i=0;i<reg.length();i++){
-			if(str.charAt(i)!=reg.charAt(i)){
-				length=i;
-				break;
-			}
-		}
-		String result = str.substring(length);
-		return new StringBuilder(result).reverse().toString();
-	}
+	
 
 }

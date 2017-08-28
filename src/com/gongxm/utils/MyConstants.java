@@ -19,5 +19,6 @@ public class MyConstants {
 	public static final String GRANT_TYPE = "authorization_code";
 	
 	//书籍列表采集状态
-	public static final int BOOK_LIST_UNCOLLECT = 0;
+	public static final int BOOK_LIST_UNCOLLECT = 0;//未采集
+	public static final int BOOK_LIST_COLLECTED = 1;//已采集
 }
