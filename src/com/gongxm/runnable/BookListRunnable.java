@@ -59,7 +59,7 @@ public class BookListRunnable implements Runnable {
 								String bookUrl = concatUrl + book_link;
 								BookList temp = service.findByBookLink(bookUrl);
 								if (temp == null) {
-									BookList list = new BookList(book_source, bookUrl, MyConstants.BOOK_LIST_UNCOLLECT);
+									BookList list = new BookList(book_source, bookUrl, MyConstants.BOOK_UNCOLLECT);
 									service.add(list);
 								}
 							}
@@ -71,7 +71,7 @@ public class BookListRunnable implements Runnable {
 							String bookUrl = concatUrl + book_link;
 							BookList temp = service.findByBookLink(bookUrl);
 							if (temp == null) {
-								BookList list = new BookList(book_source, bookUrl, MyConstants.BOOK_LIST_UNCOLLECT);
+								BookList list = new BookList(book_source, bookUrl, MyConstants.BOOK_UNCOLLECT);
 								service.add(list);
 							}
 						}

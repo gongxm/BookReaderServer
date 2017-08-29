@@ -2,7 +2,9 @@ package com.gongxm.controller;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Set;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -11,7 +13,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.gongxm.bean.Book;
 import com.gongxm.bean.BookChapter;
-import com.gongxm.domain.CategoryItem;
 import com.gongxm.domain.request.IDParam;
 import com.gongxm.domain.response.ResponseResult;
 import com.gongxm.services.BookService;
@@ -37,8 +38,11 @@ public class GetChapterList extends BaseServlet {
 					BookService bookService = ServiceUtils.getBookService();
 					Book book = bookService.findOne(id);
 					if(book!=null) {
-						List<BookChapter> list = bookService.findBookChapterList(book.getBook_link());
-						if (list != null) {
+						Set<BookChapter> set =book.getChapters();
+						if (set != null) {
+							List<BookChapter> list = new ArrayList<BookChapter>();
+							list.addAll(set);
+							Collections.sort(list);
 							result.setErrcode(MyConstants.SUCCESS);
 							result.setErrmsg(StringConstants.HTTP_REQUEST_SUCCESS);
 							result.setResult(list);

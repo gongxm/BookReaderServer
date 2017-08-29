@@ -8,4 +8,8 @@ public interface BookChapterService extends Service<BookChapter> {
 
 	List<BookChapter> findByBookId(int bookid);
 
+	long getUnCollectChapterCount();
+
+	List<BookChapter> findUnCollectChapter(int currentPage, int pageSize);
+
 }

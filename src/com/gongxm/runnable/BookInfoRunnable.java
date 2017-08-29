@@ -42,6 +42,7 @@ public class BookInfoRunnable implements Runnable {
 		}
 		try {
 			String url = bookList.getBook_link();
+			System.out.println("正在采集:"+url);
 			String html = HttpUtils.executGet(url, charset);
 
 			// 标题
@@ -67,6 +68,9 @@ public class BookInfoRunnable implements Runnable {
 					String text = m.group();
 					text = TextUtils.dealWithText(text, regex);
 					list.add(text);
+					System.out.println(text);
+				}else {
+					list.add("暂无");
 				}
 			}
 			
@@ -76,6 +80,7 @@ public class BookInfoRunnable implements Runnable {
 			
 			Book book = new Book(list.get(0), list.get(1), list.get(2), list.get(3), list.get(4),list.get(5),url);
 			bookService.add(book);
+			System.out.println("采集中.."+book);
 			//目录链接正则
 			String chapterLinkRegex = regexs[6];
 			//目录标题正则
@@ -104,19 +109,25 @@ public class BookInfoRunnable implements Runnable {
 					}
 					
 					if(chapterLinkList.size()==chapterTitleList.size()) {
+						System.out.println("采集中.....");
 						for (int i = 0; i < chapterLinkList.size(); i++) {
+							System.out.println("正在采集:"+chapterTitleList.get(i));
 							BookChapter bookChapter = new BookChapter(chapterTitleList.get(i), chapterLinkList.get(i), book,i);
 							chapterService.add(bookChapter);
-							BookListService service = ServiceUtils.getBookListService();
-							bookList.setStatus(MyConstants.BOOK_LIST_COLLECTED);
-							service.update(bookList);
 						}
+						BookListService service = ServiceUtils.getBookListService();
+						bookList.setStatus(MyConstants.BOOK_COLLECTED);
+						service.update(bookList);
+						System.out.println("采集成功.....");
+					}else {
+						System.out.println("....目录数据不匹配..."+chapterLinkList.size()+"=="+chapterTitleList.size());
 					}
 				}
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		System.out.println("======采集完成=====");
 	}
 	
 	

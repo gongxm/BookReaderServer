@@ -8,4 +8,8 @@ public interface BookChapterDao extends Dao<BookChapter> {
 
 	List<BookChapter> findByBookId(int bookid);
 
+	long getUnCollectChapterCount();
+
+	List<BookChapter> findUnCollectChapter(int currentPage, int pageSize);
+
 }

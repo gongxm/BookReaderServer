@@ -7,6 +7,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.Cascade;
@@ -14,7 +15,7 @@ import org.hibernate.annotations.CascadeType;
 
 @Entity
 @Table(name = "book_chapters")
-public class BookChapter {
+public class BookChapter implements Comparable<BookChapter>{
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
@@ -25,11 +26,17 @@ public class BookChapter {
 	@Column
 	private String chapter_link;
 	@ManyToOne(targetEntity = Book.class)
-	@Cascade(value=CascadeType.SAVE_UPDATE)
+	@Cascade(value = CascadeType.SAVE_UPDATE)
 	@JoinColumn(name = "book_id")
 	private Book book;
 	@Column
 	private int status;// 采集状态
+
+	// 关联内容
+	@OneToOne(targetEntity = BookChapterContent.class)
+	@JoinColumn(name = "content_id")
+	@Cascade(CascadeType.SAVE_UPDATE)
+	private BookChapterContent chapterContent;
 
 	public BookChapter() {
 	}
@@ -97,9 +104,22 @@ public class BookChapter {
 		this.status = status;
 	}
 
+	public BookChapterContent getChapterContent() {
+		return chapterContent;
+	}
+
+	public void setChapterContent(BookChapterContent chapterContent) {
+		this.chapterContent = chapterContent;
+	}
+
 	@Override
 	public String toString() {
 		return "BookChapter [id=" + id + ", position=" + position + ", chapter_name=" + chapter_name + "]";
+	}
+
+	@Override
+	public int compareTo(BookChapter chapter) {
+		return this.position-chapter.position;
 	}
 
 }

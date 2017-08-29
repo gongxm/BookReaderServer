@@ -30,4 +30,14 @@ public class BookChapterServiceImpl extends BaseService<BookChapter> implements 
 		return dao.findByBookId(bookid);
 	}
 
+	@Override
+	public long getUnCollectChapterCount() {
+		return dao.getUnCollectChapterCount();
+	}
+
+	@Override
+	public List<BookChapter> findUnCollectChapter(int currentPage, int pageSize) {
+		return dao.findUnCollectChapter(currentPage,pageSize);
+	}
+
 }

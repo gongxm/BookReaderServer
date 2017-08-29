@@ -9,7 +9,7 @@ import java.util.concurrent.Executors;
  */
 public class ThreadPoolUtil {
 	
-	private static ExecutorService threadPool = Executors.newFixedThreadPool(20);
+	private static ExecutorService threadPool = Executors.newFixedThreadPool(5);
 	
 	/**
 	 * 从线程池中取一个线程执行这个任务

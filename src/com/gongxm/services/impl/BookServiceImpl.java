@@ -3,7 +3,6 @@ package com.gongxm.services.impl;
 import java.util.List;
 
 import com.gongxm.bean.Book;
-import com.gongxm.bean.BookChapter;
 import com.gongxm.dao.BookDao;
 import com.gongxm.dao.Dao;
 import com.gongxm.services.BookService;
@@ -34,11 +33,6 @@ public class BookServiceImpl extends BaseService<Book> implements BookService {
 	@Override
 	public List<Book> getCategoryList(String category, int currentPage, int pageSize) {
 		return bdao.getCategoryList(category,currentPage,pageSize);
-	}
-
-	@Override
-	public List<BookChapter> findBookChapterList(String book_link) {
-		return bdao.findBookChapterList(book_link);
 	}
 
 }

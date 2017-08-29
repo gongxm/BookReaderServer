@@ -27,7 +27,7 @@ public class BookListDaoImpl extends BaseDao<BookList> implements BookListDao {
 			session = HibernateUtil.getSession();
 			String sql = "from BookList where book_source=? and status=?";
 			List<BookList> list = session.createQuery(sql).setParameter(0, book_source)
-					.setParameter(1, MyConstants.BOOK_LIST_UNCOLLECT).setFirstResult((currentPage - 1) * pageSize)
+					.setParameter(1, MyConstants.BOOK_UNCOLLECT).setFirstResult((currentPage - 1) * pageSize)
 					.setMaxResults(pageSize).list();
 			return list;
 		} catch (Exception e) {
@@ -47,7 +47,7 @@ public class BookListDaoImpl extends BaseDao<BookList> implements BookListDao {
 		try {
 			session = HibernateUtil.getSession();
 			String sql = "from BookList where status=?";
-			List<BookList> list = session.createQuery(sql).setParameter(0, MyConstants.BOOK_LIST_UNCOLLECT).setFirstResult((currentPage - 1) * pageSize).setMaxResults(pageSize).list();
+			List<BookList> list = session.createQuery(sql).setParameter(0, MyConstants.BOOK_UNCOLLECT).setFirstResult((currentPage - 1) * pageSize).setMaxResults(pageSize).list();
 			return list;
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -66,7 +66,7 @@ public class BookListDaoImpl extends BaseDao<BookList> implements BookListDao {
 			session = HibernateUtil.getSession();
 			String sql = "select count(*) from BookList where book_source=? and status=?";
 			long count = (long) session.createQuery(sql).setParameter(0, book_source)
-					.setParameter(1, MyConstants.BOOK_LIST_UNCOLLECT).uniqueResult();
+					.setParameter(1, MyConstants.BOOK_UNCOLLECT).uniqueResult();
 			return count;
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -84,7 +84,7 @@ public class BookListDaoImpl extends BaseDao<BookList> implements BookListDao {
 		try {
 			session = HibernateUtil.getSession();
 			String sql = "select count(*) from BookList where status=?";
-			long count = (long) session.createQuery(sql).setParameter(0, MyConstants.BOOK_LIST_UNCOLLECT)
+			long count = (long) session.createQuery(sql).setParameter(0, MyConstants.BOOK_UNCOLLECT)
 					.uniqueResult();
 			return count;
 		} catch (Exception e) {
