@@ -12,27 +12,44 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+import org.hibernate.annotations.LazyToOne;
+import org.hibernate.annotations.LazyToOneOption;
+
+import com.google.gson.annotations.Expose;
 
 @Entity
 @Table(name = "book_chapters")
 public class BookChapter implements Comparable<BookChapter>{
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Expose
 	private int id;
 	@Column
+	@Expose
 	private int position;
 	@Column
+	@Expose
 	private String chapter_name;
 	@Column
+	@Expose
 	private String chapter_link;
+	
+	@Fetch(FetchMode.SELECT)
+	@LazyToOne(LazyToOneOption.PROXY)
 	@ManyToOne(targetEntity = Book.class)
 	@Cascade(value = CascadeType.SAVE_UPDATE)
 	@JoinColumn(name = "book_id")
 	private Book book;
+	
 	@Column
+	@Expose
 	private int status;// 采集状态
 
 	// 关联内容
+	@Fetch(FetchMode.SELECT)
+	@LazyToOne(LazyToOneOption.PROXY)
 	@OneToOne(targetEntity = BookChapterContent.class)
 	@JoinColumn(name = "content_id")
 	@Cascade(CascadeType.SAVE_UPDATE)

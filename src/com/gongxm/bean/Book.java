@@ -12,30 +12,47 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 import org.hibernate.annotations.Type;
+
+import com.google.gson.annotations.Expose;
 
 @Entity
 @Table(name = "books")
 public class Book {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	//@Expose(serialize = true, deserialize = false)  	// serialize: 可以被序列化,deserialize:可以被反序列化
+	@Expose												//@Expose:默认为同时可以序列化和反序列化
 	private int id;
 	@Column
+	@Expose
 	private String book_name;
 	@Column
+	@Expose
 	private String author;
 	@Column
+	@Expose
 	private String category;
 	@Column
+	@Expose
 	private String cover;
 	@Column
+	@Expose
 	private String status;
 	@Column
+	@Expose
 	private String book_link;
 	@Column
 	@Type(type="text")
+	@Expose
 	private String shortIntroduce;
 
+	@Fetch(FetchMode.SELECT)
+	@LazyCollection(LazyCollectionOption.EXTRA)
 	@OneToMany(targetEntity = BookChapter.class, mappedBy = "book", cascade = CascadeType.ALL)
 	private Set<BookChapter> chapters = new HashSet<BookChapter>();
 

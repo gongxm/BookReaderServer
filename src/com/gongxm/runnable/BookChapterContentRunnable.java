@@ -27,15 +27,17 @@ public class BookChapterContentRunnable implements Runnable {
 	public void run() {
 		String url = chapter.getChapter_link();
 		try {
+			System.out.println("colleting:"+chapter.getId());
 			String text = HtmlParser.parseToText(url, startStr, endStr);
 			BookChapterContent content = new BookChapterContent(text);
 			chapter.setChapterContent(content);
 			chapter.setStatus(MyConstants.BOOK_COLLECTED);
 			synchronized (Book.class) {
 				service.update(chapter);
-//				System.out.println(chapter.getChapterContent().getContent());
+				System.out.println("collect success...");
 			}
 		} catch (IOException e) {
+			System.out.println("collect error....");
 			e.printStackTrace();
 			chapter.setStatus(MyConstants.BOOK_COLLECT_FAILURE);
 			synchronized (Book.class) {

@@ -50,7 +50,7 @@ public class GetBookDetail extends BaseServlet {
 			result.setErrmsg(StringConstants.JSON_PARSE_ERROR);
 		}
 
-		String json = GsonUtils.toJson(result);
+		String json = GsonUtils.parseToJson(result);
 		writeResult(response, json);
 	}
 

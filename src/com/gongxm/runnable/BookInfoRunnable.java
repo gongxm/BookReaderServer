@@ -68,7 +68,6 @@ public class BookInfoRunnable implements Runnable {
 					String text = m.group();
 					text = TextUtils.dealWithText(text, regex);
 					list.add(text);
-					System.out.println(text);
 				}else {
 					list.add("暂无");
 				}
@@ -80,7 +79,7 @@ public class BookInfoRunnable implements Runnable {
 			
 			Book book = new Book(list.get(0), list.get(1), list.get(2), list.get(3), list.get(4),list.get(5),url);
 			bookService.add(book);
-			System.out.println("采集中.."+book);
+			System.out.println("采集中.."+book.getBook_name());
 			//目录链接正则
 			String chapterLinkRegex = regexs[6];
 			//目录标题正则
@@ -97,7 +96,6 @@ public class BookInfoRunnable implements Runnable {
 					while(m.find()){
 						String chapterLink = m.group();
 						chapterLinkList.add(concatUrl+TextUtils.dealWithText(chapterLink, chapterLinkRegex));
-//						System.out.println(concatUrl+TextUtils.dealWithText(chapterLink, chapterLinkRegex));
 					}
 					
 					Pattern p2 = Pattern.compile(chapterTitleRegex);
@@ -105,21 +103,22 @@ public class BookInfoRunnable implements Runnable {
 					while(m2.find()){
 						String chapterTitle = m2.group();
 						chapterTitleList.add(TextUtils.dealWithText(chapterTitle, chapterTitleRegex));
-//						System.out.println(TextUtils.dealWithText(chapterTitle, chapterTitleRegex));
 					}
 					
+					BookListService service = ServiceUtils.getBookListService();
 					if(chapterLinkList.size()==chapterTitleList.size()) {
-						System.out.println("采集中.....");
+						System.out.println("采集章节目录中.....");
 						for (int i = 0; i < chapterLinkList.size(); i++) {
 							System.out.println("正在采集:"+chapterTitleList.get(i));
 							BookChapter bookChapter = new BookChapter(chapterTitleList.get(i), chapterLinkList.get(i), book,i);
 							chapterService.add(bookChapter);
 						}
-						BookListService service = ServiceUtils.getBookListService();
 						bookList.setStatus(MyConstants.BOOK_COLLECTED);
 						service.update(bookList);
 						System.out.println("采集成功.....");
 					}else {
+						bookList.setStatus(MyConstants.BOOK_COLLECT_FAILURE);
+						service.update(bookList);
 						System.out.println("....目录数据不匹配..."+chapterLinkList.size()+"=="+chapterTitleList.size());
 					}
 				}

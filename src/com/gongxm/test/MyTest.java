@@ -4,10 +4,17 @@ import java.io.IOException;
 
 import org.junit.Test;
 
+import com.gongxm.bean.Book;
 import com.gongxm.bean.BookChapter;
+import com.gongxm.bean.BookChapterContent;
+import com.gongxm.domain.response.ResponseResult;
 import com.gongxm.services.BookChapterService;
+import com.gongxm.services.BookService;
 import com.gongxm.utils.CollectUtils;
+import com.gongxm.utils.GsonUtils;
+import com.gongxm.utils.MyConstants;
 import com.gongxm.utils.ServiceUtils;
+import com.gongxm.utils.StringConstants;
 
 public class MyTest {
 
@@ -22,7 +29,16 @@ public class MyTest {
 //		demo2();
 //		demo3();
 //		demo4();
-		
+		//id: 237, position: 0,
+		ResponseResult result = new ResponseResult(MyConstants.SUCCESS, StringConstants.HTTP_REQUEST_SUCCESS);
+		BookChapterService service = ServiceUtils.getBookChapterService();
+		BookChapter chapter = service.findOne(1);
+		if (chapter != null) {
+			BookChapterContent content = chapter.getChapterContent();
+			result.setResult(content);
+			String json = GsonUtils.toJson(result);
+			System.out.println(json);
+		}
 	}
 
 	private static void demo4() {

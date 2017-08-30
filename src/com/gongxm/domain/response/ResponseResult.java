@@ -1,8 +1,13 @@
 package com.gongxm.domain.response;
 
+import com.google.gson.annotations.Expose;
+
 public class ResponseResult {
+	@Expose
 	private int errcode;
+	@Expose
 	private String errmsg;
+	@Expose
 	private Object result;
 
 	public ResponseResult() {
@@ -36,6 +41,11 @@ public class ResponseResult {
 
 	public void setResult(Object result) {
 		this.result = result;
+	}
+
+	@Override
+	public String toString() {
+		return "ResponseResult [errcode=" + errcode + ", errmsg=" + errmsg + ", result=" + result + "]";
 	}
 
 }
