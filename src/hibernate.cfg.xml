@@ -22,6 +22,8 @@
 		<property name="hibernate.c3p0.idle_test_period">3000</property>
 		<property name="hibernate.c3p0.acquire_increment">2</property>
 		<property name="hibernate.c3p0.validate">false</property>
+		 <!-- 检测数据库是否正常连接 -->  
+    	<property name="hibernate.c3p0.testConnectionOnCheckout">true</property>  
 
 		<!-- Enable Hibernate's automatic session context management -->
 		<property name="current_session_context_class">thread</property>
