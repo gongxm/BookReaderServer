@@ -16,6 +16,8 @@ import com.gongxm.utils.GsonUtils;
 import com.gongxm.utils.MyConstants;
 import com.gongxm.utils.ServiceUtils;
 import com.gongxm.utils.StringConstants;
+import com.gongxm.utils.TextUtils;
+
 //获取章节内容
 @WebServlet("/getBookChapter")
 public class GetBookChapter extends BaseServlet {
@@ -37,10 +39,18 @@ public class GetBookChapter extends BaseServlet {
 					BookChapterService service = ServiceUtils.getBookChapterService();
 					BookChapter chapter = service.findOne(id);
 					if (chapter != null) {
-						result.setErrcode(MyConstants.SUCCESS);
-						result.setErrmsg(StringConstants.HTTP_REQUEST_SUCCESS);
-						BookChapterContent content = chapter.getChapterContent();
-						result.setResult(content.getContent());
+						if (chapter.getStatus()==MyConstants.BOOK_COLLECTED) {
+							BookChapterContent content = chapter.getChapterContent();
+							String text = content.getContent();
+							if(TextUtils.isEmpty(text)) {
+								text = "";
+							}
+							result.setResult(text);
+							result.setErrcode(MyConstants.SUCCESS);
+							result.setErrmsg(StringConstants.HTTP_REQUEST_SUCCESS);
+						} else {
+							result.setErrmsg(StringConstants.BOOK_CHAPTER_UNCOLLECT);
+						}
 					} else {
 						result.setErrmsg(StringConstants.BOOK_CHAPTER_NOT_FOUND);
 					}

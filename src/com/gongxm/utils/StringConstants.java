@@ -12,4 +12,6 @@ public interface StringConstants {
 	String BOOK_NOT_FOUND = "找不到该书籍!";
 	String BOOK_CHAPTER_NOT_FOUND = "找不到该书籍对应的章节!";
 
+	String BOOK_CHAPTER_UNCOLLECT = "内容未采集!";
+
 }
