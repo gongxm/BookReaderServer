@@ -2,27 +2,17 @@ package com.gongxm.dao.impl;
 
 import java.util.List;
 
-import org.hibernate.Session;
+import org.springframework.stereotype.Repository;
 
 import com.gongxm.bean.Rules;
 import com.gongxm.dao.RulesDao;
-import com.gongxm.utils.HibernateUtil;
-
+@Repository("rulesDao")
 public class RulesDaoImpl extends BaseDao<Rules> implements RulesDao {
-
-	private static final RulesDaoImpl instance = new RulesDaoImpl();
-
-	private RulesDaoImpl() {
-	}
-
-	public static RulesDao getInstance() {
-		return instance;
-	}
 
 	@Override
 	@SuppressWarnings("unchecked")
 	public List<Rules> findAll() {
-		Session session = null;
+		/*Session session = null;
 		try {
 			session = HibernateUtil.getSession();
 			String sql = "from Rules";
@@ -34,7 +24,7 @@ public class RulesDaoImpl extends BaseDao<Rules> implements RulesDao {
 			if (session != null) {
 				session.close();
 			}
-		}
+		}*/
 		return null;
 	}
 

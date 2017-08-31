@@ -2,14 +2,19 @@ package com.gongxm.services.impl;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Service;
+
 import com.gongxm.bean.BookChapter;
 import com.gongxm.dao.BookChapterDao;
 import com.gongxm.dao.Dao;
 import com.gongxm.services.BookChapterService;
-import com.gongxm.utils.DaoUtils;
-
+@Service("bookChapterService")
 public class BookChapterServiceImpl extends BaseService<BookChapter> implements BookChapterService {
-	private static final BookChapterDao dao = DaoUtils.getBookChapterDao();
+	@Autowired
+	@Qualifier("bookChapterDao")
+	private BookChapterDao dao;
 
 	@Override
 	public Dao<BookChapter> getDao() {

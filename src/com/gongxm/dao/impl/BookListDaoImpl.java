@@ -2,27 +2,17 @@ package com.gongxm.dao.impl;
 
 import java.util.List;
 
-import org.hibernate.Session;
+import org.springframework.stereotype.Repository;
 
 import com.gongxm.bean.BookList;
 import com.gongxm.dao.BookListDao;
-import com.gongxm.utils.HibernateUtil;
-import com.gongxm.utils.MyConstants;
-
+@Repository("bookListDao")
 public class BookListDaoImpl extends BaseDao<BookList> implements BookListDao {
-	private static final BookListDaoImpl instance = new BookListDaoImpl();
-
-	private BookListDaoImpl() {
-	}
-
-	public static BookListDao getInstance() {
-		return instance;
-	}
 
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<BookList> findUnCollectBookListBySource(String book_source, int currentPage, int pageSize) {
-		Session session = null;
+		/*Session session = null;
 		try {
 			session = HibernateUtil.getSession();
 			String sql = "from BookList where book_source=? and status=?";
@@ -36,14 +26,14 @@ public class BookListDaoImpl extends BaseDao<BookList> implements BookListDao {
 			if (session != null) {
 				session.close();
 			}
-		}
+		}*/
 		return null;
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<BookList> findAllUnCollectBookList(int currentPage, int pageSize) {
-		Session session = null;
+		/*Session session = null;
 		try {
 			session = HibernateUtil.getSession();
 			String sql = "from BookList where status=?";
@@ -55,13 +45,13 @@ public class BookListDaoImpl extends BaseDao<BookList> implements BookListDao {
 			if (session != null) {
 				session.close();
 			}
-		}
+		}*/
 		return null;
 	}
 
 	@Override
 	public long getUnCollectBookListCountBySource(String book_source) {
-		Session session = null;
+		/*Session session = null;
 		try {
 			session = HibernateUtil.getSession();
 			String sql = "select count(*) from BookList where book_source=? and status=?";
@@ -74,13 +64,13 @@ public class BookListDaoImpl extends BaseDao<BookList> implements BookListDao {
 			if (session != null) {
 				session.close();
 			}
-		}
+		}*/
 		return 0;
 	}
 
 	@Override
 	public long getAllUnCollectBookListCount() {
-		Session session = null;
+		/*Session session = null;
 		try {
 			session = HibernateUtil.getSession();
 			String sql = "select count(*) from BookList where status=?";
@@ -93,13 +83,13 @@ public class BookListDaoImpl extends BaseDao<BookList> implements BookListDao {
 			if (session != null) {
 				session.close();
 			}
-		}
+		}*/
 		return 0;
 	}
 
 	@Override
 	public BookList findByBookLink(String bookUrl) {
-		Session session = null;
+		/*Session session = null;
 		try {
 			session = HibernateUtil.getSession();
 			String sql = "from BookList where book_link=?";
@@ -111,7 +101,7 @@ public class BookListDaoImpl extends BaseDao<BookList> implements BookListDao {
 			if (session != null) {
 				session.close();
 			}
-		}
+		}*/
 		return null;
 	}
 }

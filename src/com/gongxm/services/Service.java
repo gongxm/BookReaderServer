@@ -1,7 +1,6 @@
 package com.gongxm.services;
 
 import java.io.Serializable;
-
 public interface Service<T> {
 	public abstract void add(T t);
 	public abstract void update(T t);

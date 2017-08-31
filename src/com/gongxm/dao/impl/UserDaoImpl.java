@@ -1,23 +1,15 @@
 package com.gongxm.dao.impl;
 
-import org.hibernate.Session;
+import org.springframework.stereotype.Repository;
 
 import com.gongxm.bean.User;
 import com.gongxm.dao.UserDao;
-import com.gongxm.utils.HibernateUtil;
-
+@Repository("userDao")
 public class UserDaoImpl extends BaseDao<User> implements UserDao {
-	private static final UserDaoImpl instance = new UserDaoImpl(); 
-	
-	private UserDaoImpl(){}
-
-	public static UserDao getInstance() {
-		return instance;
-	}
 
 	@Override
 	public User findUserByName(String username) {
-		Session session = null;
+		/*Session session = null;
 		try {
 			session = HibernateUtil.getSession();
 			String sql = "from User where username=?";
@@ -29,13 +21,13 @@ public class UserDaoImpl extends BaseDao<User> implements UserDao {
 			if (session != null) {
 				session.close();
 			}
-		}
+		}*/
 		return null;
 	}
 
 	@Override
 	public User findUser(String username, String password) {
-		Session session = null;
+		/*Session session = null;
 		try {
 			session = HibernateUtil.getSession();
 			String sql = "from User where username=? and password=?";
@@ -47,13 +39,13 @@ public class UserDaoImpl extends BaseDao<User> implements UserDao {
 			if (session != null) {
 				session.close();
 			}
-		}
+		}*/
 		return null;
 	}
 
 	@Override
 	public User findUserByThirdSession(String thirdSession) {
-		Session session = null;
+		/*Session session = null;
 		try {
 			session = HibernateUtil.getSession();
 			String sql = "from User where thirdSession=?";
@@ -65,13 +57,13 @@ public class UserDaoImpl extends BaseDao<User> implements UserDao {
 			if (session != null) {
 				session.close();
 			}
-		}
+		}*/
 		return null;
 	}
 
 	@Override
 	public User findUserByOpenId(String openid) {
-		Session session = null;
+		/*Session session = null;
 		try {
 			session = HibernateUtil.getSession();
 			String sql = "from User where openid=?";
@@ -83,7 +75,7 @@ public class UserDaoImpl extends BaseDao<User> implements UserDao {
 			if (session != null) {
 				session.close();
 			}
-		}
+		}*/
 		return null;
 	}
 

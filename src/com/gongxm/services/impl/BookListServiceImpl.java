@@ -2,20 +2,25 @@ package com.gongxm.services.impl;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Service;
+
 import com.gongxm.bean.BookList;
 import com.gongxm.dao.BookListDao;
 import com.gongxm.dao.Dao;
 import com.gongxm.services.BookListService;
-import com.gongxm.utils.DaoUtils;
 /**
  * 用户服务
  * @author gongxm
  *
  */
+@Service("bookListService")
 public class BookListServiceImpl extends BaseService<BookList> implements BookListService {
 	private static final BookListServiceImpl instance = new BookListServiceImpl(); 
-	
-	private static final BookListDao dao = DaoUtils.getBookListDao();
+	@Autowired
+	@Qualifier("bookListDao")
+	private BookListDao dao;
 	private BookListServiceImpl(){}
 
 	public static BookListService getInstance() {

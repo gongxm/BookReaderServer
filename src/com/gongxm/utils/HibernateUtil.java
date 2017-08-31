@@ -6,7 +6,7 @@ import org.hibernate.cfg.Configuration;
 
 public class HibernateUtil {
 	
-	private static Configuration config;
+	/*private static Configuration config;
 	private static SessionFactory sessionFactory;
 	
 	static{
@@ -22,5 +22,5 @@ public class HibernateUtil {
 	public static Session getCurrentSession(){
 		
 		return sessionFactory.getCurrentSession();
-	}
+	}*/
 }

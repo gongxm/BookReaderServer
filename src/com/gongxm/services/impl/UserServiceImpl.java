@@ -1,19 +1,24 @@
 package com.gongxm.services.impl;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Service;
+
 import com.gongxm.bean.User;
 import com.gongxm.dao.Dao;
 import com.gongxm.dao.UserDao;
 import com.gongxm.services.UserService;
-import com.gongxm.utils.DaoUtils;
 /**
  * 用户服务
  * @author gongxm
  *
  */
+@Service("userService")
 public class UserServiceImpl extends BaseService<User> implements UserService {
 	private static final UserServiceImpl instance = new UserServiceImpl(); 
-	
-	private static final UserDao udao = DaoUtils.getUserDao();
+	@Autowired
+	@Qualifier("userDao")
+	private UserDao udao;
 	
 	private UserServiceImpl(){}
 

@@ -3,25 +3,38 @@ package com.gongxm.test;
 import java.io.IOException;
 
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import com.gongxm.bean.Book;
 import com.gongxm.bean.BookChapter;
 import com.gongxm.bean.BookChapterContent;
+import com.gongxm.dao.BookChapterDao;
+import com.gongxm.dao.impl.BookChapterDaoImpl;
 import com.gongxm.domain.response.ResponseResult;
 import com.gongxm.services.BookChapterService;
-import com.gongxm.services.BookService;
 import com.gongxm.utils.CollectUtils;
 import com.gongxm.utils.GsonUtils;
 import com.gongxm.utils.MyConstants;
 import com.gongxm.utils.ServiceUtils;
 import com.gongxm.utils.StringConstants;
-
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(locations = "classpath:applicationContext.xml")
 public class MyTest {
-
+	
+	@Autowired
+	@Qualifier("bookChapterDao")
+	BookChapterDao dao;
+	
 	
 	@Test
 	public void test6(){
 		//https://31412947.qcloud.la/BookReaderServer/collect?id=1
+		
+		long count = dao.getUnCollectChapterCount();
+		System.out.println("count="+count);
 	}
 	
 	public static void main(String[] args) throws IOException {
