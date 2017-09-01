@@ -20,13 +20,12 @@ public class ValidateUserName extends BaseServlet {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-
+	UserService userService= ServiceUtils.getUserService();
 
 	@Override
 	public void postRequest(HttpServletRequest request, HttpServletResponse response, String requestJson)
 			throws IOException {
 		String username = request.getParameter("username");
-		UserService userService = ServiceUtils.getUserService();
 		User user = userService.findUserByName(username);
 		ResponseResult result = new ResponseResult(MyConstants.FAILURE,"请求失败");
 		

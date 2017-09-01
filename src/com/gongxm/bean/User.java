@@ -168,4 +168,10 @@ public class User implements Serializable {
 		this.thirdSession = thirdSession;
 	}
 
+	@Override
+	public String toString() {
+		return "User [username=" + username + ", phone=" + phone + ", city=" + city + "]";
+	}
+
+	
 }

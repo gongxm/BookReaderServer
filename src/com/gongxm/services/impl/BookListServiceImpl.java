@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.gongxm.bean.BookList;
 import com.gongxm.dao.BookListDao;
@@ -16,6 +17,7 @@ import com.gongxm.services.BookListService;
  *
  */
 @Service("bookListService")
+@Transactional
 public class BookListServiceImpl extends BaseService<BookList> implements BookListService {
 	private static final BookListServiceImpl instance = new BookListServiceImpl(); 
 	@Autowired

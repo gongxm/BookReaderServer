@@ -9,7 +9,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.gongxm.bean.Rules;
 import com.gongxm.controller.BaseServlet;
-import com.gongxm.utils.ServiceUtils;
 @WebServlet("/test")
 public class Test extends BaseServlet{
 	private static final long serialVersionUID = 1L;
@@ -26,7 +25,7 @@ public class Test extends BaseServlet{
 		rules.setEndIndex(20);
 		rules.setRepeat(false);
 		rules.setCurrent(true);
-		ServiceUtils.getRulesService().add(rules);
+		//ServiceUtils.getRulesService().add(rules);
 	}
 
 }

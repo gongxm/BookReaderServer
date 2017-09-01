@@ -9,17 +9,18 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.beanutils.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import com.gongxm.bean.Rules;
 import com.gongxm.domain.response.ResponseResult;
 import com.gongxm.services.RulesService;
 import com.gongxm.utils.MyConstants;
-import com.gongxm.utils.ServiceUtils;
 
 @WebServlet("/operateRules")
 public class OperateRules extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private static RulesService rulesService = ServiceUtils.getRulesService();
+	@Autowired
+	private static RulesService rulesService;
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

@@ -5,12 +5,14 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.gongxm.bean.BookChapter;
 import com.gongxm.dao.BookChapterDao;
 import com.gongxm.dao.Dao;
 import com.gongxm.services.BookChapterService;
 @Service("bookChapterService")
+@Transactional
 public class BookChapterServiceImpl extends BaseService<BookChapter> implements BookChapterService {
 	@Autowired
 	@Qualifier("bookChapterDao")

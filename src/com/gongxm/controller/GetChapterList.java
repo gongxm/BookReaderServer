@@ -21,10 +21,11 @@ import com.gongxm.utils.MyConstants;
 import com.gongxm.utils.ServiceUtils;
 import com.gongxm.utils.StringConstants;
 
-@WebServlet("/getChapterList")
 public class GetChapterList extends BaseServlet {
 
 	private static final long serialVersionUID = 1L;
+
+	BookService bookService = ServiceUtils.getBookService();
 
 	@Override
 	public void postRequest(HttpServletRequest request, HttpServletResponse response, String requestJson)
@@ -35,10 +36,9 @@ public class GetChapterList extends BaseServlet {
 			if (param != null) {
 				int id = param.getId();
 				if (id > 0) {
-					BookService bookService = ServiceUtils.getBookService();
 					Book book = bookService.findOne(id);
-					if(book!=null) {
-						Set<BookChapter> set =book.getChapters();
+					if (book != null) {
+						Set<BookChapter> set = book.getChapters();
 						if (set != null) {
 							List<BookChapter> list = new ArrayList<BookChapter>();
 							list.addAll(set);
@@ -46,7 +46,7 @@ public class GetChapterList extends BaseServlet {
 							result.setErrcode(MyConstants.SUCCESS);
 							result.setErrmsg(StringConstants.HTTP_REQUEST_SUCCESS);
 							result.setResult(list);
-						}else {
+						} else {
 							result.setErrmsg(StringConstants.BOOK_CHAPTER_NOT_FOUND);
 						}
 					} else {

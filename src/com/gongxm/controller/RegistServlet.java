@@ -17,13 +17,12 @@ import com.gongxm.utils.MyConstants;
 import com.gongxm.utils.ServiceUtils;
 
 /**
- * �û�ע��
  */
 @WebServlet("/registServlet")
 public class RegistServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
-	UserService uService = ServiceUtils.getUserService();
+	UserService userService= ServiceUtils.getUserService();
 
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -38,7 +37,7 @@ public class RegistServlet extends HttpServlet {
 			response.setHeader("refresh", "2;url="+request.getContextPath()+"/regist.jsp");
 			return;
 		}
-		User oldUser=uService.findUserByName(username);
+		User oldUser=userService.findUserByName(username);
 		if(oldUser!=null){
 			writer.write("<h1 align='center'><font color='red' size=5>用户已被占用!</font><br/></h1>");
 			response.setHeader("refresh", "2;url="+request.getContextPath()+"/regist.jsp");
@@ -48,7 +47,7 @@ public class RegistServlet extends HttpServlet {
 		newUser.setUsername(username);
 		newUser.setPermissions(MyConstants.ROLE_USER);
 		newUser.setPassword(MD5Util.MD5(password));
-		uService.addUser(newUser);
+		userService.addUser(newUser);
 		writer.write("<h1 align='center'><font color='green' size=5>注册成功!</font><br/></h1>");
 		response.setHeader("refresh", "2;url="+request.getContextPath()+"/login.jsp");
 	}

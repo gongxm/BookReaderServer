@@ -5,12 +5,15 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.gongxm.bean.Rules;
 import com.gongxm.dao.Dao;
 import com.gongxm.dao.RulesDao;
 import com.gongxm.services.RulesService;
+
 @Service("rulesService")
+@Transactional
 public class RulesServiceImpl extends BaseService<Rules> implements RulesService {
 	private static final RulesServiceImpl instance = new RulesServiceImpl();
 	@Autowired
@@ -19,8 +22,8 @@ public class RulesServiceImpl extends BaseService<Rules> implements RulesService
 
 	private RulesServiceImpl() {
 	}
-	
-	public Dao<Rules> getDao(){
+
+	public Dao<Rules> getDao() {
 		return rulesDao;
 	}
 

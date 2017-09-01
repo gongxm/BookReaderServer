@@ -3,6 +3,7 @@ package com.gongxm.services.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.gongxm.bean.User;
 import com.gongxm.dao.Dao;
@@ -13,15 +14,17 @@ import com.gongxm.services.UserService;
  * @author gongxm
  *
  */
-@Service("userService")
+@Service
+@Transactional
 public class UserServiceImpl extends BaseService<User> implements UserService {
-	private static final UserServiceImpl instance = new UserServiceImpl(); 
 	@Autowired
 	@Qualifier("userDao")
 	private UserDao udao;
 	
-	private UserServiceImpl(){}
-
+	private static UserService instance = new UserServiceImpl();
+	
+	private UserServiceImpl() {}
+	
 	public static UserService getInstance() {
 		return instance;
 	}
@@ -55,5 +58,7 @@ public class UserServiceImpl extends BaseService<User> implements UserService {
 	public User findUserByOpenId(String openid) {
 		return udao.findUserByOpenId(openid);
 	}
+
+	
 
 }

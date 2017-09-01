@@ -4,12 +4,13 @@ import java.io.IOException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
 import com.gongxm.bean.Book;
 import com.gongxm.bean.BookList;
 import com.gongxm.services.BookListService;
 import com.gongxm.utils.HttpUtils;
 import com.gongxm.utils.MyConstants;
-import com.gongxm.utils.ServiceUtils;
 import com.gongxm.utils.TextUtils;
 
 public class BookListRunnable implements Runnable {
@@ -19,7 +20,8 @@ public class BookListRunnable implements Runnable {
 	private String regex;
 	private boolean repeat;
 
-	private BookListService service = ServiceUtils.getBookListService();
+	@Autowired
+	private BookListService service;
 	private String charset;
 	private String concatUrl;
 	private String book_source;

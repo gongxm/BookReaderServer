@@ -19,13 +19,13 @@ import com.gongxm.utils.StringConstants;
 import com.gongxm.utils.TextUtils;
 
 //获取章节内容
-@WebServlet("/getBookChapter")
 public class GetBookChapter extends BaseServlet {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	BookChapterService service= ServiceUtils.getBookChapterService();
 
 	@Override
 	public void postRequest(HttpServletRequest request, HttpServletResponse response, String requestJson)
@@ -36,7 +36,6 @@ public class GetBookChapter extends BaseServlet {
 			if (param != null) {
 				int id = param.getId();
 				if (id > 0) {
-					BookChapterService service = ServiceUtils.getBookChapterService();
 					BookChapter chapter = service.findOne(id);
 					if (chapter != null) {
 						if (chapter.getStatus()==MyConstants.BOOK_COLLECTED) {

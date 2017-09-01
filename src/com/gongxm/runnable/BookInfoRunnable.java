@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
 import com.gongxm.bean.Book;
 import com.gongxm.bean.BookChapter;
 import com.gongxm.bean.BookList;
@@ -14,7 +16,6 @@ import com.gongxm.services.BookListService;
 import com.gongxm.services.BookService;
 import com.gongxm.utils.HttpUtils;
 import com.gongxm.utils.MyConstants;
-import com.gongxm.utils.ServiceUtils;
 import com.gongxm.utils.TextUtils;
 
 public class BookInfoRunnable implements Runnable {
@@ -25,6 +26,12 @@ public class BookInfoRunnable implements Runnable {
 	private String[] regexs;
 	private String concatUrl;
 	private BookList bookList;
+	@Autowired
+	BookService bookService;
+	@Autowired
+	BookChapterService chapterService;
+	@Autowired
+	BookListService service;
 
 	public BookInfoRunnable(BookList bookList, String[] regexs, String startStr, String endStr, String concatUrl, String charset) {
 		this.bookList = bookList;
@@ -73,9 +80,7 @@ public class BookInfoRunnable implements Runnable {
 				}
 			}
 			
-			BookService bookService = ServiceUtils.getBookService();
 			
-			BookChapterService chapterService = ServiceUtils.getBookChapterService();
 			
 			Book book = new Book(list.get(0), list.get(1), list.get(2), list.get(3), list.get(4),list.get(5),url);
 			bookService.add(book);
@@ -105,7 +110,6 @@ public class BookInfoRunnable implements Runnable {
 						chapterTitleList.add(TextUtils.dealWithText(chapterTitle, chapterTitleRegex));
 					}
 					
-					BookListService service = ServiceUtils.getBookListService();
 					if(chapterLinkList.size()==chapterTitleList.size()) {
 						System.out.println("采集章节目录中.....");
 						for (int i = 0; i < chapterLinkList.size(); i++) {

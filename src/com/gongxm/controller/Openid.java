@@ -25,13 +25,13 @@ public class Openid extends BaseServlet {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	UserService userService = ServiceUtils.getUserService();
 
 	public void postRequest(HttpServletRequest request, HttpServletResponse response, String requestJson)
 			throws IOException {
 		UserInfoParam userInfoParam = null;
 		ResponseResult result = new ResponseResult(MyConstants.FAILURE, "用户信息存储失败!");
 		try {
-			UserService userService = ServiceUtils.getUserService();
 			userInfoParam = GsonUtils.fromJson(requestJson, UserInfoParam.class);
 			String thirdSession = userInfoParam.getThirdSession();
 			if (TextUtils.notEmpty(thirdSession)) {

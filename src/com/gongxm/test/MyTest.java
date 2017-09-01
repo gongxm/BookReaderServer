@@ -6,20 +6,16 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import com.gongxm.bean.BookChapter;
-import com.gongxm.bean.BookChapterContent;
+import com.gongxm.bean.User;
 import com.gongxm.dao.BookChapterDao;
-import com.gongxm.dao.impl.BookChapterDaoImpl;
-import com.gongxm.domain.response.ResponseResult;
-import com.gongxm.services.BookChapterService;
+import com.gongxm.dao.BookDao;
+import com.gongxm.services.UserService;
 import com.gongxm.utils.CollectUtils;
-import com.gongxm.utils.GsonUtils;
 import com.gongxm.utils.MyConstants;
-import com.gongxm.utils.ServiceUtils;
-import com.gongxm.utils.StringConstants;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = "classpath:applicationContext.xml")
 public class MyTest {
@@ -28,13 +24,43 @@ public class MyTest {
 	@Qualifier("bookChapterDao")
 	BookChapterDao dao;
 	
+	@Autowired
+	private JdbcTemplate jtl;
+	
+	@Autowired
+	@Qualifier("bookDao")
+	protected BookDao bookDao;  
+	
+	
+	@Autowired
+	UserService userService;
+	
+	@Test
+	public void test7() {
+		System.out.println(userService==null);
+		User user = userService.findOne(1);
+		System.out.println(user);
+	}
+	
 	
 	@Test
 	public void test6(){
 		//https://31412947.qcloud.la/BookReaderServer/collect?id=1
 		
-		long count = dao.getUnCollectChapterCount();
+		/*long count = dao.getUnCollectChapterCount();
+		System.out.println("count="+count);*/
+//		String sql = "select distinct category from books";
+//		List<String> forList = jtl.queryForList(sql, String.class);
+//		System.out.println("list = "+forList);
+		
+		String sql = "select count(*) from book_list where status = ?";
+		Long count = jtl.queryForObject(sql,new Object[] {MyConstants.BOOK_COLLECTED}, Long.class);
 		System.out.println("count="+count);
+		
+		
+		/*List<Book> list =bookDao.getCategoryList("武侠修真", 2, 5);
+		
+		System.out.println("list.size="+list.size());*/
 	}
 	
 	public static void main(String[] args) throws IOException {
@@ -43,7 +69,7 @@ public class MyTest {
 //		demo3();
 //		demo4();
 		//id: 237, position: 0,
-		ResponseResult result = new ResponseResult(MyConstants.SUCCESS, StringConstants.HTTP_REQUEST_SUCCESS);
+		/*ResponseResult result = new ResponseResult(MyConstants.SUCCESS, StringConstants.HTTP_REQUEST_SUCCESS);
 		BookChapterService service = ServiceUtils.getBookChapterService();
 		BookChapter chapter = service.findOne(1);
 		if (chapter != null) {
@@ -51,17 +77,17 @@ public class MyTest {
 			result.setResult(content);
 			String json = GsonUtils.toJson(result);
 			System.out.println(json);
-		}
+		}*/
 	}
 
 	private static void demo4() {
-		BookChapterService service = ServiceUtils.getBookChapterService();
+	/*	BookChapterService service = ServiceUtils.getBookChapterService();
 		BookChapter chapter = service.findOne(8140);
 //		System.out.println(chapter.getChapterContent().getContent());
 		String content = chapter.getChapterContent().getContent();
 		for(int i=0;i<4;i++) {
 			System.out.println(content.charAt(i));
-		}
+		}*/
 		
 	}
 
@@ -69,7 +95,7 @@ public class MyTest {
 		String startStr = "<div class=\"yd_text2\">";
 		String endStr = "<div class=\"yd_ad1\">";
 		System.out.println("第三步启动");
-		CollectUtils.collectBookChapter(startStr,endStr);
+	//	CollectUtils.collectBookChapter(startStr,endStr);
 	}
 
 	public static void demo2() {
@@ -87,8 +113,8 @@ public class MyTest {
 		String charset="gbk";
 		try {
 			System.out.println("第二步启动");
-			CollectUtils.collectBookInfo(null, regexs, startStr, endStr, charset);
-		} catch (IOException e) {
+			//CollectUtils.collectBookInfo(null, regexs, startStr, endStr, charset);
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		

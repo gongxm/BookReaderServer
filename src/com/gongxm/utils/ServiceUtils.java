@@ -12,7 +12,7 @@ import com.gongxm.services.impl.RulesServiceImpl;
 import com.gongxm.services.impl.UserServiceImpl;
 
 public class ServiceUtils {
-	//获取用户服务
+	// 获取用户服务
 	public static UserService getUserService() {
 		return UserServiceImpl.getInstance();
 	}
@@ -21,14 +21,17 @@ public class ServiceUtils {
 	public static RulesService getRulesService() {
 		return RulesServiceImpl.getInstance();
 	}
+
 	// 获取书籍服务
 	public static BookService getBookService() {
 		return BookServiceImpl.getInstance();
 	}
+
 	// 获取书籍列表服务
 	public static BookListService getBookListService() {
 		return BookListServiceImpl.getInstance();
 	}
+
 	// 获取书籍章节服务
 	public static BookChapterService getBookChapterService() {
 		return BookChapterServiceImpl.getInstance();

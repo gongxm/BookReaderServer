@@ -16,10 +16,11 @@ import com.gongxm.utils.ServiceUtils;
 public class CollectManagement extends BaseServlet {
 	private static final long serialVersionUID = 1L;
 
+	RulesService rulesService = ServiceUtils.getRulesService();
+
 	@Override
 	public void postRequest(HttpServletRequest request, HttpServletResponse response, String requestJson)
 			throws ServletException, IOException {
-		RulesService rulesService = ServiceUtils.getRulesService();
 
 		List<Rules> rulesList = rulesService.findAll();
 

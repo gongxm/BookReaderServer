@@ -20,6 +20,7 @@ import com.gongxm.utils.TextUtils;
 public class GetUserInfo extends BaseServlet {
 	private static final long serialVersionUID = 1L;
 
+	UserService userService= ServiceUtils.getUserService();
 	@Override
 	public void postRequest(HttpServletRequest request, HttpServletResponse response, String requestJson)
 			throws ServletException, IOException {
@@ -29,7 +30,6 @@ public class GetUserInfo extends BaseServlet {
 			if(param!=null){
 				String thirdSession = param.getThirdSession();
 				if(TextUtils.notEmpty(thirdSession)){
-					UserService userService = ServiceUtils.getUserService();
 					User user = userService.findUserByThirdSession(thirdSession);
 					if(user!=null){
 						info.setUser(user);

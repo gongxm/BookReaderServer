@@ -8,6 +8,8 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
 import com.gongxm.domain.response.ResponseResult;
 import com.gongxm.services.BookService;
 import com.gongxm.utils.GsonUtils;
@@ -20,24 +22,25 @@ public class GetBookCategory extends BaseServlet {
 
 	private static final long serialVersionUID = 1L;
 
+	@Autowired
+	BookService bookService = ServiceUtils.getBookService();
+
 	@Override
 	public void postRequest(HttpServletRequest request, HttpServletResponse response, String requestJson)
 			throws ServletException, IOException {
-		BookService bookService = ServiceUtils.getBookService();
-		
+
 		ResponseResult result = new ResponseResult(MyConstants.FAILURE, StringConstants.HTTP_REQUEST_ERROR);
-		
+
 		List<String> categories = bookService.getBookCategory();
-		
+
 		String json = "[]";
-		if(categories!=null) {
+		if (categories != null) {
 			result.setErrcode(MyConstants.SUCCESS);
 			result.setErrmsg(StringConstants.HTTP_REQUEST_SUCCESS);
 			result.setResult(categories);
 			json = GsonUtils.toJson(result);
 		}
-		
-		
+
 		writeResult(response, json);
 	}
 

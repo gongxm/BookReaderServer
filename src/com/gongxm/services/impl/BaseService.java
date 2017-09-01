@@ -2,9 +2,11 @@ package com.gongxm.services.impl;
 
 import java.io.Serializable;
 
+import org.springframework.transaction.annotation.Transactional;
+
 import com.gongxm.dao.Dao;
 import com.gongxm.services.Service;
-
+@Transactional
 public abstract class BaseService<T> implements Service<T> {
 
 	@Override

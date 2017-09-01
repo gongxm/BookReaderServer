@@ -16,10 +16,10 @@ import com.gongxm.utils.MyConstants;
 import com.gongxm.utils.ServiceUtils;
 import com.gongxm.utils.StringConstants;
 
-@WebServlet("/getBookDetail")
 public class GetBookDetail extends BaseServlet {
 
 	private static final long serialVersionUID = 1L;
+	BookService bookService= ServiceUtils.getBookService();
 
 	@Override
 	public void postRequest(HttpServletRequest request, HttpServletResponse response, String requestJson)
@@ -30,7 +30,6 @@ public class GetBookDetail extends BaseServlet {
 			if (param != null) {
 				int id = param.getId();
 				if (id > 0) {
-					BookService bookService = ServiceUtils.getBookService();
 					Book book = bookService.findOne(id);
 					if (book != null) {
 						result.setErrcode(MyConstants.SUCCESS);

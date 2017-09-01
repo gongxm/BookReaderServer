@@ -20,6 +20,8 @@ import com.gongxm.utils.ServiceUtils;
 public class LoginServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
+	UserService userService= ServiceUtils.getUserService();
+	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		doPost(req, resp);
@@ -31,8 +33,7 @@ public class LoginServlet extends HttpServlet {
 		String username = request.getParameter("username");
 		String password = request.getParameter("password");
 		password = MD5Util.MD5(password);
-		UserService uService = ServiceUtils.getUserService();
-		User user = uService.findUser(username, password);
+		User user = userService.findUser(username, password);
 		if (user == null) {
 			writer.write("<h1 align='center'><font color='red' size=5>登陆失败,用户名或密码错误!</font></h1>");
 			response.setHeader("refresh", "1;url=" + request.getContextPath()

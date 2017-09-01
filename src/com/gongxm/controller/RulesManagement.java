@@ -18,17 +18,17 @@ import com.gongxm.utils.ServiceUtils;
 @WebServlet("/rulesManagement")
 public class RulesManagement extends BaseServlet {
 	private static final long serialVersionUID = 1L;
-       
+
+	RulesService rulesService = ServiceUtils.getRulesService();
 
 	@Override
 	public void postRequest(HttpServletRequest request, HttpServletResponse response, String requestJson)
 			throws IOException, ServletException {
-		RulesService rulesService = ServiceUtils.getRulesService();
-		
+
 		List<Rules> rulesList = rulesService.findAll();
-		
+
 		request.getSession().setAttribute("rulesList", rulesList);
-		
+
 		request.getRequestDispatcher("/WEB-INF/rulesManagement.jsp").forward(request, response);
 	}
 

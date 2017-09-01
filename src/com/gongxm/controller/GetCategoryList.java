@@ -23,6 +23,7 @@ import com.gongxm.utils.StringConstants;
 public class GetCategoryList extends BaseServlet {
 
 	private static final long serialVersionUID = 1L;
+	BookService bookService= ServiceUtils.getBookService();
 
 	@Override
 	public void postRequest(HttpServletRequest request, HttpServletResponse response, String requestJson)
@@ -34,7 +35,6 @@ public class GetCategoryList extends BaseServlet {
 				String category = param.getCategory();
 				int currentPage = param.getCurrentPage();
 				int pageSize = param.getPageSize();
-				BookService bookService = ServiceUtils.getBookService();
 				List<Book> books = bookService.getCategoryList(category,currentPage,pageSize);
 				if(books!=null && books.size()>0){
 					List<CategoryItem> items = new ArrayList<CategoryItem>();

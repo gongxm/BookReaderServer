@@ -36,9 +36,8 @@ public class CollectUtils {
 	}
 
 	// 书籍信息和章节列表
-	public static void collectBookInfo(String book_source, String[] regexs, String startStr, String endStr,
+	public static void collectBookInfo(BookListService service,String book_source, String[] regexs, String startStr, String endStr,
 		String charset) throws IOException {
-		BookListService service = ServiceUtils.getBookListService();
 		int currentPage = 1;
 		int pageSize = 20;
 
@@ -83,8 +82,7 @@ public class CollectUtils {
 
 
 	// 书籍章节内容
-	public static void collectBookChapter(String startStr, String endStr) {
-		BookChapterService service = ServiceUtils.getBookChapterService();
+	public static void collectBookChapter(BookChapterService service,String startStr, String endStr) {
 		
 		int currentPage = 1;
 		int pageSize = 20;

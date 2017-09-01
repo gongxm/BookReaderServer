@@ -2,6 +2,7 @@ package com.gongxm.dao.impl;
 
 import java.util.List;
 
+import org.hibernate.criterion.DetachedCriteria;
 import org.springframework.stereotype.Repository;
 
 import com.gongxm.bean.Rules;
@@ -12,20 +13,9 @@ public class RulesDaoImpl extends BaseDao<Rules> implements RulesDao {
 	@Override
 	@SuppressWarnings("unchecked")
 	public List<Rules> findAll() {
-		/*Session session = null;
-		try {
-			session = HibernateUtil.getSession();
-			String sql = "from Rules";
-			List<Rules> list= session.createQuery(sql).list();
-			return list;
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			if (session != null) {
-				session.close();
-			}
-		}*/
-		return null;
+		DetachedCriteria criteria = DetachedCriteria.forClass(Rules.class);
+		List<Rules> list = (List<Rules>) hqlObj.findByCriteria(criteria);
+		return list;
 	}
 
 }
