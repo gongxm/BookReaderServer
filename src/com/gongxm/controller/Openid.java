@@ -18,7 +18,6 @@ import com.gongxm.utils.StringConstants;
 import com.gongxm.utils.TextUtils;
 import com.gongxm.utils.WxAuthUtil;
 
-@WebServlet("/openid")
 public class Openid extends BaseServlet {
 
 	/**

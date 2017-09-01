@@ -3,5 +3,7 @@
 	"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
 	"http://struts.apache.org/dtds/struts-2.3.dtd">
 <struts>
+	<!-- 上传文件最大限制 -->
 	<constant name="struts.multipart.maxSize" value="209715200"></constant>
+	
 </struts>

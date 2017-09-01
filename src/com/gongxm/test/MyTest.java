@@ -37,8 +37,7 @@ public class MyTest {
 	
 	@Test
 	public void test7() {
-		System.out.println(userService==null);
-		User user = userService.findOne(1);
+		User user = userService.findUserByOpenId("oAiHx0LaSfcEojusK4bbkHqIfbDE");
 		System.out.println(user);
 	}
 	

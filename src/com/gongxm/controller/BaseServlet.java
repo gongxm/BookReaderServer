@@ -4,14 +4,12 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
 
-import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.web.context.WebApplicationContext;
-import org.springframework.web.context.support.SpringBeanAutowiringSupport;
 
 import com.gongxm.utils.MyConstants;
 import com.gongxm.utils.StringUtils;
