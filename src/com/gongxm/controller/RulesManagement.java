@@ -19,12 +19,10 @@ import com.gongxm.utils.ServiceUtils;
 public class RulesManagement extends BaseServlet {
 	private static final long serialVersionUID = 1L;
 
-	RulesService rulesService = ServiceUtils.getRulesService();
-
 	@Override
 	public void postRequest(HttpServletRequest request, HttpServletResponse response, String requestJson)
 			throws IOException, ServletException {
-
+		RulesService rulesService = (RulesService) context.getBean("rulesService");
 		List<Rules> rulesList = rulesService.findAll();
 
 		request.getSession().setAttribute("rulesList", rulesList);

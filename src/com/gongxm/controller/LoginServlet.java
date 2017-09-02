@@ -10,17 +10,26 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.web.context.WebApplicationContext;
+import org.springframework.web.context.support.WebApplicationContextUtils;
+
 import com.gongxm.bean.User;
 import com.gongxm.services.UserService;
 import com.gongxm.utils.MD5Util;
 import com.gongxm.utils.MyConstants;
-import com.gongxm.utils.ServiceUtils;
 
 @WebServlet(description = "用户登陆", urlPatterns = { "/loginServlet" })
 public class LoginServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
-	UserService userService= ServiceUtils.getUserService();
+	UserService userService;
+	@Override
+	public void init() throws ServletException {
+		super.init();
+		 WebApplicationContext context = WebApplicationContextUtils.getRequiredWebApplicationContext(this.getServletContext()); 
+		 userService = (UserService) context.getBean("userService");
+	}
+	
 	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

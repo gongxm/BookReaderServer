@@ -20,18 +20,18 @@ public class ValidateUserName extends BaseServlet {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	UserService userService= ServiceUtils.getUserService();
 
 	@Override
 	public void postRequest(HttpServletRequest request, HttpServletResponse response, String requestJson)
 			throws IOException {
+		UserService userService = (UserService) context.getBean("userService");
 		String username = request.getParameter("username");
 		User user = userService.findUserByName(username);
-		ResponseResult result = new ResponseResult(MyConstants.FAILURE,"请求失败");
-		
-		if(user!=null){
+		ResponseResult result = new ResponseResult(MyConstants.FAILURE, "请求失败");
+
+		if (user != null) {
 			result.setErrmsg("该用户名已被占用!");
-		}else{
+		} else {
 			result.setErrcode(MyConstants.SUCCESS);
 			result.setErrmsg("恭喜您,该用户名可以使用!");
 		}

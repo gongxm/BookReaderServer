@@ -10,9 +10,11 @@ import org.springframework.stereotype.Controller;
 import com.gongxm.bean.User;
 import com.gongxm.domain.OpenIdResult;
 import com.gongxm.domain.request.LoginParam;
+import com.gongxm.domain.request.ThirdSessionParam;
 import com.gongxm.domain.request.UserInfoParam;
 import com.gongxm.domain.response.LoginResult;
 import com.gongxm.domain.response.ResponseResult;
+import com.gongxm.domain.response.UserInfo;
 import com.gongxm.domain.response.UserResult;
 import com.gongxm.services.UserService;
 import com.gongxm.utils.GsonUtils;
@@ -25,7 +27,7 @@ import com.gongxm.utils.WxAuthUtil;
 
 @Controller
 @Scope("prototype")
-@Namespace("/")
+@Namespace("/action")
 @ParentPackage("struts-default")
 public class UserAction extends BaseAction {
 	private static final long serialVersionUID = 1L;
@@ -141,6 +143,37 @@ public class UserAction extends BaseAction {
 			result.setErrmsg(StringConstants.JSON_PARSE_ERROR);
 		}
 		String json = GsonUtils.toJson(result);
+		write(json);
+	}
+	
+	@Action("getUserInfo")
+	public void getUserInfo() {
+		UserInfo info = new UserInfo();
+		try {
+			ThirdSessionParam param = GsonUtils.fromJson(getData(), ThirdSessionParam.class);
+			if(param!=null){
+				String thirdSession = param.getThirdSession();
+				if(TextUtils.notEmpty(thirdSession)){
+					User user = userService.findUserByThirdSession(thirdSession);
+					if(user!=null){
+						info.setUser(user);
+						info.setErrcode(MyConstants.SUCCESS);
+						info.setErrmsg("获取用户信息成功!");
+					}else{
+						info.setErrmsg("用户不存在!");
+					}
+				}else{
+					info.setErrmsg("thirdSession为空");
+				}
+			}else{
+				info.setErrmsg("参数为空");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			info.setErrmsg(StringConstants.JSON_PARSE_ERROR);
+		}
+		String json = GsonUtils.toJson(info);
+		
 		write(json);
 	}
 

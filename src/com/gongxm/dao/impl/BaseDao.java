@@ -15,7 +15,6 @@ import com.gongxm.dao.Dao;
 public class BaseDao<T> extends HibernateDaoSupport implements Dao<T> {
 	private Class<?> clazz;
 	protected HibernateTemplate hqlObj;  //hql执行对象
-	
 	@Autowired
 	protected JdbcTemplate sqlObj; //普通sql执行对象
 

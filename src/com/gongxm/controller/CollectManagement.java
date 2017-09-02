@@ -10,17 +10,16 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.gongxm.bean.Rules;
 import com.gongxm.services.RulesService;
-import com.gongxm.utils.ServiceUtils;
 
 @WebServlet("/collectManagement")
 public class CollectManagement extends BaseServlet {
 	private static final long serialVersionUID = 1L;
 
-	RulesService rulesService = ServiceUtils.getRulesService();
 
 	@Override
 	public void postRequest(HttpServletRequest request, HttpServletResponse response, String requestJson)
 			throws ServletException, IOException {
+		RulesService rulesService= (RulesService) context.getBean("RulesService");
 
 		List<Rules> rulesList = rulesService.findAll();
 

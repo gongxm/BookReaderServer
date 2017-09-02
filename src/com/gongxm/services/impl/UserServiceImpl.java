@@ -14,7 +14,7 @@ import com.gongxm.services.UserService;
  * @author gongxm
  *
  */
-@Service
+@Service("userService")
 @Transactional
 public class UserServiceImpl extends BaseService<User> implements UserService {
 	@Autowired

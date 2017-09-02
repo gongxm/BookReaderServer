@@ -26,7 +26,7 @@ import com.gongxm.utils.TextUtils;
 
 @Controller
 @Scope("prototype")
-@Namespace("/")
+@Namespace("/action")
 @ParentPackage("struts-default")
 public class BookAction extends BaseAction {
 	private static final long serialVersionUID = 1L;
