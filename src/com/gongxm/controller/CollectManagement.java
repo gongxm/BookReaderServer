@@ -19,7 +19,7 @@ public class CollectManagement extends BaseServlet {
 	@Override
 	public void postRequest(HttpServletRequest request, HttpServletResponse response, String requestJson)
 			throws ServletException, IOException {
-		RulesService rulesService= (RulesService) context.getBean("RulesService");
+		RulesService rulesService= (RulesService) context.getBean("rulesService");
 
 		List<Rules> rulesList = rulesService.findAll();
 

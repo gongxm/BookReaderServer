@@ -1,75 +1,57 @@
 package com.gongxm.bean;
 
-import javax.persistence.Column;
+import java.io.Serializable;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
-import org.hibernate.annotations.GenericGenerator;
-import org.hibernate.annotations.LazyToOne;
-import org.hibernate.annotations.LazyToOneOption;
 import org.hibernate.annotations.Type;
 
 import com.google.gson.annotations.Expose;
 
+/**
+ * @author gongxm
+ *
+ */
 @Entity
 @Table(name = "book_chapter_content")
-public class BookChapterContent {
+public class BookChapterContent implements Serializable{
+	private static final long serialVersionUID = 1L;
 	@Id
-	@GenericGenerator(strategy = "uuid", name = "myuuid")
-	@GeneratedValue(generator = "myuuid")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Expose
-	private String id;
+	private int id;
 
-	@Column
 	@Type(type = "text")
 	@Expose
-	private String content;
-
-	@Fetch(FetchMode.SELECT)
-	@LazyToOne(LazyToOneOption.PROXY)
-	@OneToOne(targetEntity = BookChapter.class, mappedBy = "chapterContent")
-	private BookChapter chapter;
-
-	public BookChapterContent(String content) {
-		this.content = content;
-	}
+	private String text;
 
 	public BookChapterContent() {
 		super();
 	}
 
-	public String getId() {
+	public BookChapterContent(String text) {
+		super();
+		this.text = text;
+	}
+
+	public int getId() {
 		return id;
 	}
 
-	public void setId(String id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 
-	public String getContent() {
-		return content;
+	public String getText() {
+		return text;
 	}
 
-	public void setContent(String content) {
-		this.content = content;
-	}
-
-	public BookChapter getChapter() {
-		return chapter;
-	}
-
-	public void setChapter(BookChapter chapter) {
-		this.chapter = chapter;
-	}
-
-	@Override
-	public String toString() {
-		return "BookChapterContent [id=" + id + ", content=" + content + "]";
+	public void setText(String text) {
+		this.text = text;
 	}
 
 }

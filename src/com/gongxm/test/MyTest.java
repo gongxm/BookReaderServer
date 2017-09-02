@@ -1,6 +1,7 @@
 package com.gongxm.test;
 
 import java.io.IOException;
+import java.util.Set;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -10,9 +11,17 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import com.gongxm.bean.User;
+import com.gongxm.bean.Book;
+import com.gongxm.bean.BookChapter;
+import com.gongxm.bean.BookChapterContent;
+import com.gongxm.bean.BookChapterContentRules;
+import com.gongxm.bean.BookInfoAndChapterListRules;
+import com.gongxm.bean.BookListRules;
 import com.gongxm.dao.BookChapterDao;
 import com.gongxm.dao.BookDao;
+import com.gongxm.services.BookListRulesService;
+import com.gongxm.services.BookListService;
+import com.gongxm.services.BookService;
 import com.gongxm.services.UserService;
 import com.gongxm.utils.CollectUtils;
 import com.gongxm.utils.MyConstants;
@@ -35,10 +44,65 @@ public class MyTest {
 	@Autowired
 	UserService userService;
 	
+	@Autowired
+	BookListRulesService service;
+	
+	@Autowired
+	BookService bookService;
+	
+	@Autowired
+	static BookListService bookListService;
+	
+	@Test
+	public void test8() {
+		
+		Book book = new Book();
+		book.setBook_name("好好学习");
+		BookChapter bookChapter = new BookChapter();
+		bookChapter.setChapter_name("java");
+		bookChapter.setChapter_link("www.itheima.com");
+		BookChapterContent chapterContent=new BookChapterContent();
+		chapterContent.setText("好好学习好好学习好好学习好好学习好好学习好好学习好好学习好好学习好好学习好好学习好好学习好好学习");
+		bookChapter.setChapterContent(chapterContent);
+		book.getChapters().add(bookChapter);
+		
+		bookService.add(book);
+		
+		
+//		Book book = bookService.findOne(1);
+		/*BookChapter bookChapter = new BookChapter();
+		bookChapter.setChapter_name("UI");
+		bookChapter.setChapter_link("www.ith11eima.com");
+		BookChapterContent chapterContent=new BookChapterContent();
+		chapterContent.setText("222好好学习好好学习好好学习好好学习好好学习好好学习好好学习好好学习好好学习好好学习好好学习好好学习");
+		bookChapter.setChapterContent(chapterContent);
+		book.getChapters().add(bookChapter);
+		bookService.update(book);*/
+//		bookService.delete(book);
+		
+		
+	}
+	
 	@Test
 	public void test7() {
-		User user = userService.findUserByOpenId("oAiHx0LaSfcEojusK4bbkHqIfbDE");
-		System.out.println(user);
+	/*	BookListRules bookListRules = new BookListRules();
+		bookListRules.setBook_source("www.baidu.com");
+		bookListRules.setRegex("[0-9]\\d+");
+		
+		BookInfoAndChapterListRules rules=new BookInfoAndChapterListRules();
+		rules.setCharset("utf-8");
+		String[] regexs= {"aaaaaa","bbbbbbbbbbb","CCCCCCCCCCCCCCCCc"};
+		rules.setRegexs(regexs);
+		BookChapterContentRules contentRules=new BookChapterContentRules();
+		contentRules.setEndStr("end");
+		contentRules.setStartStr("start");
+		rules.setContentRules(contentRules);
+		bookListRules.setRules(rules);
+		service.add(bookListRules);*/
+		
+	/*	BookListRules bookListRules = service.findOne(1);
+		service.delete(bookListRules);*/
+		
 	}
 	
 	
@@ -110,9 +174,11 @@ public class MyTest {
 		String startStr="<div class=\"mulu\">";
 		String endStr="<div id=\"footer\">";
 		String charset="gbk";
+		String concatUrl="";
+		boolean useBookLink=true;
 		try {
 			System.out.println("第二步启动");
-			//CollectUtils.collectBookInfo(null, regexs, startStr, endStr, charset);
+			CollectUtils.collectBookInfo(bookListService,null, regexs, startStr, endStr, charset,concatUrl,useBookLink);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

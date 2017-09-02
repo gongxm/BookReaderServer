@@ -29,7 +29,7 @@
 		<property name="hibernateProperties">
 			<props>
 				<!-- 可以将向数据库发送的sql显示出来 -->
-				<prop key="hibernate.show_sql">true</prop>
+				<prop key="hibernate.show_sql">false</prop>
 				<!-- 格式化sql -->
 				<prop key="hibernate.format_sql">true</prop>
 				<!-- 数据库的方言 -->
@@ -41,7 +41,7 @@
 			</props>
 		</property>
 
-		<!-- 加载注解类 -->
+		<!-- 加载注解的Bean类 -->
 		<property name="packagesToScan">
 			<list>
 				<value>com.gongxm.bean</value>

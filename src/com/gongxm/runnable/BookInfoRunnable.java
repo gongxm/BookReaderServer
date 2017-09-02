@@ -111,20 +111,21 @@ public class BookInfoRunnable implements Runnable {
 					}
 					
 					if(chapterLinkList.size()==chapterTitleList.size()) {
-						System.out.println("采集章节目录中.....");
+						System.out.println("..........采集章节目录中.........");
 						for (int i = 0; i < chapterLinkList.size(); i++) {
 							System.out.println("正在采集:"+chapterTitleList.get(i));
-							BookChapter bookChapter = new BookChapter(chapterTitleList.get(i), chapterLinkList.get(i), book,i);
-							chapterService.add(bookChapter);
+							BookChapter bookChapter = new BookChapter(chapterTitleList.get(i), chapterLinkList.get(i), i);
+							book.getChapters().add(bookChapter);
 						}
+						bookService.update(book);
 						bookList.setStatus(MyConstants.BOOK_COLLECTED);
-						service.update(bookList);
-						System.out.println("采集成功.....");
+						System.out.println(".........采集成功..........");
 					}else {
 						bookList.setStatus(MyConstants.BOOK_COLLECT_FAILURE);
-						service.update(bookList);
 						System.out.println("....目录数据不匹配..."+chapterLinkList.size()+"=="+chapterTitleList.size());
 					}
+					//更新书籍列表状态
+					service.update(bookList);
 				}
 			}
 		} catch (IOException e) {

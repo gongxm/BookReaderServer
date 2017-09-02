@@ -1,17 +1,20 @@
 package com.gongxm.bean;
 
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.LazyCollection;
@@ -22,7 +25,8 @@ import com.google.gson.annotations.Expose;
 
 @Entity
 @Table(name = "books")
-public class Book {
+public class Book implements Serializable{
+	private static final long serialVersionUID = 1L;
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	//@Expose(serialize = true, deserialize = false)  	// serialize: 可以被序列化,deserialize:可以被反序列化
@@ -51,9 +55,11 @@ public class Book {
 	@Expose
 	private String shortIntroduce;
 
+	@OneToMany(targetEntity = BookChapter.class)
 	@Fetch(FetchMode.SELECT)
 	@LazyCollection(LazyCollectionOption.EXTRA)
-	@OneToMany(targetEntity = BookChapter.class, mappedBy = "book", cascade = CascadeType.ALL)
+	@JoinColumn(name = "book_id")
+	@Cascade({CascadeType.SAVE_UPDATE,CascadeType.DELETE})
 	private Set<BookChapter> chapters = new HashSet<BookChapter>();
 
 	public Book() {

@@ -1,7 +1,9 @@
 package com.gongxm.action;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Set;
 
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Namespace;
@@ -66,7 +68,7 @@ public class BookAction extends BaseAction {
 		}
 
 		String json = GsonUtils.parseToJson(result);
-		
+
 		write(json);
 	}
 
@@ -84,7 +86,7 @@ public class BookAction extends BaseAction {
 					if (chapter != null) {
 						if (chapter.getStatus() == MyConstants.BOOK_COLLECTED) {
 							BookChapterContent content = chapter.getChapterContent();
-							String text = content.getContent();
+							String text = content.getText();
 							if (TextUtils.isEmpty(text)) {
 								text = "";
 							}
@@ -116,7 +118,66 @@ public class BookAction extends BaseAction {
 	@Action("getChapterList")
 	public void getChapterList() {
 		String data = getData();
+		System.out.println("data="+data);
+		ResponseResult resp = new ResponseResult(MyConstants.FAILURE, StringConstants.HTTP_REQUEST_ERROR);
+		try {
+			IDParam param = GsonUtils.fromJson(data, IDParam.class);
+			if (param != null) {
+				int bookid = param.getId();
+				if (bookid > 0) {
+					Book book = bookService.findOne(bookid);
+					if(book!=null) {
+						Set<BookChapter> set =book.getChapters();
+						if (set != null) {
+							List<BookChapter> list = new ArrayList<BookChapter>();
+							list.addAll(set);
+							Collections.sort(list);
+							resp.setErrcode(MyConstants.SUCCESS);
+							resp.setErrmsg(StringConstants.HTTP_REQUEST_SUCCESS);
+							resp.setResult(list);
+						}else {
+							resp.setErrmsg(StringConstants.BOOK_CHAPTER_NOT_FOUND);
+						}
+					} else {
+						resp.setErrmsg(StringConstants.BOOK_NOT_FOUND);
+					}
+				} else {
+					resp.setErrmsg(StringConstants.BOOK_ID_ERROR);
+				}
+			} else {
+				resp.setErrmsg(StringConstants.HTTP_REQUEST_PARAM_ERROR);
+			}
 
+		} catch (Exception e) {
+			resp.setErrmsg(StringConstants.JSON_PARSE_ERROR);
+		}
+
+		String json = GsonUtils.parseToJson(resp);
+		write(json);
+	}
+
+	// 获取书籍类型
+	@Action("getBookCategory")
+	public void getBookCategory() {
+		ResponseResult result = new ResponseResult(MyConstants.FAILURE, StringConstants.HTTP_REQUEST_ERROR);
+
+		List<String> categories = bookService.getBookCategory();
+
+		String json = "[]";
+		if (categories != null) {
+			result.setErrcode(MyConstants.SUCCESS);
+			result.setErrmsg(StringConstants.HTTP_REQUEST_SUCCESS);
+			result.setResult(categories);
+			json = GsonUtils.toJson(result);
+		}
+
+		write(json);
+	}
+
+	// 获取书籍类型列表
+	@Action("getCategoryList")
+	public void getCategoryList() {
+		String data = getData();
 		ResponseResult resp = new ResponseResult(MyConstants.FAILURE, StringConstants.HTTP_REQUEST_ERROR);
 		try {
 			GetCategoryListParam param = GsonUtils.fromJson(data, GetCategoryListParam.class);
@@ -143,61 +204,6 @@ public class BookAction extends BaseAction {
 			resp.setErrmsg(StringConstants.JSON_PARSE_ERROR);
 		}
 
-		String json = GsonUtils.toJson(resp);
-		write(json);
-	}
-	
-	
-	//获取书籍类型
-	@Action("getBookCategory")
-	public void getBookCategory() {
-		ResponseResult result = new ResponseResult(MyConstants.FAILURE, StringConstants.HTTP_REQUEST_ERROR);
-
-		List<String> categories = bookService.getBookCategory();
-
-		String json = "[]";
-		if (categories != null) {
-			result.setErrcode(MyConstants.SUCCESS);
-			result.setErrmsg(StringConstants.HTTP_REQUEST_SUCCESS);
-			result.setResult(categories);
-			json = GsonUtils.toJson(result);
-		}
-
-		write(json);
-	}
-	
-	
-	
-	//获取书籍类型列表
-	@Action("getCategoryList")
-	public void getCategoryList() {
-		String data = getData();
-		ResponseResult resp = new ResponseResult(MyConstants.FAILURE,StringConstants.HTTP_REQUEST_ERROR);
-		try {
-			GetCategoryListParam param = GsonUtils.fromJson(data, GetCategoryListParam.class);
-			if (param != null) {
-				String category = param.getCategory();
-				int currentPage = param.getCurrentPage();
-				int pageSize = param.getPageSize();
-				List<Book> books = bookService.getCategoryList(category,currentPage,pageSize);
-				if(books!=null && books.size()>0){
-					List<CategoryItem> items = new ArrayList<CategoryItem>();
-					for (Book book : books) {
-						CategoryItem item = new CategoryItem(book);
-						items.add(item);
-					}
-					resp.setResult(items);
-				}
-				resp.setErrcode(MyConstants.SUCCESS);
-				resp.setErrmsg(StringConstants.HTTP_REQUEST_SUCCESS);
-			}else{
-				resp.setErrmsg(StringConstants.HTTP_REQUEST_PARAM_ERROR);
-			}
-
-		} catch (Exception e) {
-			resp.setErrmsg(StringConstants.JSON_PARSE_ERROR);
-		}
-		
 		String json = GsonUtils.toJson(resp);
 		write(json);
 	}

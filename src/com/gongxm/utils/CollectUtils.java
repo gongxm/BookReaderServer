@@ -36,8 +36,8 @@ public class CollectUtils {
 	}
 
 	// 书籍信息和章节列表
-	public static void collectBookInfo(BookListService service,String book_source, String[] regexs, String startStr, String endStr,
-		String charset) throws IOException {
+	public static void collectBookInfo(BookListService service, String book_source, String[] regexs, String startStr,
+			String endStr, String charset, String concatUrl, boolean useBookLink) throws IOException {
 		int currentPage = 1;
 		int pageSize = 20;
 
@@ -53,8 +53,9 @@ public class CollectUtils {
 			while (currentPage <= page) {
 				List<BookList> list = service.findUnCollectBookListBySource(book_source, currentPage, pageSize);
 				for (BookList bookList : list) {
-					BookInfoRunnable task = new BookInfoRunnable(bookList, regexs, startStr, endStr,
-							bookList.getBook_link(), charset);
+					String concatUrl2 = useBookLink ? bookList.getBook_link() : concatUrl;
+					BookInfoRunnable task = new BookInfoRunnable(bookList, regexs, startStr, endStr, concatUrl2,
+							charset);
 					ThreadPoolUtil.executeOnNewThread(task);
 				}
 				currentPage++;
@@ -80,29 +81,27 @@ public class CollectUtils {
 		}
 	}
 
-
 	// 书籍章节内容
-	public static void collectBookChapter(BookChapterService service,String startStr, String endStr) {
-		
+	public static void collectBookChapter(BookChapterService service, String startStr, String endStr) {
+
 		int currentPage = 1;
 		int pageSize = 20;
-		
+
 		long total = service.getUnCollectChapterCount();
-		
+
 		long page = 0;
 		if (total % pageSize == 0) {
 			page = total / pageSize;
 		} else {
 			page = total / pageSize + 1;
 		}
-		
-		
+
 		while (currentPage <= page) {
-			List<BookChapter> chapters = service.findUnCollectChapter(currentPage,pageSize);
-				for (BookChapter chapter : chapters) {
-					BookChapterContentRunnable task = new BookChapterContentRunnable(chapter, startStr, endStr,service);
-					ThreadPoolUtil.executeOnNewThread(task);
-				}
+			List<BookChapter> chapters = service.findUnCollectChapter(currentPage, pageSize);
+			for (BookChapter chapter : chapters) {
+				BookChapterContentRunnable task = new BookChapterContentRunnable(chapter, startStr, endStr, service);
+				ThreadPoolUtil.executeOnNewThread(task);
+			}
 			currentPage++;
 		}
 

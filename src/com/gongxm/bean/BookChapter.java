@@ -1,12 +1,13 @@
 package com.gongxm.bean;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -21,7 +22,8 @@ import com.google.gson.annotations.Expose;
 
 @Entity
 @Table(name = "book_chapters")
-public class BookChapter implements Comparable<BookChapter>{
+public class BookChapter implements Comparable<BookChapter>,Serializable{
+	private static final long serialVersionUID = 1L;
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Expose
@@ -36,13 +38,6 @@ public class BookChapter implements Comparable<BookChapter>{
 	@Expose
 	private String chapter_link;
 	
-	@Fetch(FetchMode.SELECT)
-	@LazyToOne(LazyToOneOption.PROXY)
-	@ManyToOne(targetEntity = Book.class)
-	@Cascade(value = CascadeType.SAVE_UPDATE)
-	@JoinColumn(name = "book_id")
-	private Book book;
-	
 	@Column
 	@Expose
 	private int status;// 采集状态
@@ -52,17 +47,16 @@ public class BookChapter implements Comparable<BookChapter>{
 	@LazyToOne(LazyToOneOption.PROXY)
 	@OneToOne(targetEntity = BookChapterContent.class)
 	@JoinColumn(name = "content_id")
-	@Cascade(CascadeType.SAVE_UPDATE)
+	@Cascade({CascadeType.SAVE_UPDATE,CascadeType.DELETE})
 	private BookChapterContent chapterContent;
 
 	public BookChapter() {
 	}
 
-	public BookChapter(String chapter_name, String chapter_link, Book book, int position) {
+	public BookChapter(String chapter_name, String chapter_link, int position) {
 		super();
 		this.chapter_name = chapter_name;
 		this.chapter_link = chapter_link;
-		this.book = book;
 		this.position = position;
 	}
 
@@ -95,14 +89,6 @@ public class BookChapter implements Comparable<BookChapter>{
 
 	public void setChapter_link(String chapter_link) {
 		this.chapter_link = chapter_link;
-	}
-
-	public Book getBook() {
-		return book;
-	}
-
-	public void setBook(Book book) {
-		this.book = book;
 	}
 
 	public int getPosition() {

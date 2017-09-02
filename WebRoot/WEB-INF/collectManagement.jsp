@@ -4,10 +4,14 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<%
+String path = request.getContextPath();
+String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
+%>
 <title>采集管理</title>
-<link rel="stylesheet" type="text/css" href="css/main.css">
-<script type="text/javascript" src="js/jquery.js"></script>
-<script type="text/javascript" src="js/CollectManagement.js"></script>
+<link rel="stylesheet" type="text/css" href="<%=basePath%>css/main.css">
+<script type="text/javascript" src="<%=basePath%>js/jquery.js"></script>
+<script type="text/javascript" src="<%=basePath%>js/CollectManagement.js"></script>
 </head>
 <body>
 	<h1>规则列表</h1>
