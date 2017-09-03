@@ -1,5 +1,8 @@
 package com.gongxm.action;
 
+import javax.servlet.http.HttpServletRequest;
+
+import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.ParentPackage;
@@ -174,6 +177,25 @@ public class UserAction extends BaseAction {
 		}
 		String json = GsonUtils.toJson(info);
 		
+		write(json);
+	}
+	
+	
+	//验证用户名
+	@Action("validateUserName")
+	public void validateUserName() {
+		HttpServletRequest request = ServletActionContext.getRequest();
+		String username = request.getParameter("username");
+		User user = userService.findUserByName(username);
+		ResponseResult result = new ResponseResult(MyConstants.FAILURE, "请求失败");
+
+		if (user != null) {
+			result.setErrmsg("该用户名已被占用!");
+		} else {
+			result.setErrcode(MyConstants.SUCCESS);
+			result.setErrmsg("恭喜您,该用户名可以使用!");
+		}
+		String json = GsonUtils.toJson(result);
 		write(json);
 	}
 

@@ -85,7 +85,7 @@ public class MyTest {
 	
 	@Test
 	public void test7() {
-	/*	BookListRules bookListRules = new BookListRules();
+		BookListRules bookListRules = new BookListRules();
 		bookListRules.setBook_source("www.baidu.com");
 		bookListRules.setRegex("[0-9]\\d+");
 		
@@ -98,7 +98,7 @@ public class MyTest {
 		contentRules.setStartStr("start");
 		rules.setContentRules(contentRules);
 		bookListRules.setRules(rules);
-		service.add(bookListRules);*/
+		service.add(bookListRules);
 		
 	/*	BookListRules bookListRules = service.findOne(1);
 		service.delete(bookListRules);*/

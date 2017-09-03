@@ -1,5 +1,7 @@
 package com.gongxm.services.impl;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,6 +17,11 @@ public class BookListRulesServiceImpl extends BaseService<BookListRules> impleme
 	@Override
 	public Dao<BookListRules> getDao() {
 		return dao;
+	}
+
+	@Override
+	public List<BookListRules> findAll() {
+		return dao.findAll();
 	}
 
 }

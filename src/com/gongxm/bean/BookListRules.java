@@ -24,6 +24,7 @@ public class BookListRules implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
+	private String rulesName;// 规则名称
 	private String book_source;
 	private String baseUrl;
 	private String flag;
@@ -32,16 +33,15 @@ public class BookListRules implements Serializable {
 	private String startStr;
 	private String endStr;
 	private String regex;
-	private boolean mRepeat;
+	private boolean isRepeat;
 	private String charset;
 	private String concatUrl;
-	
 
 	@Fetch(FetchMode.SELECT)
 	@LazyToOne(LazyToOneOption.PROXY)
 	@OneToOne(targetEntity = BookInfoAndChapterListRules.class)
 	@JoinColumn(name = "book_info_id")
-	@Cascade({CascadeType.SAVE_UPDATE,CascadeType.DELETE})
+	@Cascade({ CascadeType.SAVE_UPDATE, CascadeType.DELETE })
 	private BookInfoAndChapterListRules rules;
 
 	public int getId() {
@@ -50,6 +50,14 @@ public class BookListRules implements Serializable {
 
 	public void setId(int id) {
 		this.id = id;
+	}
+
+	public String getRulesName() {
+		return rulesName;
+	}
+
+	public void setRulesName(String rulesName) {
+		this.rulesName = rulesName;
 	}
 
 	public String getBook_source() {
@@ -116,12 +124,12 @@ public class BookListRules implements Serializable {
 		this.regex = regex;
 	}
 
-	public boolean ismRepeat() {
-		return mRepeat;
+	public boolean isRepeat() {
+		return isRepeat;
 	}
 
-	public void setmRepeat(boolean mRepeat) {
-		this.mRepeat = mRepeat;
+	public void setRepeat(boolean isRepeat) {
+		this.isRepeat = isRepeat;
 	}
 
 	public String getCharset() {
@@ -148,4 +156,13 @@ public class BookListRules implements Serializable {
 		this.rules = rules;
 	}
 
+	@Override
+	public String toString() {
+		return "BookListRules [rulesName=" + rulesName + ", book_source=" + book_source + ", baseUrl=" + baseUrl
+				+ ", flag=" + flag + ", startIndex=" + startIndex + ", endIndex=" + endIndex + ", startStr=" + startStr
+				+ ", endStr=" + endStr + ", regex=" + regex + ", isRepeat=" + isRepeat + ", charset=" + charset
+				+ ", concatUrl=" + concatUrl + ", rules=" + rules + "]";
+	}
+
+	
 }

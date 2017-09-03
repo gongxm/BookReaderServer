@@ -12,10 +12,10 @@
 
 <script type="text/javascript">
 	function rulesManagement() {
-		location.href = "${pageContext.request.contextPath}/rulesManagement";
+		location.href = "${pageContext.request.contextPath}/action/showAllRules";
 	}
 	function collectManagement() {
-		location.href = "${pageContext.request.contextPath}/collectManagement";
+		location.href = "${pageContext.request.contextPath}/action/collect";
 	}
 </script>
 

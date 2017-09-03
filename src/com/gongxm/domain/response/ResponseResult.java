@@ -1,5 +1,7 @@
 package com.gongxm.domain.response;
 
+import com.gongxm.utils.MyConstants;
+import com.gongxm.utils.StringConstants;
 import com.google.gson.annotations.Expose;
 
 public class ResponseResult {
@@ -11,12 +13,13 @@ public class ResponseResult {
 	private Object result;
 
 	public ResponseResult() {
+		this.errcode = MyConstants.FAILURE;
+		this.errmsg = StringConstants.HTTP_REQUEST_ERROR;
 	}
 
 	public ResponseResult(int errcode, String errmsg) {
-		super();
-		this.errcode = errcode;
-		this.errmsg = errmsg;
+		this.errcode=errcode;
+		this.errmsg=errmsg;
 	}
 
 	public int getErrcode() {
@@ -46,6 +49,11 @@ public class ResponseResult {
 	@Override
 	public String toString() {
 		return "ResponseResult [errcode=" + errcode + ", errmsg=" + errmsg + ", result=" + result + "]";
+	}
+
+	public void setSuccess() {
+		this.errcode = MyConstants.SUCCESS;
+		this.errmsg = StringConstants.HTTP_REQUEST_SUCCESS;
 	}
 
 }

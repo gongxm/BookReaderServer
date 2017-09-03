@@ -20,7 +20,6 @@ public class UserDaoImpl extends BaseDao<User> implements UserDao {
 		try {
 			user = sqlObj.queryForObject(sql, new UserMap(), username);
 		} catch (DataAccessException e) {
-			// e.printStackTrace();
 		}
 		return user;
 	}
@@ -32,7 +31,6 @@ public class UserDaoImpl extends BaseDao<User> implements UserDao {
 		try {
 			user = sqlObj.queryForObject(sql, new UserMap(), username, password);
 		} catch (DataAccessException e) {
-//			 e.printStackTrace();
 		}
 		return user;
 	}
@@ -44,7 +42,6 @@ public class UserDaoImpl extends BaseDao<User> implements UserDao {
 		try {
 			user = sqlObj.queryForObject(sql, new UserMap(), thirdSession);
 		} catch (DataAccessException e) {
-			// e.printStackTrace();
 		}
 		return user;
 	}
@@ -56,7 +53,6 @@ public class UserDaoImpl extends BaseDao<User> implements UserDao {
 		try {
 			user = sqlObj.queryForObject(sql, new UserMap(), openid);
 		} catch (DataAccessException e) {
-			// e.printStackTrace();
 		}
 		return user;
 	}

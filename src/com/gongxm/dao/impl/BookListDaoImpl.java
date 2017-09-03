@@ -19,34 +19,54 @@ public class BookListDaoImpl extends BaseDao<BookList> implements BookListDao {
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<BookList> findUnCollectBookListBySource(String book_source, int currentPage, int pageSize) {
-		DetachedCriteria criteria = DetachedCriteria.forClass(BookList.class);
-		criteria.add(Restrictions.eq("book_source", book_source));
-		criteria.add(Restrictions.eq("status", MyConstants.BOOK_UNCOLLECT));
-		List<BookList> list = (List<BookList>) hqlObj.findByCriteria(criteria, (currentPage - 1) * pageSize,pageSize);
-		return list;
+		try {
+			DetachedCriteria criteria = DetachedCriteria.forClass(BookList.class);
+			criteria.add(Restrictions.eq("book_source", book_source));
+			criteria.add(Restrictions.eq("status", MyConstants.BOOK_UNCOLLECT));
+			List<BookList> list = (List<BookList>) hqlObj.findByCriteria(criteria, (currentPage - 1) * pageSize,pageSize);
+			return list;
+		} catch (DataAccessException e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<BookList> findAllUnCollectBookList(int currentPage, int pageSize) {
-		DetachedCriteria criteria = DetachedCriteria.forClass(BookList.class);
-		criteria.add(Restrictions.eq("status", MyConstants.BOOK_UNCOLLECT));
-		List<BookList> list = (List<BookList>) hqlObj.findByCriteria(criteria, (currentPage - 1) * pageSize,pageSize);
-		return list;
+		try {
+			DetachedCriteria criteria = DetachedCriteria.forClass(BookList.class);
+			criteria.add(Restrictions.eq("status", MyConstants.BOOK_UNCOLLECT));
+			List<BookList> list = (List<BookList>) hqlObj.findByCriteria(criteria, (currentPage - 1) * pageSize,pageSize);
+			return list;
+		} catch (DataAccessException e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 
 	@Override
 	public long getUnCollectBookListCountBySource(String book_source) {
-		String sql = "select count(*) from book_list where book_source=? and status=?";
-		Long count =sqlObj.queryForObject(sql, new Object[] {book_source,MyConstants.BOOK_UNCOLLECT}, Long.class);
-		return count;
+		try {
+			String sql = "select count(*) from book_list where book_source=? and status=?";
+			Long count =sqlObj.queryForObject(sql, new Object[] {book_source,MyConstants.BOOK_UNCOLLECT}, Long.class);
+			return count;
+		} catch (DataAccessException e) {
+			e.printStackTrace();
+		}
+		return 0;
 	}
 
 	@Override
 	public long getAllUnCollectBookListCount() {
-		String sql = "select count(*) from book_list where status=?";
-		Long count =sqlObj.queryForObject(sql, new Object[] {MyConstants.BOOK_UNCOLLECT}, Long.class);
-		return count;
+		try {
+			String sql = "select count(*) from book_list where status=?";
+			Long count =sqlObj.queryForObject(sql, new Object[] {MyConstants.BOOK_UNCOLLECT}, Long.class);
+			return count;
+		} catch (DataAccessException e) {
+			e.printStackTrace();
+		}
+		return 0;
 	}
 
 	@Override

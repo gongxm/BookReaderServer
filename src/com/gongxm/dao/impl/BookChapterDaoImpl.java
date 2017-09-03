@@ -2,6 +2,7 @@ package com.gongxm.dao.impl;
 
 import java.util.List;
 
+import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Repository;
 
 import com.gongxm.bean.BookChapter;
@@ -14,22 +15,37 @@ public class BookChapterDaoImpl extends BaseDao<BookChapter> implements BookChap
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<BookChapter> findByBookId(int bookid) {
-		String sql = "from BookChapter where book_id=?";
-		List<BookChapter> list = (List<BookChapter>) hqlObj.find(sql, bookid);
-		return list;
+		try {
+			String sql = "from BookChapter where book_id=?";
+			List<BookChapter> list = (List<BookChapter>) hqlObj.find(sql, bookid);
+			return list;
+		} catch (DataAccessException e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 
 	@Override
 	public long getUnCollectChapterCount() {
-		String sql = "select count(*) from book_chapters where status=?";
-		Long count =sqlObj.queryForObject(sql, new Object[] {MyConstants.BOOK_UNCOLLECT}, Long.class);
-		return count;
+		try {
+			String sql = "select count(*) from book_chapters where status=?";
+			Long count =sqlObj.queryForObject(sql, new Object[] {MyConstants.BOOK_UNCOLLECT}, Long.class);
+			return count;
+		} catch (DataAccessException e) {
+			e.printStackTrace();
+		}
+		return 0;
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<BookChapter> findUnCollectChapter(int currentPage, int pageSize) {
-		String sql = "from BookChapter where status=?";
-		return (List<BookChapter>) hqlObj.find(sql, MyConstants.BOOK_UNCOLLECT);
+		try {
+			String sql = "from BookChapter where status=?";
+			return (List<BookChapter>) hqlObj.find(sql, MyConstants.BOOK_UNCOLLECT);
+		} catch (DataAccessException e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 }

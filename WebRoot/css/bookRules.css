@@ -1,0 +1,19 @@
+.center {
+	text-align: center;
+}
+
+.center_table {
+	margin: 200px auto;
+	border: 1px dotted #0000ff;
+	width: 600px;
+	font-size: 18px;
+	table-layout: fixed;
+	padding: 5px;
+	cellspacing: 0;
+	cellpadding: 0;
+}
+
+h1{
+	text-align: center;
+}
+

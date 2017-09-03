@@ -25,7 +25,7 @@ public abstract class BaseService<T> implements Service<T> {
 	}
 
 	@Override
-	public T findOne(Serializable id) {
+	public T findById(Serializable id) {
 		return getDao().findOne(id);
 	}
 

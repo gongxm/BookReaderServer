@@ -48,7 +48,7 @@ public class BookAction extends BaseAction {
 			if (param != null) {
 				int id = param.getId();
 				if (id > 0) {
-					Book book = bookService.findOne(id);
+					Book book = bookService.findById(id);
 					if (book != null) {
 						result.setErrcode(MyConstants.SUCCESS);
 						result.setErrmsg(StringConstants.HTTP_REQUEST_SUCCESS);
@@ -82,7 +82,7 @@ public class BookAction extends BaseAction {
 			if (param != null) {
 				int id = param.getId();
 				if (id > 0) {
-					BookChapter chapter = chapterService.findOne(id);
+					BookChapter chapter = chapterService.findById(id);
 					if (chapter != null) {
 						if (chapter.getStatus() == MyConstants.BOOK_COLLECTED) {
 							BookChapterContent content = chapter.getChapterContent();
@@ -125,7 +125,7 @@ public class BookAction extends BaseAction {
 			if (param != null) {
 				int bookid = param.getId();
 				if (bookid > 0) {
-					Book book = bookService.findOne(bookid);
+					Book book = bookService.findById(bookid);
 					if(book!=null) {
 						Set<BookChapter> set =book.getChapters();
 						if (set != null) {
