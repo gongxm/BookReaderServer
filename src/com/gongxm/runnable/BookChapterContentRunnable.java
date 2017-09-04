@@ -5,6 +5,7 @@ import java.io.IOException;
 import com.gongxm.bean.Book;
 import com.gongxm.bean.BookChapter;
 import com.gongxm.bean.BookChapterContent;
+import com.gongxm.bean.BookChapterContentRules;
 import com.gongxm.services.BookChapterService;
 import com.gongxm.utils.HtmlParser;
 import com.gongxm.utils.MyConstants;
@@ -16,10 +17,10 @@ public class BookChapterContentRunnable implements Runnable {
 	private String endStr;
 	private BookChapterService service;
 
-	public BookChapterContentRunnable(BookChapter chapter,String startStr, String endStr, BookChapterService service) {
+	public BookChapterContentRunnable(BookChapter chapter,BookChapterContentRules rules, BookChapterService service) {
 		this.chapter=chapter;
-		this.startStr =startStr;
-		this.endStr=endStr;
+		this.startStr =rules.getStartStr();
+		this.endStr=rules.getEndStr();
 		this.service=service;
 	}
 

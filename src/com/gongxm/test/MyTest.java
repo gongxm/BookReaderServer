@@ -173,7 +173,7 @@ public class MyTest {
 		String startStr = "<div class=\"yd_text2\">";
 		String endStr = "<div class=\"yd_ad1\">";
 		System.out.println("第三步启动");
-	//	CollectUtils.collectBookChapter(startStr,endStr);
+		CollectUtils.collectBookChapter(null,new BookChapterContentRules());
 	}
 
 	public static void demo2() {
@@ -193,7 +193,7 @@ public class MyTest {
 		boolean useBookLink=true;
 		try {
 			System.out.println("第二步启动");
-			CollectUtils.collectBookInfo(bookListService,null, regexs, startStr, endStr, charset,concatUrl,useBookLink);
+		//	CollectUtils.collectBookInfo(bookListService,null,new BookInfoAndChapterListRules());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -213,7 +213,7 @@ public class MyTest {
 		String charset = "gbk";
 		String concatUrl = "http://www.88dushu.com";
 		System.out.println("第一步启动");
-		CollectUtils.collectBookList(book_source,baseUrl, flag, startIndex, endIndex, startStr, endStr, regex, repeat,charset,concatUrl);
+		//CollectUtils.collectBookList(new BookListRules());
 	}
 	
 	//查询重复记录

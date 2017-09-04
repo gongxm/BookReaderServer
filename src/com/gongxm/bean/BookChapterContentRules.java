@@ -23,6 +23,8 @@ public class BookChapterContentRules implements Serializable {
 	@Expose
 	private String endStr;
 
+	private int book_list_rules_id;
+
 	public int getId() {
 		return id;
 	}
@@ -47,5 +49,12 @@ public class BookChapterContentRules implements Serializable {
 		this.endStr = endStr;
 	}
 
+	public int getBook_list_rules_id() {
+		return book_list_rules_id;
+	}
+
+	public void setBook_list_rules_id(int book_list_rules_id) {
+		this.book_list_rules_id = book_list_rules_id;
+	}
 
 }

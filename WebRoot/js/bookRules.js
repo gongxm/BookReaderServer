@@ -36,15 +36,14 @@ $(document).ready(function() {
 			success : function(data, textStatus) {
 				if ("success" == textStatus) {
 					if (data.errcode == 1) {
-						$("#over").show();// 展现遮罩层屏幕
-						$("#floatdiv").show().center(800, 600);// 展现悬浮框
-						
 						var rules = data.result;
-						
 						$("#c_id").val(rules.id);
-						$("#c_start").val(rules.startStr);
-						$("#c_end").val(rules.endStr);
+						$("#c_start").text(rules.startStr);
+						$("#c_end").text(rules.endStr);
 					}
+					$("#c_book_rules_id").val($("#book_list_rules_id").val());
+					$("#over").show();// 展现遮罩层屏幕
+					$("#floatdiv").show().center(800, 600);// 展现悬浮框
 				}
 			}
 		});
@@ -57,7 +56,6 @@ $(document).ready(function() {
 	$("#bookRulesForm").submit(function() { // 
 
 		var FormData = $("form[name=bookRulesForm]").serializeArray(); // 转换为Json格式数据
-
 		$.ajax({
 			url : "updateBookRules",
 			type : "POST",
@@ -77,4 +75,30 @@ $(document).ready(function() {
 		});
 		return false; // 设置为 false 这样表单提交就不会页面跳转
 	});
+	
+	
+	$("#contentRules").submit(function() { // 
+
+		var FormData = $("form[name=contentRules]").serializeArray(); // 转换为Json格式数据
+
+		$.ajax({
+			url : "updateContentRules",
+			type : "POST",
+			data : FormData,
+			success : function(data, textStatus) {
+				if ("success" == textStatus) {
+					if (data.errcode == 1) {
+						alert("操作成功!")
+						window.location.href = 'showAllRules';
+					} else {
+						alert("操作失败!")
+					}
+				} else {
+					alert("请求失败,请重试!")
+				}
+			}
+		});
+		return false; // 设置为 false 这样表单提交就不会页面跳转
+	});
+	
 });

@@ -29,62 +29,66 @@
 			<tr>
 				<td>ID</td>
 				<td><input type="text" name="id" id="id"
-					value="${bookRules.id}" readonly="readonly" /></td>
+					value="${bookRules.id}" readonly="readonly" /> <input
+					type="hidden" name="book_list_rules_id" id="book_list_rules_id"
+					value="${bookListRulesId}" /></td>
 			</tr>
 			<tr>
-				<td>标题</td>
-				<td><input type="text" name="titleRegex" id="titleRegex"
-					value="${bookRules.titleRegex}" /></td>
+				<td>标题正则</td>
+				<td><textarea rows="1" cols="20" name="titleRegex"
+						id="titleRegex">${bookRules.titleRegex}</textarea></td>
 			</tr>
 			<tr>
-				<td>作者</td>
-				<td><input type="text" name="authorRegex" id="authorRegex"
-					value="${bookRules.authorRegex}" /></td>
+				<td>作者正则</td>
+				<td><textarea rows="1" cols="20" name="authorRegex"
+						id="authorRegex">${bookRules.authorRegex}</textarea></td>
 			</tr>
 			<tr>
-				<td>类别</td>
-				<td><input type="text" name="categoryRegex" id="categoryRegex"
-					value="${bookRules.categoryRegex}" /></td>
+				<td>类别正则</td>
+				<td><textarea rows="1" cols="20" name="categoryRegex"
+						id="categoryRegex">${bookRules.categoryRegex}</textarea></td>
 			</tr>
 			<tr>
-				<td>状态</td>
-				<td><input type="text" name="statusRegex" id="statusRegex"
-					value="${bookRules.statusRegex}" /></td>
+				<td>状态正则</td>
+				<td><textarea rows="1" cols="20" name="statusRegex"
+						id="statusRegex">${bookRules.statusRegex}</textarea></td>
 			</tr>
 			<tr>
-				<td>封面</td>
-				<td><input type="text" name="coverRegex" id="coverRegex"
-					value="${bookRules.coverRegex}" /></td>
+				<td>封面正则</td>
+				<td><textarea rows="1" cols="20" name="coverRegex"
+						id="coverRegex">${bookRules.coverRegex}</textarea></td>
 			</tr>
 			<tr>
-				<td>简介</td>
-				<td><input type="text" name="shortIntroduceRegex"
-					id="shortIntroduceRegex" value="${bookRules.shortIntroduceRegex}" /></td>
+				<td>简介正则</td>
+				<td><textarea rows="1" cols="20" name="shortIntroduceRegex"
+						id="shortIntroduceRegex">${bookRules.shortIntroduceRegex}</textarea>
+				</td>
 			</tr>
 			<tr>
 				<td>目录链接正则</td>
-				<td><input type="text" name="listLinkRegex" id="listLinkRegex"
-					value="${bookRules.listLinkRegex}" /></td>
+				<td><textarea rows="1" cols="20" name="listLinkRegex"
+						id="listLinkRegex"></textarea> value="${bookRules.listLinkRegex}"
+					/></td>
 			</tr>
 			<tr>
 				<td>目录标题正则</td>
-				<td><input type="text" name="listTitleRegex"
-					id="listTitleRegex" value="${bookRules.listTitleRegex}" /></td>
+				<td><textarea rows="1" cols="20" name="listTitleRegex"
+						id="listTitleRegex">${bookRules.listTitleRegex}</textarea></td>
 			</tr>
 			<tr>
-				<td>开始区域</td>
-				<td><input type="text" name="startStr" id="startStr"
-					value="${bookRules.startStr}" /></td>
+				<td>开始区域正则</td>
+				<td><textarea rows="1" cols="20" name="startStr" id="startStr">${bookRules.startStr}</textarea>
+				</td>
 			</tr>
 			<tr>
-				<td>结束区域</td>
-				<td><input type="text" name="endStr" id="endStr"
-					value="${bookRules.endStr}" /></td>
+				<td>结束区域正则</td>
+				<td><textarea rows="1" cols="20" name="endStr" id="endStr">${bookRules.endStr}</textarea>
+				</td>
 			</tr>
 			<tr>
 				<td>页面字符集</td>
 				<td><select name="charset" style="width: 80px" id="charset">
-						<c:if test="${bookRules.charset=='GBK'||bookRules.charset==''}">
+						<c:if test="${bookRules.charset=='GBK'}">
 							<option value="GBK" selected="selected">GBK</option>
 							<option value="UTF-8">UTF-8</option>
 						</c:if>
@@ -92,28 +96,35 @@
 							<option value="GBK">GBK</option>
 							<option value="UTF-8" selected="selected">UTF-8</option>
 						</c:if>
+						<c:if
+							test="${bookRules.charset!='GBK'&&bookRules.charset!='UTF-8'}">
+							<option value="GBK" selected="selected">GBK</option>
+							<option value="UTF-8">UTF-8</option>
+						</c:if>
 				</select></td>
 			</tr>
 			<tr>
 				<td>拼接链接</td>
-				<td><input type="text" name="concatUrl" id="concatUrl"
-					value="${bookRules.concatUrl}" /></td>
+				<td><textarea rows="1" cols="20" name="concatUrl"
+						id="concatUrl">${bookRules.concatUrl}</textarea></td>
 			</tr>
 			<tr>
 				<td>是否使用书籍链接进行拼接</td>
-				<td><c:if test="${bookRules.useBookLink}">
-						<input type="radio" name="useBookLink" value="true"
-							checked="checked">是
-					<input type="radio" name="useBookLink" value="false">否
-			</c:if> <c:if test="${bookRules.useBookLink==false}">
-						<input type="radio" name="useBookLink" value="true">是
+				<td><input type="radio" name="useBookLink" value="true"
+					<c:if test="${bookRules.useBookLink==true}">
+							checked="checked" </c:if>>是
 					<input type="radio" name="useBookLink" value="false"
-							checked="checked">否
-			</c:if>
+					<c:if test="${bookRules.useBookLink==false}">
+							checked="checked"</c:if>>否
+
+
+
+
+				
 			</tr>
 			<tr>
 				<td colspan="2" class="center"><input type="submit" value="修改" />
-					<input type="button" value="取消" id="cancel" /></td>
+					<input type="button" value="返回" id="cancel" /></td>
 			</tr>
 		</table>
 	</form>
@@ -136,21 +147,23 @@
 				<caption>编辑内容页规则</caption>
 				<tr>
 					<td>ID(无需修改)</td>
-					<td><input type="text" id="c_id" name="id" /></td>
+					<td><input type="text" id="c_id" name="id" readonly="readonly" />
+						<input type="hidden" id="c_book_rules_id"
+						name="book_list_rules_id" /></td>
 				</tr>
 				<tr>
 					<td>开始区域</td>
-					<td><input type="text" id="c_start" name="startStr" /></td>
+					<td><textarea rows="1" cols="20" id="c_start" name="startStr"></textarea></td>
 				</tr>
 				<tr>
 					<td>结束区域</td>
-					<td><input type="text" id="c_end" name="endStr" /></td>
+					<td><textarea rows="1" cols="20" id="c_end" name="endStr"></textarea></td>
 				</tr>
 
 				<tr>
-					<td align="center" colspan="2"><input type="submit" value="确定修改"
-						id="editContentRules" /> <input type="button" value="取消修改"
-						id="cancelEdit" /></td>
+					<td align="center" colspan="2"><input type="submit"
+						value="确定修改" id="editContentRules" /> <input type="button"
+						value="取消修改" id="cancelEdit" /></td>
 				</tr>
 
 			</table>

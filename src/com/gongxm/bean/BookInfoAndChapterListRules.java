@@ -46,6 +46,8 @@ public class BookInfoAndChapterListRules implements Serializable {
 	@Expose
 	private boolean useBookLink; // 是否使用书籍本身的链接进行拼接
 
+	private int book_list_rules_id;
+
 	public int getId() {
 		return id;
 	}
@@ -158,6 +160,14 @@ public class BookInfoAndChapterListRules implements Serializable {
 		this.listTitleRegex = listTitleRegex;
 	}
 
+	public int getBook_list_rules_id() {
+		return book_list_rules_id;
+	}
+
+	public void setBook_list_rules_id(int book_list_rules_id) {
+		this.book_list_rules_id = book_list_rules_id;
+	}
+
 	@Override
 	public String toString() {
 		return "BookInfoAndChapterListRules [id=" + id + ", titleRegex=" + titleRegex + ", authorRegex=" + authorRegex
@@ -166,5 +176,5 @@ public class BookInfoAndChapterListRules implements Serializable {
 				+ ", listTitleRegex=" + listTitleRegex + ", startStr=" + startStr + ", endStr=" + endStr + ", charset="
 				+ charset + ", concatUrl=" + concatUrl + ", useBookLink=" + useBookLink + "]";
 	}
-	
+
 }

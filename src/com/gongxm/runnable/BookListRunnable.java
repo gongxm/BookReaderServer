@@ -8,7 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.gongxm.bean.Book;
 import com.gongxm.bean.BookList;
+import com.gongxm.bean.BookListRules;
 import com.gongxm.services.BookListService;
+import com.gongxm.utils.CollectUtils;
 import com.gongxm.utils.HttpUtils;
 import com.gongxm.utils.MyConstants;
 import com.gongxm.utils.TextUtils;
@@ -26,20 +28,20 @@ public class BookListRunnable implements Runnable {
 	private String concatUrl;
 	private String book_source;
 
-	public BookListRunnable(String book_source, String url, String startStr, String endStr, String regex,
-			boolean repeat, String charset, String concatUrl) {
-		this.book_source = book_source;
+	public BookListRunnable(BookListRules bookListRules, String url) {
+		this.book_source = bookListRules.getBook_source();
 		this.url = url;
-		this.startStr = startStr;
-		this.endStr = endStr;
-		this.regex = regex;
-		this.repeat = repeat;
+		this.startStr = bookListRules.getStartStr();
+		this.endStr = bookListRules.getEndStr();
+		this.regex = bookListRules.getRegex();
+		this.repeat = bookListRules.isRepeat();
+		String charset = bookListRules.getCharset();
 		if (TextUtils.notEmpty(charset)) {
 			this.charset = charset;
 		} else {
 			this.charset = MyConstants.DEFAULT_ENCODING;
 		}
-		this.concatUrl = concatUrl;
+		this.concatUrl = bookListRules.getConcatUrl();
 	}
 
 	@Override
@@ -84,6 +86,7 @@ public class BookListRunnable implements Runnable {
 			e.printStackTrace();
 		}
 
+		CollectUtils.threadCount--;
 		System.out.println("----完成----");
 	}
 

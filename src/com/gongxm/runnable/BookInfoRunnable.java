@@ -10,10 +10,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.gongxm.bean.Book;
 import com.gongxm.bean.BookChapter;
+import com.gongxm.bean.BookInfoAndChapterListRules;
 import com.gongxm.bean.BookList;
 import com.gongxm.services.BookChapterService;
 import com.gongxm.services.BookListService;
 import com.gongxm.services.BookService;
+import com.gongxm.utils.CollectUtils;
 import com.gongxm.utils.HttpUtils;
 import com.gongxm.utils.MyConstants;
 import com.gongxm.utils.TextUtils;
@@ -23,7 +25,6 @@ public class BookInfoRunnable implements Runnable {
 	private String charset;
 	private String endStr;
 	private String startStr;
-	private String[] regexs;
 	private String concatUrl;
 	private BookList bookList;
 	@Autowired
@@ -32,38 +33,53 @@ public class BookInfoRunnable implements Runnable {
 	BookChapterService chapterService;
 	@Autowired
 	BookListService service;
+	
+	// 标题
+//	String titleRegex;
+//	// 作者
+//	String authorRegex;
+//	// 类别
+//	String categoryRegex;
+//	// 状态
+//	String statusRegex;
+//	// 封面
+//	String coverRegex;
+//	// 简介
+//	String shortIntroduceRegex;
+	private String[] regexs;
 
-	public BookInfoRunnable(BookList bookList, String[] regexs, String startStr, String endStr, String concatUrl, String charset) {
+	public BookInfoRunnable(BookList bookList, String concatUrl,BookInfoAndChapterListRules rules) {
 		this.bookList = bookList;
-		this.regexs = regexs;
-		this.startStr = startStr;
-		this.endStr = endStr;
+		this.startStr = rules.getStartStr();
+		this.endStr = rules.getEndStr();
 		this.concatUrl=concatUrl;
-		this.charset = charset;
+		String charset = rules.getCharset();
+		if (TextUtils.notEmpty(charset)) {
+			this.charset = charset;
+		} else {
+			this.charset = MyConstants.DEFAULT_ENCODING;
+		}
+		
+		
+		this.regexs = new String[] {
+				rules.getTitleRegex(),
+				rules.getAuthorRegex(),
+				rules.getCategoryRegex(),
+				rules.getStatusRegex(),
+				rules.getCoverRegex(),
+				rules.getShortIntroduceRegex()
+		};
+		
 	}
 
 	@Override
 	public void run() {
-		if(regexs==null||regexs.length<7){
-			return;
-		}
 		try {
 			String url = bookList.getBook_link();
 			System.out.println("正在采集:"+url);
 			String html = HttpUtils.executGet(url, charset);
 
-			// 标题
-//			String titleRegex = regexs[0];
-			// 作者
-//			String authorRegex = regexs[1];
-			// 类别
-//			String categoryRegex = regexs[2];
-			// 状态
-//			String statusRegex = regexs[3];
-			// 封面
-//			String coverRegex = regexs[4];
-			// 简介
-//			String shortIntroduceRegex = regexs[5];
+
 			
 			List<String> list = new ArrayList<>();
 			
@@ -79,7 +95,6 @@ public class BookInfoRunnable implements Runnable {
 					list.add("暂无");
 				}
 			}
-			
 			
 			
 			Book book = new Book(list.get(0), list.get(1), list.get(2), list.get(3), list.get(4),list.get(5),url);
@@ -131,6 +146,7 @@ public class BookInfoRunnable implements Runnable {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		CollectUtils.threadCount--;
 		System.out.println("======采集完成=====");
 	}
 	

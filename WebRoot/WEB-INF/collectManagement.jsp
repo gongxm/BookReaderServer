@@ -30,7 +30,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 						<tr>
 							<td class="inner_td">${rules.id}</td>
 							<td class="inner_td">${rules.rulesName}</td>
-							<td class="inner_td"><input type="button" value="采集"
+							<td class="inner_td"><input type="button" id="collect_bt" value="采集"
 								onclick="collect(this)"></td>
 						</tr>
 					</c:forEach>

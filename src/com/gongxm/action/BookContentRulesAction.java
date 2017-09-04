@@ -8,7 +8,8 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
 import com.gongxm.bean.BookChapterContentRules;
-import com.gongxm.dao.BookChapterContentRulesDao;
+import com.gongxm.bean.BookListRules;
+import com.gongxm.dao.Dao;
 import com.gongxm.domain.request.IDParam;
 import com.gongxm.domain.response.ResponseResult;
 import com.gongxm.services.BookListRulesService;
@@ -28,9 +29,8 @@ public class BookContentRulesAction extends BaseAction implements ModelDriven<Bo
 
 	@Autowired
 	BookListRulesService rulesService;
-
 	@Autowired
-	BookChapterContentRulesDao contentRulesDao;
+	private Dao<BookChapterContentRules> contentRulesDao;
 
 	@Override
 	public BookChapterContentRules getModel() {
@@ -42,22 +42,19 @@ public class BookContentRulesAction extends BaseAction implements ModelDriven<Bo
 	public void updateContentRules() {
 		ResponseResult result = new ResponseResult();
 		if (rules != null) {
-			BookChapterContentRules oldRules = contentRulesDao.findById(rules.getId());
-			if (oldRules == null) {
-				contentRulesDao.add(rules);
-			} else {
-				contentRulesDao.update(rules);
+			BookListRules bookListRules = rulesService.findById(rules.getBook_list_rules_id());
+			if (bookListRules != null) {
+				bookListRules.setContentRules(rules);
+				rulesService.update(bookListRules);
+				result.setErrcode(MyConstants.SUCCESS);
+				result.setErrmsg("修改规则成功!");
 			}
-			result.setErrcode(MyConstants.SUCCESS);
-			result.setErrmsg("修改规则成功!");
 		}
 		String json = GsonUtils.toJson(result);
 		write(json);
 	}
-	
-	
-	
-	//显示内容页规则
+
+	// 显示内容页规则
 	@Action("showContentRules")
 	public void showContentRules() {
 		ResponseResult result = new ResponseResult();

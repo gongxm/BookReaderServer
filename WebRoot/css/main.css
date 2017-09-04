@@ -4,6 +4,8 @@
 	cellpadding: 0;
 }
 
+textarea{ resize:none; width:200px; height:35px;}
+
 .table_inner {
 	border: 1px dotted #f3c3f3;
 	width: 800px;

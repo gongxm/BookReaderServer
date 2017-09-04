@@ -55,15 +55,15 @@ public class BookListRules implements Serializable {
 	@Fetch(FetchMode.SELECT)
 	@LazyToOne(LazyToOneOption.PROXY)
 	@OneToOne(targetEntity = BookInfoAndChapterListRules.class)
-	@JoinColumn(name = "book_info_id")
 	@Cascade({ CascadeType.SAVE_UPDATE, CascadeType.DELETE })
+	@JoinColumn(name = "book_info_rules_id")
 	private BookInfoAndChapterListRules rules;
 
 	@Fetch(FetchMode.SELECT)
 	@LazyToOne(LazyToOneOption.PROXY)
 	@OneToOne(targetEntity = BookChapterContentRules.class)
-	@JoinColumn(name = "book_content_rules_id")
 	@Cascade({ CascadeType.SAVE_UPDATE, CascadeType.DELETE })
+	@JoinColumn(name = "chapter_content_rules_id")
 	private BookChapterContentRules contentRules;
 
 	public int getId() {
