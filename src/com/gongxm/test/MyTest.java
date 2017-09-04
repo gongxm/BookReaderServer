@@ -24,14 +24,11 @@ import com.gongxm.services.BookListService;
 import com.gongxm.services.BookService;
 import com.gongxm.services.UserService;
 import com.gongxm.utils.CollectUtils;
+import com.gongxm.utils.GsonUtils;
 import com.gongxm.utils.MyConstants;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = "classpath:applicationContext.xml")
 public class MyTest {
-	
-	@Autowired
-	@Qualifier("bookChapterDao")
-	BookChapterDao dao;
 	
 	@Autowired
 	private JdbcTemplate jtl;
@@ -39,6 +36,7 @@ public class MyTest {
 	@Autowired
 	@Qualifier("bookDao")
 	protected BookDao bookDao;  
+	
 	
 	
 	@Autowired
@@ -54,9 +52,16 @@ public class MyTest {
 	static BookListService bookListService;
 	
 	@Test
+	public void test9() {
+		BookListRules rules = service.findById(1);
+		String json = GsonUtils.parseToJson(rules);
+		System.out.println(json);
+	}
+	
+	@Test
 	public void test8() {
 		
-		Book book = new Book();
+		/*Book book = new Book();
 		book.setBook_name("好好学习");
 		BookChapter bookChapter = new BookChapter();
 		bookChapter.setChapter_name("java");
@@ -66,10 +71,10 @@ public class MyTest {
 		bookChapter.setChapterContent(chapterContent);
 		book.getChapters().add(bookChapter);
 		
-		bookService.add(book);
+		bookService.add(book);*/
 		
+//		Book book = bookService.findById(1);
 		
-//		Book book = bookService.findOne(1);
 		/*BookChapter bookChapter = new BookChapter();
 		bookChapter.setChapter_name("UI");
 		bookChapter.setChapter_link("www.ith11eima.com");
@@ -91,12 +96,22 @@ public class MyTest {
 		
 		BookInfoAndChapterListRules rules=new BookInfoAndChapterListRules();
 		rules.setCharset("utf-8");
-		String[] regexs= {"aaaaaa","bbbbbbbbbbb","CCCCCCCCCCCCCCCCc"};
-		rules.setRegexs(regexs);
+		rules.setTitleRegex("titleRegex");
+		rules.setAuthorRegex("authorRegex");
+		rules.setCategoryRegex("categoryRegex");
+		rules.setCharset("charset");
+		rules.setConcatUrl("concatUrl");
+		rules.setCoverRegex("coverRegex");
+		rules.setEndStr("endStr");
+		rules.setStartStr("startStr");
+		rules.setListLinkRegex("listLinkRegex");
+		rules.setListTitleRegex("listTitleRegex");
+		rules.setUseBookLink(true);
+		
 		BookChapterContentRules contentRules=new BookChapterContentRules();
 		contentRules.setEndStr("end");
 		contentRules.setStartStr("start");
-		rules.setContentRules(contentRules);
+		bookListRules.setContentRules(contentRules);
 		bookListRules.setRules(rules);
 		service.add(bookListRules);
 		

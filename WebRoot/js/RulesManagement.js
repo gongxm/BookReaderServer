@@ -201,7 +201,7 @@ function editRules(thisObj) {
 	var $td = $(thisObj).parents('tr').children('td');
 
 	var id = $td.eq(0).text();
-
+	
 	// 根据ID获取到当前要编辑的规则内容
 	$.ajax({
 		url : "getRules",
@@ -236,7 +236,7 @@ function editRules(thisObj) {
 					$("#charset").find("option[value='"+charset+"']").attr("selected",true);
 
 				} else {
-					alert(data.errmsg)
+					alert(textStatus)
 				}
 			} else {
 				alert("请求失败!")

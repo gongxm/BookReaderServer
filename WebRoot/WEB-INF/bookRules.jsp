@@ -12,13 +12,18 @@
 <title>编辑书籍信息规则</title>
 <link rel="stylesheet" type="text/css"
 	href="<%=basePath%>css/bookRules.css">
+<link rel="stylesheet" type="text/css" href="<%=basePath%>css/main.css">
 <script type="text/javascript" src="<%=basePath%>js/jquery.js"></script>
 <script type="text/javascript" src="<%=basePath%>js/bookRules.js"></script>
 </head>
 <body>
 	<h1>编辑书籍信息规则</h1>
 
-	<form action="">
+	<div class="edit">
+		<input type="button" value="编辑内容页规则" id="edit" />
+	</div>
+
+	<form name="bookRulesForm" id="bookRulesForm">
 		<table class="center_table">
 			<caption>编辑书籍信息规则</caption>
 			<tr>
@@ -28,43 +33,43 @@
 			</tr>
 			<tr>
 				<td>标题</td>
-				<td><input type="text" name="title" id="title"
-					value="${bookRules.regexs[0]}" /></td>
+				<td><input type="text" name="titleRegex" id="titleRegex"
+					value="${bookRules.titleRegex}" /></td>
 			</tr>
 			<tr>
 				<td>作者</td>
-				<td><input type="text" name="author" id="author"
-					value="${bookRules.regexs[1]}" /></td>
+				<td><input type="text" name="authorRegex" id="authorRegex"
+					value="${bookRules.authorRegex}" /></td>
 			</tr>
 			<tr>
 				<td>类别</td>
-				<td><input type="text" name="category" id="category"
-					value="${bookRules.regexs[2]}" /></td>
+				<td><input type="text" name="categoryRegex" id="categoryRegex"
+					value="${bookRules.categoryRegex}" /></td>
 			</tr>
 			<tr>
 				<td>状态</td>
-				<td><input type="text" name="status" id="status"
-					value="${bookRules.regexs[3]}" /></td>
+				<td><input type="text" name="statusRegex" id="statusRegex"
+					value="${bookRules.statusRegex}" /></td>
 			</tr>
 			<tr>
 				<td>封面</td>
-				<td><input type="text" name="cover" id="cover"
-					value="${bookRules.regexs[4]}" /></td>
+				<td><input type="text" name="coverRegex" id="coverRegex"
+					value="${bookRules.coverRegex}" /></td>
 			</tr>
 			<tr>
 				<td>简介</td>
-				<td><input type="text" name="shortIntroduce"
-					id="shortIntroduce" value="${bookRules.regexs[5]}" /></td>
+				<td><input type="text" name="shortIntroduceRegex"
+					id="shortIntroduceRegex" value="${bookRules.shortIntroduceRegex}" /></td>
 			</tr>
 			<tr>
 				<td>目录链接正则</td>
-				<td><input type="text" name="list_link" id="list_link"
-					value="${bookRules.regexs[6]}" /></td>
+				<td><input type="text" name="listLinkRegex" id="listLinkRegex"
+					value="${bookRules.listLinkRegex}" /></td>
 			</tr>
 			<tr>
 				<td>目录标题正则</td>
-				<td><input type="text" name="list_title" id="list_title"
-					value="${bookRules.regexs[7]}" /></td>
+				<td><input type="text" name="listTitleRegex"
+					id="listTitleRegex" value="${bookRules.listTitleRegex}" /></td>
 			</tr>
 			<tr>
 				<td>开始区域</td>
@@ -78,8 +83,16 @@
 			</tr>
 			<tr>
 				<td>页面字符集</td>
-				<td><input type="text" name="charset" id="charset"
-					value="${bookRules.charset}" /></td>
+				<td><select name="charset" style="width: 80px" id="charset">
+						<c:if test="${bookRules.charset=='GBK'||bookRules.charset==''}">
+							<option value="GBK" selected="selected">GBK</option>
+							<option value="UTF-8">UTF-8</option>
+						</c:if>
+						<c:if test="${bookRules.charset=='UTF-8'}">
+							<option value="GBK">GBK</option>
+							<option value="UTF-8" selected="selected">UTF-8</option>
+						</c:if>
+				</select></td>
 			</tr>
 			<tr>
 				<td>拼接链接</td>
@@ -99,9 +112,49 @@
 			</c:if>
 			</tr>
 			<tr>
-				<td colspan="2" class="center"><input type="submit"></td>
+				<td colspan="2" class="center"><input type="submit" value="修改" />
+					<input type="button" value="取消" id="cancel" /></td>
 			</tr>
 		</table>
 	</form>
+
+
+
+
+
+	<!-- 遮盖层 -->
+	<div id="over" class="over"></div>
+
+	<!-- 弹出窗口代码 -->
+	<div id="floatdiv" style="height: 300px">
+		<input class="close" id="close" type="button" value="关闭" />
+		<h2>编辑内容页规则</h2>
+		<form id="contentRules" name="contentRules"
+			action="updateContentRules">
+			<table class="table_inner table_margin table_width"
+				style='margin: 0px auto'>
+				<caption>编辑内容页规则</caption>
+				<tr>
+					<td>ID(无需修改)</td>
+					<td><input type="text" id="c_id" name="id" /></td>
+				</tr>
+				<tr>
+					<td>开始区域</td>
+					<td><input type="text" id="c_start" name="startStr" /></td>
+				</tr>
+				<tr>
+					<td>结束区域</td>
+					<td><input type="text" id="c_end" name="endStr" /></td>
+				</tr>
+
+				<tr>
+					<td align="center" colspan="2"><input type="submit" value="确定修改"
+						id="editContentRules" /> <input type="button" value="取消修改"
+						id="cancelEdit" /></td>
+				</tr>
+
+			</table>
+		</form>
+	</div>
 </body>
 </html>

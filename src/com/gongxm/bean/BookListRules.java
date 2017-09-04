@@ -17,24 +17,39 @@ import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.LazyToOne;
 import org.hibernate.annotations.LazyToOneOption;
 
+import com.google.gson.annotations.Expose;
+
 @Entity
 @Table(name = "book_list_rules")
 public class BookListRules implements Serializable {
 	private static final long serialVersionUID = 1L;
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Expose
 	private int id;
+	@Expose
 	private String rulesName;// 规则名称
+	@Expose
 	private String book_source;
+	@Expose
 	private String baseUrl;
+	@Expose
 	private String flag;
+	@Expose
 	private int startIndex;
+	@Expose
 	private int endIndex;
+	@Expose
 	private String startStr;
+	@Expose
 	private String endStr;
+	@Expose
 	private String regex;
+	@Expose
 	private boolean isRepeat;
+	@Expose
 	private String charset;
+	@Expose
 	private String concatUrl;
 
 	@Fetch(FetchMode.SELECT)
@@ -43,6 +58,13 @@ public class BookListRules implements Serializable {
 	@JoinColumn(name = "book_info_id")
 	@Cascade({ CascadeType.SAVE_UPDATE, CascadeType.DELETE })
 	private BookInfoAndChapterListRules rules;
+
+	@Fetch(FetchMode.SELECT)
+	@LazyToOne(LazyToOneOption.PROXY)
+	@OneToOne(targetEntity = BookChapterContentRules.class)
+	@JoinColumn(name = "book_content_rules_id")
+	@Cascade({ CascadeType.SAVE_UPDATE, CascadeType.DELETE })
+	private BookChapterContentRules contentRules;
 
 	public int getId() {
 		return id;
@@ -156,6 +178,14 @@ public class BookListRules implements Serializable {
 		this.rules = rules;
 	}
 
+	public BookChapterContentRules getContentRules() {
+		return contentRules;
+	}
+
+	public void setContentRules(BookChapterContentRules contentRules) {
+		this.contentRules = contentRules;
+	}
+
 	@Override
 	public String toString() {
 		return "BookListRules [rulesName=" + rulesName + ", book_source=" + book_source + ", baseUrl=" + baseUrl
@@ -164,5 +194,4 @@ public class BookListRules implements Serializable {
 				+ ", concatUrl=" + concatUrl + ", rules=" + rules + "]";
 	}
 
-	
 }

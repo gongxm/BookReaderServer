@@ -50,7 +50,7 @@ public class BaseDao<T> extends HibernateDaoSupport implements Dao<T> {
 
 	@Override
 	@SuppressWarnings("unchecked")
-	public T findOne(Serializable id) {
+	public T findById(Serializable id) {
 		return  (T) hqlObj.get(clazz, id);
 	}
 

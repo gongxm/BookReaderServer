@@ -6,16 +6,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
-import org.hibernate.annotations.Cascade;
-import org.hibernate.annotations.CascadeType;
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
-import org.hibernate.annotations.LazyToOne;
-import org.hibernate.annotations.LazyToOneOption;
+import com.google.gson.annotations.Expose;
 
 @Entity
 @Table(name = "book_info_and_chapter_list_rules")
@@ -23,20 +16,35 @@ public class BookInfoAndChapterListRules implements Serializable {
 	private static final long serialVersionUID = 1L;
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Expose
 	private int id;
-	private String[] regexs;// 1.标题 2.作者 3.类别 4.状态 5.封面 6.简介7.目录链接正则 8.目录标题正则
+	// 1.标题 2.作者 3.类别 4.状态 5.封面 6.简介7.目录链接正则 8.目录标题正则
+	@Expose
+	private String titleRegex;
+	@Expose
+	private String authorRegex;
+	@Expose
+	private String categoryRegex;
+	@Expose
+	private String statusRegex;
+	@Expose
+	private String coverRegex;
+	@Expose
+	private String shortIntroduceRegex;
+	@Expose
+	private String listLinkRegex;
+	@Expose
+	private String listTitleRegex;
+	@Expose
 	private String startStr;
+	@Expose
 	private String endStr;
+	@Expose
 	private String charset;
+	@Expose
 	private String concatUrl; // 用于把获取到的链接拼接成完整链接
+	@Expose
 	private boolean useBookLink; // 是否使用书籍本身的链接进行拼接
-
-	@Fetch(FetchMode.SELECT)
-	@LazyToOne(LazyToOneOption.PROXY)
-	@OneToOne(targetEntity = BookChapterContentRules.class)
-	@JoinColumn(name = "chapter_content_id")
-	@Cascade({CascadeType.SAVE_UPDATE,CascadeType.DELETE})
-	private BookChapterContentRules contentRules;
 
 	public int getId() {
 		return id;
@@ -44,14 +52,6 @@ public class BookInfoAndChapterListRules implements Serializable {
 
 	public void setId(int id) {
 		this.id = id;
-	}
-
-	public String[] getRegexs() {
-		return regexs;
-	}
-
-	public void setRegexs(String[] regexs) {
-		this.regexs = regexs;
 	}
 
 	public String getStartStr() {
@@ -78,14 +78,6 @@ public class BookInfoAndChapterListRules implements Serializable {
 		this.charset = charset;
 	}
 
-	public BookChapterContentRules getContentRules() {
-		return contentRules;
-	}
-
-	public void setContentRules(BookChapterContentRules contentRules) {
-		this.contentRules = contentRules;
-	}
-
 	public String getConcatUrl() {
 		return concatUrl;
 	}
@@ -102,4 +94,77 @@ public class BookInfoAndChapterListRules implements Serializable {
 		this.useBookLink = useBookLink;
 	}
 
+	public String getTitleRegex() {
+		return titleRegex;
+	}
+
+	public void setTitleRegex(String titleRegex) {
+		this.titleRegex = titleRegex;
+	}
+
+	public String getAuthorRegex() {
+		return authorRegex;
+	}
+
+	public void setAuthorRegex(String authorRegex) {
+		this.authorRegex = authorRegex;
+	}
+
+	public String getCategoryRegex() {
+		return categoryRegex;
+	}
+
+	public void setCategoryRegex(String categoryRegex) {
+		this.categoryRegex = categoryRegex;
+	}
+
+	public String getStatusRegex() {
+		return statusRegex;
+	}
+
+	public void setStatusRegex(String statusRegex) {
+		this.statusRegex = statusRegex;
+	}
+
+	public String getCoverRegex() {
+		return coverRegex;
+	}
+
+	public void setCoverRegex(String coverRegex) {
+		this.coverRegex = coverRegex;
+	}
+
+	public String getShortIntroduceRegex() {
+		return shortIntroduceRegex;
+	}
+
+	public void setShortIntroduceRegex(String shortIntroduceRegex) {
+		this.shortIntroduceRegex = shortIntroduceRegex;
+	}
+
+	public String getListLinkRegex() {
+		return listLinkRegex;
+	}
+
+	public void setListLinkRegex(String listLinkRegex) {
+		this.listLinkRegex = listLinkRegex;
+	}
+
+	public String getListTitleRegex() {
+		return listTitleRegex;
+	}
+
+	public void setListTitleRegex(String listTitleRegex) {
+		this.listTitleRegex = listTitleRegex;
+	}
+
+	@Override
+	public String toString() {
+		return "BookInfoAndChapterListRules [id=" + id + ", titleRegex=" + titleRegex + ", authorRegex=" + authorRegex
+				+ ", categoryRegex=" + categoryRegex + ", statusRegex=" + statusRegex + ", coverRegex=" + coverRegex
+				+ ", shortIntroduceRegex=" + shortIntroduceRegex + ", listLinkRegex=" + listLinkRegex
+				+ ", listTitleRegex=" + listTitleRegex + ", startStr=" + startStr + ", endStr=" + endStr + ", charset="
+				+ charset + ", concatUrl=" + concatUrl + ", useBookLink=" + useBookLink + "]";
+	}
+	
 }
