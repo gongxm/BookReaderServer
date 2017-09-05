@@ -67,8 +67,7 @@
 			<tr>
 				<td>目录链接正则</td>
 				<td><textarea rows="1" cols="20" name="listLinkRegex"
-						id="listLinkRegex"></textarea> value="${bookRules.listLinkRegex}"
-					/></td>
+						id="listLinkRegex">${bookRules.listLinkRegex}</textarea></td>
 			</tr>
 			<tr>
 				<td>目录标题正则</td>
@@ -116,10 +115,6 @@
 					<input type="radio" name="useBookLink" value="false"
 					<c:if test="${bookRules.useBookLink==false}">
 							checked="checked"</c:if>>否
-
-
-
-
 				
 			</tr>
 			<tr>

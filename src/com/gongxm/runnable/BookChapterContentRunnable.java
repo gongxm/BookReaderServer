@@ -2,6 +2,8 @@ package com.gongxm.runnable;
 
 import java.io.IOException;
 
+import org.springframework.web.context.WebApplicationContext;
+
 import com.gongxm.bean.Book;
 import com.gongxm.bean.BookChapter;
 import com.gongxm.bean.BookChapterContent;
@@ -17,11 +19,11 @@ public class BookChapterContentRunnable implements Runnable {
 	private String endStr;
 	private BookChapterService service;
 
-	public BookChapterContentRunnable(BookChapter chapter,BookChapterContentRules rules, BookChapterService service) {
+	public BookChapterContentRunnable(BookChapter chapter,BookChapterContentRules rules, WebApplicationContext context) {
 		this.chapter=chapter;
 		this.startStr =rules.getStartStr();
 		this.endStr=rules.getEndStr();
-		this.service=service;
+		this.service=(BookChapterService) context.getBean("bookChapterService");
 	}
 
 	@Override

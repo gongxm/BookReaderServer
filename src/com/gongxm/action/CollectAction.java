@@ -10,6 +10,9 @@ import org.apache.struts2.convention.annotation.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.context.ContextLoader;
+import org.springframework.web.context.WebApplicationContext;
 
 import com.gongxm.bean.BookListRules;
 import com.gongxm.domain.request.IDParam;
@@ -44,19 +47,23 @@ public class CollectAction extends BaseAction {
 
 	@Action("startCollect")
 	public void collect() {
+		WebApplicationContext context = ContextLoader.getCurrentWebApplicationContext();
 		ResponseResult result = new ResponseResult();
 
-		if (CollectUtils.threadCount > 0) {
+		if (CollectUtils.threadCount > 0 && CollectUtils.collecting) {
 			result.setErrmsg("正在采集中...");
 		} else {
 			IDParam param = GsonUtils.fromJson(getData(), IDParam.class);
 			if (param != null) {
 				int id = param.getId();
 				if (id > 0) {
+					BookListRules bookListRules = rulesService.findById(id);
+					System.out.println(bookListRules.getRules());
+					System.out.println(bookListRules.getContentRules());
 					new Thread() {
+						@Transactional
 						public void run() {
-							BookListRules bookListRules = rulesService.findById(id);
-							CollectUtils.collectBookList(service, chapterService, bookListRules);
+							CollectUtils.collectBookList(context,service, chapterService, bookListRules);
 						};
 					}.start();
 					result.setSuccess();

@@ -70,7 +70,6 @@ public class BookRulesAction extends BaseAction implements ModelDriven<BookInfoA
 
 	}
 
-
 	@Override
 	public BookInfoAndChapterListRules getModel() {
 		return rules;

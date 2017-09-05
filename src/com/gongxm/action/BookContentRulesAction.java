@@ -80,4 +80,5 @@ public class BookContentRulesAction extends BaseAction implements ModelDriven<Bo
 		write(json);
 	}
 
+	
 }

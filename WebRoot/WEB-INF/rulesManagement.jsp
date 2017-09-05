@@ -80,53 +80,57 @@
 				</tr>
 				<tr>
 					<td class="inner_td insert_data_width">请输入规则名称:</td>
-					<td class="inner_td insert_data_width"><input type="text"
-						class="insert_data_width" name="rulesName" id="rulesName" /></td>
+					<td class="inner_td insert_data_width"><textarea rows="1"
+							cols="20" class="insert_data_width" name="rulesName"
+							id="rulesName"></textarea></td>
 				</tr>
 				<tr>
 					<td class="inner_td insert_data_width">请输入数据源:</td>
-					<td class="inner_td insert_data_width"><input type="text"
-						class="insert_data_width" name="book_source" id="book_source" /></td>
+					<td class="inner_td insert_data_width"><textarea rows="1"
+							cols="20" class="insert_data_width" name="book_source"
+							id="book_source"></textarea></td>
 				</tr>
 				<tr>
 					<td class="inner_td insert_data_width">请输入列表链接:</td>
-					<td class="inner_td insert_data_width"><input type="text"
-						class="insert_data_width" name="baseUrl" id="baseUrl" /></td>
+					<td class="inner_td insert_data_width"><textarea rows="1"
+							cols="20" class="insert_data_width" name="baseUrl" id="baseUrl"></textarea></td>
 				</tr>
 				<tr>
 					<td class="inner_td insert_data_width">请输入通配符:</td>
-					<td class="inner_td insert_data_width"><input type="text"
-						class="insert_data_width" name="flag" id="flag" /></td>
+					<td class="inner_td insert_data_width"><textarea rows="1"
+							cols="20" class="insert_data_width" name="flag" id="flag"></textarea></td>
 				</tr>
 				<tr>
 					<td class="inner_td insert_data_width">请输入开始索引:</td>
-					<td class="inner_td insert_data_width"><input type="text"
-						class="insert_data_width" name="startIndex" id="startIndex" /></td>
+					<td class="inner_td insert_data_width"><textarea rows="1"
+							cols="20" class="insert_data_width" name="startIndex"
+							id="startIndex"></textarea></td>
 				</tr>
 				<tr>
 					<td class="inner_td insert_data_width">请输入结束索引:</td>
-					<td class="inner_td insert_data_width"><input type="text"
-						class="insert_data_width" name="endIndex" id="endIndex" /></td>
+					<td class="inner_td insert_data_width"><textarea rows="1"
+							cols="20" class="insert_data_width" name="endIndex" id="endIndex"></textarea></td>
 				</tr>
 				<tr>
 					<td class="inner_td insert_data_width">请输入开始区域:</td>
-					<td class="inner_td insert_data_width"><input type="text"
-						name="startStr" id="startStr" class="insert_data_width" /></td>
+					<td class="inner_td insert_data_width"><textarea rows="1"
+							cols="20" name="startStr" id="startStr" class="insert_data_width"></textarea></td>
 				</tr>
 				<tr>
 					<td class="inner_td insert_data_width">请输入结束区域:</td>
-					<td class="inner_td insert_data_width"><input type="text"
-						class="insert_data_width" name="endStr" id="endStr" /></td>
+					<td class="inner_td insert_data_width"><textarea rows="1"
+							cols="20" class="insert_data_width" name="endStr" id="endStr"></textarea></td>
 				</tr>
 				<tr>
 					<td class="inner_td insert_data_width">请输入正则表达式:</td>
-					<td class="inner_td insert_data_width"><input type="text"
-						class="insert_data_width" name="regex" id="regex" /></td>
+					<td class="inner_td insert_data_width"><textarea rows="1"
+							cols="20" class="insert_data_width" name="regex" id="regex"></textarea></td>
 				</tr>
 				<tr>
 					<td class="inner_td insert_data_width">请输入拼接链接:</td>
-					<td class="inner_td insert_data_width"><input type="text"
-						class="insert_data_width" name="concatUrl" id="concatUrl" /></td>
+					<td class="inner_td insert_data_width"><textarea rows="1"
+							cols="20" class="insert_data_width" name="concatUrl"
+							id="concatUrl"></textarea></td>
 				</tr>
 				<tr>
 					<td class="inner_td insert_data_width">是否循环匹配</td>

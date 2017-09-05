@@ -40,4 +40,10 @@ public class StringUtils {
         return sb.toString();  
     } 
 	
+	
+	//替换HTML内容
+	public static String htmlTrance(String str) {
+		return str.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;");
+	}
+
 }

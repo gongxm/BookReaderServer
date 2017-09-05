@@ -43,7 +43,7 @@ $(document).ready(function() {
 					}
 					$("#c_book_rules_id").val($("#book_list_rules_id").val());
 					$("#over").show();// 展现遮罩层屏幕
-					$("#floatdiv").show().center(800, 600);// 展现悬浮框
+					$("#floatdiv").show().center(800, 300);// 展现悬浮框
 				}
 			}
 		});

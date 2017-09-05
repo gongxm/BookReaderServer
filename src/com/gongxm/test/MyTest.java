@@ -1,7 +1,6 @@
 package com.gongxm.test;
 
 import java.io.IOException;
-import java.util.Set;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -10,21 +9,18 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.transaction.annotation.Transactional;
 
-import com.gongxm.bean.Book;
-import com.gongxm.bean.BookChapter;
-import com.gongxm.bean.BookChapterContent;
 import com.gongxm.bean.BookChapterContentRules;
 import com.gongxm.bean.BookInfoAndChapterListRules;
+import com.gongxm.bean.BookList;
 import com.gongxm.bean.BookListRules;
-import com.gongxm.dao.BookChapterDao;
 import com.gongxm.dao.BookDao;
 import com.gongxm.services.BookListRulesService;
 import com.gongxm.services.BookListService;
 import com.gongxm.services.BookService;
 import com.gongxm.services.UserService;
 import com.gongxm.utils.CollectUtils;
-import com.gongxm.utils.GsonUtils;
 import com.gongxm.utils.MyConstants;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = "classpath:applicationContext.xml")
@@ -49,129 +45,28 @@ public class MyTest {
 	BookService bookService;
 	
 	@Autowired
-	static BookListService bookListService;
+	@Qualifier("bookListService")
+	BookListService bookListService;
 	
 	@Test
+	@Transactional
 	public void test9() {
-		BookListRules rules = service.findById(1);
-		String json = GsonUtils.parseToJson(rules);
-		System.out.println(json);
+		
+	
 	}
 	
-	@Test
-	public void test8() {
-		
-		/*Book book = new Book();
-		book.setBook_name("好好学习");
-		BookChapter bookChapter = new BookChapter();
-		bookChapter.setChapter_name("java");
-		bookChapter.setChapter_link("www.itheima.com");
-		BookChapterContent chapterContent=new BookChapterContent();
-		chapterContent.setText("好好学习好好学习好好学习好好学习好好学习好好学习好好学习好好学习好好学习好好学习好好学习好好学习");
-		bookChapter.setChapterContent(chapterContent);
-		book.getChapters().add(bookChapter);
-		
-		bookService.add(book);*/
-		
-//		Book book = bookService.findById(1);
-		
-		/*BookChapter bookChapter = new BookChapter();
-		bookChapter.setChapter_name("UI");
-		bookChapter.setChapter_link("www.ith11eima.com");
-		BookChapterContent chapterContent=new BookChapterContent();
-		chapterContent.setText("222好好学习好好学习好好学习好好学习好好学习好好学习好好学习好好学习好好学习好好学习好好学习好好学习");
-		bookChapter.setChapterContent(chapterContent);
-		book.getChapters().add(bookChapter);
-		bookService.update(book);*/
-//		bookService.delete(book);
-		
-		
-	}
-	
-	@Test
-	public void test7() {
-		BookListRules bookListRules = new BookListRules();
-		bookListRules.setBook_source("www.baidu.com");
-		bookListRules.setRegex("[0-9]\\d+");
-		
-		BookInfoAndChapterListRules rules=new BookInfoAndChapterListRules();
-		rules.setCharset("utf-8");
-		rules.setTitleRegex("titleRegex");
-		rules.setAuthorRegex("authorRegex");
-		rules.setCategoryRegex("categoryRegex");
-		rules.setCharset("charset");
-		rules.setConcatUrl("concatUrl");
-		rules.setCoverRegex("coverRegex");
-		rules.setEndStr("endStr");
-		rules.setStartStr("startStr");
-		rules.setListLinkRegex("listLinkRegex");
-		rules.setListTitleRegex("listTitleRegex");
-		rules.setUseBookLink(true);
-		
-		BookChapterContentRules contentRules=new BookChapterContentRules();
-		contentRules.setEndStr("end");
-		contentRules.setStartStr("start");
-		bookListRules.setContentRules(contentRules);
-		bookListRules.setRules(rules);
-		service.add(bookListRules);
-		
-	/*	BookListRules bookListRules = service.findOne(1);
-		service.delete(bookListRules);*/
-		
-	}
+
 	
 	
-	@Test
-	public void test6(){
-		//https://31412947.qcloud.la/BookReaderServer/collect?id=1
-		
-		/*long count = dao.getUnCollectChapterCount();
-		System.out.println("count="+count);*/
-//		String sql = "select distinct category from books";
-//		List<String> forList = jtl.queryForList(sql, String.class);
-//		System.out.println("list = "+forList);
-		
-		String sql = "select count(*) from book_list where status = ?";
-		Long count = jtl.queryForObject(sql,new Object[] {MyConstants.BOOK_COLLECTED}, Long.class);
-		System.out.println("count="+count);
-		
-		
-		/*List<Book> list =bookDao.getCategoryList("武侠修真", 2, 5);
-		
-		System.out.println("list.size="+list.size());*/
-	}
-	
+
 	public static void main(String[] args) throws IOException {
-//		demo1();
-//		demo2();
-//		demo3();
-//		demo4();
-		//id: 237, position: 0,
-		/*ResponseResult result = new ResponseResult(MyConstants.SUCCESS, StringConstants.HTTP_REQUEST_SUCCESS);
-		BookChapterService service = ServiceUtils.getBookChapterService();
-		BookChapter chapter = service.findOne(1);
-		if (chapter != null) {
-			BookChapterContent content = chapter.getChapterContent();
-			result.setResult(content);
-			String json = GsonUtils.toJson(result);
-			System.out.println(json);
-		}*/
+
 	}
 
-	private static void demo4() {
-	/*	BookChapterService service = ServiceUtils.getBookChapterService();
-		BookChapter chapter = service.findOne(8140);
-//		System.out.println(chapter.getChapterContent().getContent());
-		String content = chapter.getChapterContent().getContent();
-		for(int i=0;i<4;i++) {
-			System.out.println(content.charAt(i));
-		}*/
-		
-	}
 
 	public static void demo3() {
-		String startStr = "<div class=\"yd_text2\">";
-		String endStr = "<div class=\"yd_ad1\">";
+		String startStr = "<div class=\"yd_text2\">";//<div class="yd_text2">
+		String endStr = "<div class=\"yd_ad1\">";//<div class="yd_ad1">
 		System.out.println("第三步启动");
 		CollectUtils.collectBookChapter(null,new BookChapterContentRules());
 	}
@@ -186,8 +81,25 @@ public class MyTest {
 				"<li><a href=\"\\d+\\.(html){1}\">",
 				"html\">.{1,100}</a></li>"
 				};
-		String startStr="<div class=\"mulu\">";
-		String endStr="<div id=\"footer\">";
+		
+		//<meta property="og:novel:book_name" content=".{1,20}">
+		
+		//<meta property="og:novel:author" content=".{1,10}">
+		
+		//<meta property="og:novel:category" content=".{2,8}">
+		
+		//<meta property="og:novel:status" content=".{2,5}">
+		
+		//<meta property="og:image" content=".{5,100}">
+		
+		//og:description" content=".{10,1500}
+		
+		//<li><a href="\d+\.(html){1}">
+		
+		//html">.{1,100}</a></li>
+		
+		String startStr="<div class=\"mulu\">";//<div class="mulu">
+		String endStr="<div id=\"footer\">";//<div id="footer">
 		String charset="gbk";
 		String concatUrl="";
 		boolean useBookLink=true;
@@ -206,9 +118,9 @@ public class MyTest {
 		String flag="(*)";
 		int startIndex=1;
 		int endIndex=53;
-		String startStr="<div class=\"booklist\">";
-		String endStr="<div class=\"pagelink\" id=\"pagelink\">";
-		String regex="<span class=\"sm\"><a href=\"(/xiaoshuo/)[0-9/]*\">";
+		String startStr="<div class=\"booklist\">";//<div class="booklist">
+		String endStr="<div class=\"pagelink\" id=\"pagelink\">";//<div class="pagelink" id="pagelink">
+		String regex="<span class=\"sm\"><a href=\"(/xiaoshuo/)[0-9/]*\">";//<span class="sm"><a href="(/xiaoshuo/)[0-9/]*">
 		boolean repeat = true;
 		String charset = "gbk";
 		String concatUrl = "http://www.88dushu.com";

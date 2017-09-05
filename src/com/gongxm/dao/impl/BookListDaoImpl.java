@@ -76,7 +76,7 @@ public class BookListDaoImpl extends BaseDao<BookList> implements BookListDao {
 		try {
 			bookList = sqlObj.queryForObject(sql, new BookListMap(), bookUrl);
 		} catch (DataAccessException e) {
-			// e.printStackTrace();
+			 e.printStackTrace();
 		}
 		return bookList;
 	}

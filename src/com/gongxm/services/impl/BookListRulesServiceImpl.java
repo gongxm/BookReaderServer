@@ -4,12 +4,14 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.gongxm.bean.BookListRules;
 import com.gongxm.dao.BookListRulesDao;
 import com.gongxm.dao.Dao;
 import com.gongxm.services.BookListRulesService;
-@Service
+@Service("bookListRulesService")
+@Transactional
 public class BookListRulesServiceImpl extends BaseService<BookListRules> implements BookListRulesService {
 	@Autowired
 	BookListRulesDao dao;

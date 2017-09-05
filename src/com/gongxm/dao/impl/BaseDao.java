@@ -14,9 +14,9 @@ import com.gongxm.dao.Dao;
 
 public class BaseDao<T> extends HibernateDaoSupport implements Dao<T> {
 	private Class<?> clazz;
-	protected HibernateTemplate hqlObj;  //hql执行对象
+	protected HibernateTemplate hqlObj; // hql执行对象
 	@Autowired
-	protected JdbcTemplate sqlObj; //普通sql执行对象
+	protected JdbcTemplate sqlObj; // 普通sql执行对象
 
 	public BaseDao() {
 		ParameterizedType type = (ParameterizedType) this.getClass().getGenericSuperclass();
@@ -32,12 +32,12 @@ public class BaseDao<T> extends HibernateDaoSupport implements Dao<T> {
 
 	@Override
 	public void add(T t) {
-		 hqlObj.save(t);
+		hqlObj.save(t);
 	}
 
 	@Override
 	public void update(T t) {
-		 hqlObj.update(t);
+		hqlObj.update(t);
 	}
 
 	/**
@@ -45,13 +45,13 @@ public class BaseDao<T> extends HibernateDaoSupport implements Dao<T> {
 	 */
 	@Override
 	public void delete(Serializable id) {
-		 hqlObj.delete(id);
+		hqlObj.delete(id);
 	}
 
 	@Override
 	@SuppressWarnings("unchecked")
 	public T findById(Serializable id) {
-		return  (T) hqlObj.get(clazz, id);
+		return (T) hqlObj.get(clazz, id);
 	}
 
 }

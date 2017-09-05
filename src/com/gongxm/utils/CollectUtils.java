@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.web.context.WebApplicationContext;
+
 import com.gongxm.bean.BookChapter;
 import com.gongxm.bean.BookChapterContentRules;
 import com.gongxm.bean.BookInfoAndChapterListRules;
@@ -19,9 +21,13 @@ import com.gongxm.services.BookListService;
 public class CollectUtils {
 
 	public static volatile int threadCount;
+	public static volatile boolean collecting;
+	
+	
 
 	// 书籍列表
-	public static void collectBookList(BookListService service,BookChapterService chapterService, BookListRules bookListRules) {
+	public static void collectBookList(WebApplicationContext context, BookListService service,BookChapterService chapterService, BookListRules bookListRules) {
+		collecting = true;
 		System.out.println("======开始采集目录=======");
 		threadCount = 0;
 		List<String> urls = new ArrayList<>();
@@ -36,7 +42,7 @@ public class CollectUtils {
 		}
 		for (String url : urls) {
 			threadCount++;
-			BookListRunnable task = new BookListRunnable(bookListRules, url);
+			BookListRunnable task = new BookListRunnable(context,bookListRules, url);
 			ThreadPoolUtil.executeOnNewThread(task);
 		}
 
@@ -54,7 +60,7 @@ public class CollectUtils {
 				}
 
 				try {
-					collectBookInfo(service,chapterService, bookListRules.getBook_source(), bookListRules);
+					collectBookInfo(context,bookListRules.getBook_source(), bookListRules);
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
@@ -64,15 +70,16 @@ public class CollectUtils {
 	}
 
 	// 书籍信息和章节列表
-	public static void collectBookInfo(BookListService service, BookChapterService chapterService, String book_source,
+	public static void collectBookInfo(WebApplicationContext context, String book_source,
 			BookListRules bookListRules) throws IOException {
+		BookListService service=(BookListService) context.getBean("bookListService");
 		threadCount=0;
 		BookInfoAndChapterListRules rules = bookListRules.getRules();
 		if (rules == null) {
 			System.out.println("缺少书籍信息规则!!!!!!!!!!!!!!");
 			return;
 		}
-		System.out.println("======开始书籍信息=======");
+		System.out.println("=============================================开始采集书籍信息=========================================");
 		int currentPage = 1;
 		int pageSize = 20;
 
@@ -91,7 +98,7 @@ public class CollectUtils {
 				for (BookList bookList : list) {
 					threadCount++;
 					String concatUrl2 = rules.isUseBookLink() ? bookList.getBook_link() : rules.getConcatUrl();
-					BookInfoRunnable task = new BookInfoRunnable(bookList, concatUrl2, rules);
+					BookInfoRunnable task = new BookInfoRunnable(context,bookList, concatUrl2, rules);
 					ThreadPoolUtil.executeOnNewThread(task);
 				}
 				currentPage++;
@@ -110,7 +117,7 @@ public class CollectUtils {
 				for (BookList bookList : list) {
 					threadCount++;
 					String concatUrl2 = rules.isUseBookLink() ? bookList.getBook_link() : rules.getConcatUrl();
-					BookInfoRunnable task = new BookInfoRunnable(bookList, concatUrl2, rules);
+					BookInfoRunnable task = new BookInfoRunnable(context,bookList, concatUrl2, rules);
 					ThreadPoolUtil.executeOnNewThread(task);
 				}
 				currentPage++;
@@ -130,19 +137,19 @@ public class CollectUtils {
 					System.out.println("还在采集书籍信息中.......");
 				}
 
-				collectBookChapter(chapterService, bookListRules.getContentRules());
+				collectBookChapter(context, bookListRules.getContentRules());
 			}
 		}).start();
 	}
 
 	// 书籍章节内容
-	public static void collectBookChapter(BookChapterService service, BookChapterContentRules rules) {
+	public static void collectBookChapter(WebApplicationContext context, BookChapterContentRules rules) {
 		
 		System.out.println("==============开始采集章节内容====================");
 
+		BookChapterService service=(BookChapterService) context.getBean("bookChapterService");
 		int currentPage = 1;
 		int pageSize = 20;
-
 		long total = service.getUnCollectChapterCount();
 
 		long page = 0;
@@ -155,12 +162,28 @@ public class CollectUtils {
 		while (currentPage <= page) {
 			List<BookChapter> chapters = service.findUnCollectChapter(currentPage, pageSize);
 			for (BookChapter chapter : chapters) {
-				BookChapterContentRunnable task = new BookChapterContentRunnable(chapter, rules, service);
+				BookChapterContentRunnable task = new BookChapterContentRunnable(chapter, rules, context);
 				ThreadPoolUtil.executeOnNewThread(task);
 			}
 			currentPage++;
 		}
 
+
+		new Thread(new Runnable() {
+
+			@Override
+			public void run() {
+				while (threadCount > 0) {
+					try {
+						Thread.sleep(2000);
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+					System.out.println("还在采集章节内容中.......");
+				}
+				collecting = false;
+			}
+		}).start();
 	}
 
 }

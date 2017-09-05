@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.context.WebApplicationContext;
 
 import com.gongxm.bean.Book;
 import com.gongxm.bean.BookChapter;
@@ -27,11 +27,8 @@ public class BookInfoRunnable implements Runnable {
 	private String startStr;
 	private String concatUrl;
 	private BookList bookList;
-	@Autowired
 	BookService bookService;
-	@Autowired
 	BookChapterService chapterService;
-	@Autowired
 	BookListService service;
 	
 	// 标题
@@ -48,7 +45,7 @@ public class BookInfoRunnable implements Runnable {
 //	String shortIntroduceRegex;
 	private String[] regexs;
 
-	public BookInfoRunnable(BookList bookList, String concatUrl,BookInfoAndChapterListRules rules) {
+	public BookInfoRunnable(WebApplicationContext context, BookList bookList, String concatUrl,BookInfoAndChapterListRules rules) {
 		this.bookList = bookList;
 		this.startStr = rules.getStartStr();
 		this.endStr = rules.getEndStr();
@@ -67,20 +64,24 @@ public class BookInfoRunnable implements Runnable {
 				rules.getCategoryRegex(),
 				rules.getStatusRegex(),
 				rules.getCoverRegex(),
-				rules.getShortIntroduceRegex()
+				rules.getShortIntroduceRegex(),
+				rules.getListLinkRegex(),
+				rules.getListTitleRegex()
 		};
 		
+		this.bookService=(BookService) context.getBean("bookService");
+		this.service = (BookListService) context.getBean("bookListService");
+		this.chapterService = (BookChapterService) context.getBean("bookChapterService");
 	}
 
 	@Override
 	public void run() {
+		
 		try {
 			String url = bookList.getBook_link();
 			System.out.println("正在采集:"+url);
 			String html = HttpUtils.executGet(url, charset);
 
-
-			
 			List<String> list = new ArrayList<>();
 			
 			for(int i=0;i<6;i++){
@@ -95,15 +96,16 @@ public class BookInfoRunnable implements Runnable {
 					list.add("暂无");
 				}
 			}
-			
-			
 			Book book = new Book(list.get(0), list.get(1), list.get(2), list.get(3), list.get(4),list.get(5),url);
 			bookService.add(book);
 			System.out.println("采集中.."+book.getBook_name());
+			
 			//目录链接正则
 			String chapterLinkRegex = regexs[6];
+			
 			//目录标题正则
 			String chapterTitleRegex = regexs[7];
+			
 			String[] sArr = html.split(startStr);
 			if (sArr != null && sArr.length > 1) {
 				String[] sArr2 = sArr[1].split(endStr);

@@ -34,26 +34,31 @@ public class BookListServiceImpl extends BaseService<BookList> implements BookLi
 		return dao;
 	}
 
+	@Transactional(readOnly=true)
 	@Override
 	public List<BookList> findUnCollectBookListBySource(String book_source, int currentPage, int pageSize) {
 		return dao.findUnCollectBookListBySource(book_source,currentPage,pageSize);
 	}
 
+	@Transactional(readOnly=true)
 	@Override
 	public List<BookList> findAllUnCollectBookList(int currentPage, int pageSize) {
 		return dao.findAllUnCollectBookList(currentPage,pageSize);
 	}
 
+	@Transactional(readOnly=true)
 	@Override
 	public long getUnCollectBookListCountBySource(String book_source) {
 		return dao.getUnCollectBookListCountBySource(book_source);
 	}
 
+	@Transactional(readOnly=true)
 	@Override
 	public long getAllUnCollectBookListCount() {
 		return dao.getAllUnCollectBookListCount();
 	}
 
+	@Transactional(readOnly=true)
 	@Override
 	public BookList findByBookLink(String bookUrl) {
 		return dao.findByBookLink(bookUrl);

@@ -105,7 +105,7 @@ $(document).ready(function() {
 		$("#regex").val('');
 		$("#concatUrl").val('');
 		$("#over").show();// 展现遮罩层屏幕
-		$("#floatdiv").show().center(800, 600);// 展现悬浮框
+		$("#floatdiv").show().center(800, 650);// 展现悬浮框
 	});
 });
 
@@ -212,7 +212,7 @@ function editRules(thisObj) {
 			if ("success" == textStatus) {
 				if (data.errcode == 1) {
 					$("#over").show();// 展现遮罩层屏幕
-					$("#floatdiv").show().center(800, 600);// 展现悬浮框
+					$("#floatdiv").show().center(800, 700);// 展现悬浮框
 					
 					$("#operate").text("修改规则");
 					$("#bt_submit").val("修改规则");

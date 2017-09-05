@@ -5,7 +5,7 @@ import org.springframework.stereotype.Repository;
 import com.gongxm.bean.BookInfoAndChapterListRules;
 import com.gongxm.dao.BookInfoAndChapterListRulesDao;
 
-@Repository
+@Repository("bookInfoAndChapterListRulesDao")
 public class BookInfoAndChapterListRulesDaoImpl extends BaseDao<BookInfoAndChapterListRules>
 		implements BookInfoAndChapterListRulesDao {
 
