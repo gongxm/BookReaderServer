@@ -12,7 +12,7 @@ import com.gongxm.bean.BookList;
 import com.gongxm.bean.BookListRules;
 import com.gongxm.services.BookListService;
 import com.gongxm.utils.CollectUtils;
-import com.gongxm.utils.HttpUtils;
+import com.gongxm.utils.HtmlParser;
 import com.gongxm.utils.MyConstants;
 import com.gongxm.utils.TextUtils;
 
@@ -23,7 +23,6 @@ public class BookListRunnable implements Runnable {
 	private String regex;
 	private boolean repeat;
 	private BookListService service;
-	private String charset;
 	private String concatUrl;
 	private String book_source;
 
@@ -34,14 +33,7 @@ public class BookListRunnable implements Runnable {
 		this.endStr = bookListRules.getEndStr();
 		this.regex = bookListRules.getRegex();
 		this.repeat = bookListRules.isRepeat();
-		String charset = bookListRules.getCharset();
-		if (TextUtils.notEmpty(charset)) {
-			this.charset = charset;
-		} else {
-			this.charset = MyConstants.DEFAULT_ENCODING;
-		}
 		this.concatUrl = bookListRules.getConcatUrl();
-		
 		this.service = (BookListService) context.getBean("bookListService");
 	}
 
@@ -50,7 +42,7 @@ public class BookListRunnable implements Runnable {
 	public void run() {
 		try {
 			System.out.println("采集:"+url);
-			String html = HttpUtils.executGet(url, charset);
+			String html = HtmlParser.parseToHtml(url);
 			String[] sArr = html.split(startStr);
 			if (sArr != null && sArr.length > 1) {
 				String[] sArr2 = sArr[1].split(endStr);

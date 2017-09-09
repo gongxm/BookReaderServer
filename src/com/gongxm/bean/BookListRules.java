@@ -48,8 +48,6 @@ public class BookListRules implements Serializable {
 	@Expose
 	private boolean isRepeat;
 	@Expose
-	private String charset;
-	@Expose
 	private String concatUrl;
 
 	@OneToOne(targetEntity = BookInfoAndChapterListRules.class)
@@ -154,14 +152,6 @@ public class BookListRules implements Serializable {
 		this.isRepeat = isRepeat;
 	}
 
-	public String getCharset() {
-		return charset;
-	}
-
-	public void setCharset(String charset) {
-		this.charset = charset;
-	}
-
 	public String getConcatUrl() {
 		return concatUrl;
 	}
@@ -184,14 +174,6 @@ public class BookListRules implements Serializable {
 
 	public void setContentRules(BookChapterContentRules contentRules) {
 		this.contentRules = contentRules;
-	}
-
-	@Override
-	public String toString() {
-		return "BookListRules [rulesName=" + rulesName + ", book_source=" + book_source + ", baseUrl=" + baseUrl
-				+ ", flag=" + flag + ", startIndex=" + startIndex + ", endIndex=" + endIndex + ", startStr=" + startStr
-				+ ", endStr=" + endStr + ", regex=" + regex + ", isRepeat=" + isRepeat + ", charset=" + charset
-				+ ", concatUrl=" + concatUrl + ", rules=" + rules + "]";
 	}
 
 }

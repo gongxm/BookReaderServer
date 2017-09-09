@@ -6,8 +6,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <%
 	String path = request.getContextPath();
-	String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()
-			+ path + "/";
+	String basePath = "https://" + request.getServerName() + path + "/";
 %>
 <title>编辑书籍信息规则</title>
 <link rel="stylesheet" type="text/css"
@@ -85,24 +84,6 @@
 				</td>
 			</tr>
 			<tr>
-				<td>页面字符集</td>
-				<td><select name="charset" style="width: 80px" id="charset">
-						<c:if test="${bookRules.charset=='GBK'}">
-							<option value="GBK" selected="selected">GBK</option>
-							<option value="UTF-8">UTF-8</option>
-						</c:if>
-						<c:if test="${bookRules.charset=='UTF-8'}">
-							<option value="GBK">GBK</option>
-							<option value="UTF-8" selected="selected">UTF-8</option>
-						</c:if>
-						<c:if
-							test="${bookRules.charset!='GBK'&&bookRules.charset!='UTF-8'}">
-							<option value="GBK" selected="selected">GBK</option>
-							<option value="UTF-8">UTF-8</option>
-						</c:if>
-				</select></td>
-			</tr>
-			<tr>
 				<td>拼接链接</td>
 				<td><textarea rows="1" cols="20" name="concatUrl"
 						id="concatUrl">${bookRules.concatUrl}</textarea></td>
@@ -115,6 +96,8 @@
 					<input type="radio" name="useBookLink" value="false"
 					<c:if test="${bookRules.useBookLink==false}">
 							checked="checked"</c:if>>否
+
+
 				
 			</tr>
 			<tr>

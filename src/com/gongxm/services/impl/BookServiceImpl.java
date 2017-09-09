@@ -41,4 +41,9 @@ public class BookServiceImpl extends BaseService<Book> implements BookService {
 		return bdao.getCategoryList(category,currentPage,pageSize);
 	}
 
+	@Override
+	public List<Book> findListByKeyword(String keyword, int currentPage, int pageSize) {
+		return bdao.findListByKeyword(keyword,currentPage,pageSize);
+	}
+
 }

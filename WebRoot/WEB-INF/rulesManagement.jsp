@@ -6,8 +6,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <%
 	String path = request.getContextPath();
-	String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()
-			+ path + "/";
+	String basePath = "https://" + request.getServerName() + path + "/";
 %>
 <title>规则管理</title>
 <link rel="stylesheet" type="text/css" href="<%=basePath%>css/main.css">
@@ -31,7 +30,6 @@
 							<td class="inner_td" style="width: 120px">数据源</td>
 							<td class="inner_td" style="width: 180px">正则表达式</td>
 							<td class="inner_td" style="width: 80px">重复匹配</td>
-							<td class="inner_td" style="width: 120px">页面字符集</td>
 							<td class="inner_td" style="width: 200px">操作</td>
 						</tr>
 
@@ -43,7 +41,6 @@
 								<td class="inner_td">${rules.regex}</td>
 								<td class="inner_td"><c:if test="${rules.repeat}">是</c:if>
 									<c:if test="${rules.repeat==false}">否</c:if></td>
-								<td class="inner_td">${rules.charset}</td>
 								<td class="inner_td"><input type="button" value="编辑"
 									onclick="editRules(this)"> <input type="button"
 									value="删除" onclick="deleteRules(this)"> <input
@@ -140,15 +137,6 @@
 							<option value="false">否</option>
 					</select></td>
 				</tr>
-				<tr>
-					<td class="inner_td insert_data_width">页面字符集</td>
-					<td class="inner_td insert_data_width"><select name="charset"
-						style="width: 80px" id="charset">
-							<option value="GBK">GBK</option>
-							<option value="UTF-8">UTF-8</option>
-					</select></td>
-				</tr>
-
 				<tr>
 					<td class="inner_td insert_data_width" colspan="2"><input
 						id="bt_submit" type="submit" value="添加新规则" /></td>

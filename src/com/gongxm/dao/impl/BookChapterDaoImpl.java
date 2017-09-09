@@ -2,6 +2,8 @@ package com.gongxm.dao.impl;
 
 import java.util.List;
 
+import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Repository;
 
@@ -41,8 +43,10 @@ public class BookChapterDaoImpl extends BaseDao<BookChapter> implements BookChap
 	@Override
 	public List<BookChapter> findUnCollectChapter(int currentPage, int pageSize) {
 		try {
-			String sql = "from BookChapter where status=?";
-			return (List<BookChapter>) hqlObj.find(sql, MyConstants.BOOK_UNCOLLECT);
+			DetachedCriteria criteria = DetachedCriteria.forClass(BookChapter.class);
+			criteria.add(Restrictions.eq("status", MyConstants.BOOK_UNCOLLECT));
+			List<BookChapter> list = (List<BookChapter>) hqlObj.findByCriteria(criteria, (currentPage - 1) * pageSize,pageSize);
+			return list;
 		} catch (DataAccessException e) {
 			e.printStackTrace();
 		}

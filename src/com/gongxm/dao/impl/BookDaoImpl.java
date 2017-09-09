@@ -3,6 +3,7 @@ package com.gongxm.dao.impl;
 import java.util.List;
 
 import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Repository;
@@ -31,7 +32,22 @@ public class BookDaoImpl extends BaseDao<Book> implements BookDao {
 		try {
 			DetachedCriteria criteria = DetachedCriteria.forClass(Book.class);
 			criteria.add(Restrictions.eq("category", category));
-			List<Book> list = (List<Book>) hqlObj.findByCriteria(criteria, (currentPage - 1) * pageSize,pageSize);
+			List<Book> list = (List<Book>) hqlObj.findByCriteria(criteria, (currentPage - 1) * pageSize, pageSize);
+			return list;
+		} catch (DataAccessException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Book> findListByKeyword(String keyword, int currentPage, int pageSize) {
+		try {
+			DetachedCriteria criteria = DetachedCriteria.forClass(Book.class);
+			criteria.add(Restrictions.or(Restrictions.like("book_name", keyword, MatchMode.ANYWHERE),
+					Restrictions.like("author", keyword, MatchMode.ANYWHERE)));
+			List<Book> list = (List<Book>) hqlObj.findByCriteria(criteria, (currentPage - 1) * pageSize, pageSize);
 			return list;
 		} catch (DataAccessException e) {
 			e.printStackTrace();

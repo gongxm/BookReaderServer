@@ -1,5 +1,6 @@
 package com.gongxm.action;
 
+import java.io.IOException;
 import java.util.List;
 
 import org.apache.struts2.ServletActionContext;
@@ -14,6 +15,8 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.context.ContextLoader;
 import org.springframework.web.context.WebApplicationContext;
 
+import com.gongxm.bean.BookChapterContentRules;
+import com.gongxm.bean.BookInfoAndChapterListRules;
 import com.gongxm.bean.BookListRules;
 import com.gongxm.domain.request.IDParam;
 import com.gongxm.domain.response.ResponseResult;
@@ -45,7 +48,8 @@ public class CollectAction extends BaseAction {
 		return SUCCESS;
 	}
 
-	@Action("startCollect")
+	//采集所有内容
+	@Action("collectAll")
 	public void collect() {
 		WebApplicationContext context = ContextLoader.getCurrentWebApplicationContext();
 		ResponseResult result = new ResponseResult();
@@ -58,16 +62,95 @@ public class CollectAction extends BaseAction {
 				int id = param.getId();
 				if (id > 0) {
 					BookListRules bookListRules = rulesService.findById(id);
-					System.out.println(bookListRules.getRules());
+					System.out.println(bookListRules.getRules());//把内容加载出来, 不可删除
 					System.out.println(bookListRules.getContentRules());
 					new Thread() {
 						@Transactional
 						public void run() {
-							CollectUtils.collectBookList(context,service, chapterService, bookListRules);
+							CollectUtils.collectBookList(context, service, chapterService, bookListRules, true);
 						};
 					}.start();
 					result.setSuccess();
 				}
+			}
+		}
+		String json = GsonUtils.toJson(result);
+		write(json);
+	}
+
+	// 只采集书籍列表
+	@Action("collectBookList")
+	public void collectBookList() {
+		WebApplicationContext context = ContextLoader.getCurrentWebApplicationContext();
+		ResponseResult result = new ResponseResult();
+
+		IDParam param = GsonUtils.fromJson(getData(), IDParam.class);
+		if (param != null) {
+			int id = param.getId();
+			if (id > 0) {
+				BookListRules bookListRules = rulesService.findById(id);
+				new Thread() {
+					@Transactional
+					public void run() {
+						CollectUtils.collectBookList(context, service, chapterService, bookListRules, false);
+					};
+				}.start();
+				result.setSuccess();
+			}
+		}
+		String json = GsonUtils.toJson(result);
+		write(json);
+	}
+
+	// 只采集书籍信息和章节列表
+	@Action("collectBookInfo")
+	public void collectBookInfo() {
+		WebApplicationContext context = ContextLoader.getCurrentWebApplicationContext();
+		ResponseResult result = new ResponseResult();
+		IDParam param = GsonUtils.fromJson(getData(), IDParam.class);
+		if (param != null) {
+			int id = param.getId();
+			if (id > 0) {
+				BookListRules bookListRules = rulesService.findById(id);
+				BookInfoAndChapterListRules rules = bookListRules.getRules();
+				System.out.println(rules);//把内容加载出来, 不可删除
+				new Thread() {
+					@Transactional
+					public void run() {
+						try {
+							CollectUtils.collectBookInfo(context, bookListRules.getBook_source(), bookListRules, false);
+						} catch (IOException e) {
+							e.printStackTrace();
+						}
+					};
+				}.start();
+				result.setSuccess();
+			}
+		}
+		String json = GsonUtils.toJson(result);
+		write(json);
+	}
+
+	// 只采集书籍章节内容
+	@Action("collectChapter")
+	public void collectChapter() {
+		WebApplicationContext context = ContextLoader.getCurrentWebApplicationContext();
+		ResponseResult result = new ResponseResult();
+
+		IDParam param = GsonUtils.fromJson(getData(), IDParam.class);
+		if (param != null) {
+			int id = param.getId();
+			if (id > 0) {
+				BookListRules bookListRules = rulesService.findById(id);
+				BookChapterContentRules rules = bookListRules.getContentRules();
+				System.out.println(rules);//把内容加载出来, 不可删除
+				new Thread() {
+					@Transactional
+					public void run() {
+						CollectUtils.collectBookChapter(context, rules);
+					};
+				}.start();
+				result.setSuccess();
 			}
 		}
 		String json = GsonUtils.toJson(result);

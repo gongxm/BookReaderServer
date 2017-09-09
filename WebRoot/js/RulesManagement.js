@@ -232,8 +232,6 @@ function editRules(thisObj) {
 					$("#concatUrl").val(rules.concatUrl);
 					var repeat = rules.isRepeat
 					$("#repeat").find("option[value='"+repeat+"']").attr("selected",true);
-					var charset = rules.charset
-					$("#charset").find("option[value='"+charset+"']").attr("selected",true);
 
 				} else {
 					alert(textStatus)

@@ -9,7 +9,7 @@
 	<!-- 可以帮助我们解决post请求乱码问题 -->
 	<constant name="struts.i18n.encoding" value="UTF-8" />
 	<!-- 配置这项后，它会提供更加详细报错信息，以及在struts.xml文件修改后不在需要重启服务器 -->
-	<constant name="struts.devMode" value="true" />
+	<constant name="struts.devMode" value="false" />
 	
 	<constant name="struts.enable.DynamicMethodInvocation" value="true"/>
 

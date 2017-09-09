@@ -1,33 +1,27 @@
 package com.gongxm.test;
 
 import java.io.IOException;
+import java.util.List;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.gongxm.bean.Book;
 import com.gongxm.bean.BookChapterContentRules;
-import com.gongxm.bean.BookInfoAndChapterListRules;
-import com.gongxm.bean.BookList;
-import com.gongxm.bean.BookListRules;
 import com.gongxm.dao.BookDao;
 import com.gongxm.services.BookListRulesService;
 import com.gongxm.services.BookListService;
 import com.gongxm.services.BookService;
 import com.gongxm.services.UserService;
 import com.gongxm.utils.CollectUtils;
-import com.gongxm.utils.MyConstants;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = "classpath:applicationContext.xml")
 public class MyTest {
-	
-	@Autowired
-	private JdbcTemplate jtl;
 	
 	@Autowired
 	@Qualifier("bookDao")
@@ -51,7 +45,6 @@ public class MyTest {
 	@Test
 	@Transactional
 	public void test9() {
-		
 	
 	}
 	

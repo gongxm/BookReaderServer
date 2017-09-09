@@ -10,4 +10,6 @@ public interface BookService extends Service<Book>{
 
 	List<Book> getCategoryList(String category, int currentPage, int pageSize);
 
+	List<Book> findListByKeyword(String keyword, int currentPage, int pageSize);
+
 }

@@ -106,7 +106,6 @@ public class RulesAction extends BaseAction implements ModelDriven<BookListRules
 	private BookListRules fillData(BookListRules src,BookListRules dest) {
 		dest.setBaseUrl(src.getBaseUrl());
 		dest.setBook_source(src.getBook_source());
-		dest.setCharset(src.getCharset());
 		dest.setConcatUrl(src.getConcatUrl());
 		dest.setEndIndex(src.getEndIndex());
 		dest.setEndStr(src.getEndStr());

@@ -16,13 +16,12 @@ import com.gongxm.services.BookChapterService;
 import com.gongxm.services.BookListService;
 import com.gongxm.services.BookService;
 import com.gongxm.utils.CollectUtils;
-import com.gongxm.utils.HttpUtils;
+import com.gongxm.utils.HtmlParser;
 import com.gongxm.utils.MyConstants;
 import com.gongxm.utils.TextUtils;
 
 public class BookInfoRunnable implements Runnable {
 
-	private String charset;
 	private String endStr;
 	private String startStr;
 	private String concatUrl;
@@ -50,13 +49,6 @@ public class BookInfoRunnable implements Runnable {
 		this.startStr = rules.getStartStr();
 		this.endStr = rules.getEndStr();
 		this.concatUrl=concatUrl;
-		String charset = rules.getCharset();
-		if (TextUtils.notEmpty(charset)) {
-			this.charset = charset;
-		} else {
-			this.charset = MyConstants.DEFAULT_ENCODING;
-		}
-		
 		
 		this.regexs = new String[] {
 				rules.getTitleRegex(),
@@ -80,7 +72,7 @@ public class BookInfoRunnable implements Runnable {
 		try {
 			String url = bookList.getBook_link();
 			System.out.println("正在采集:"+url);
-			String html = HttpUtils.executGet(url, charset);
+			String html = HtmlParser.parseToHtml(url);
 
 			List<String> list = new ArrayList<>();
 			
