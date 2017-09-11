@@ -33,7 +33,6 @@ public class AdminFilter implements Filter {
 		} catch (Exception e) {
 			throw new RuntimeException("non http request or response");
 		}
-		System.out.println("---------AdminFilter--------uri="+request.getRequestURI());
 		request.setCharacterEncoding(MyConstants.DEFAULT_ENCODING);
 		response.setCharacterEncoding(MyConstants.DEFAULT_ENCODING);
 		response.setContentType("text/html;charset=" + MyConstants.DEFAULT_ENCODING);

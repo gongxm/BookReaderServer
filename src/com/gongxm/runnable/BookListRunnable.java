@@ -55,7 +55,6 @@ public class BookListRunnable implements Runnable {
 							synchronized (Book.class) {
 								String book_link = m.group();
 								book_link = TextUtils.dealWithText(book_link, regex);
-								System.out.println("concatUrl="+concatUrl);
 								String bookUrl = concatUrl + book_link;
 								BookList temp = service.findByBookLink(bookUrl);
 								if (temp == null) {
