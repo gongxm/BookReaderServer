@@ -74,32 +74,11 @@
 						id="listTitleRegex">${bookRules.listTitleRegex}</textarea></td>
 			</tr>
 			<tr>
-				<td>开始区域正则</td>
-				<td><textarea rows="1" cols="20" name="startStr" id="startStr">${bookRules.startStr}</textarea>
+				<td>内容区域正则</td>
+				<td><textarea rows="1" cols="20" name="contentDivClass" id="contentDivClass">${bookRules.contentDivClass}</textarea>
 				</td>
 			</tr>
-			<tr>
-				<td>结束区域正则</td>
-				<td><textarea rows="1" cols="20" name="endStr" id="endStr">${bookRules.endStr}</textarea>
-				</td>
-			</tr>
-			<tr>
-				<td>拼接链接</td>
-				<td><textarea rows="1" cols="20" name="concatUrl"
-						id="concatUrl">${bookRules.concatUrl}</textarea></td>
-			</tr>
-			<tr>
-				<td>是否使用书籍链接进行拼接</td>
-				<td><input type="radio" name="useBookLink" value="true"
-					<c:if test="${bookRules.useBookLink==true}">
-							checked="checked" </c:if>>是
-					<input type="radio" name="useBookLink" value="false"
-					<c:if test="${bookRules.useBookLink==false}">
-							checked="checked"</c:if>>否
-
-
-				
-			</tr>
+	
 			<tr>
 				<td colspan="2" class="center"><input type="submit" value="修改" />
 					<input type="button" value="返回" id="cancel" /></td>

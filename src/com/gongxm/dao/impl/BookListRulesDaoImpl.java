@@ -35,16 +35,14 @@ public class BookListRulesDaoImpl extends BaseDao<BookListRules> implements Book
 			BookListRules rules = new BookListRules();
 			rules.setBaseUrl(rs.getString("baseUrl"));
 			rules.setBook_source(rs.getString("book_source"));
-			rules.setConcatUrl(rs.getString("concatUrl"));
 			rules.setEndIndex(rs.getInt("endIndex"));
-			rules.setEndStr(rs.getString("endStr"));
 			rules.setFlag(rs.getString("flag"));
 			rules.setId(rs.getInt("id"));
 			rules.setRegex(rs.getString("regex"));
 			rules.setRepeat(rs.getBoolean("isRepeat"));
 			rules.setRulesName(rs.getString("rulesName"));
 			rules.setStartIndex(rs.getInt("startIndex"));
-			rules.setStartStr(rs.getString("startStr"));
+			rules.setContentDivClass(rs.getString("contentDivClass"));
 			return rules;
 		}
 		

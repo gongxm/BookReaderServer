@@ -1,11 +1,14 @@
 package com.gongxm.dao.impl;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.List;
 
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.dao.DataAccessException;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
 import com.gongxm.bean.Book;
@@ -55,4 +58,31 @@ public class BookDaoImpl extends BaseDao<Book> implements BookDao {
 		return null;
 	}
 
+	@Override
+	public Book findByBookUrl(String url) {
+		String sql = "select * from books where book_link=?";
+		Book book = null;
+		try {
+			book = sqlObj.queryForObject(sql, new BookMap(), url);
+		} catch (DataAccessException e) {
+		}
+		return book;
+	}
+
+	class BookMap implements RowMapper<Book> {
+		@Override
+		public Book mapRow(ResultSet rs, int i) throws SQLException {
+			Book book = new Book();
+			book.setId(rs.getInt("id"));
+			book.setAuthor(rs.getString("author"));
+			book.setBook_link(rs.getString("book_link"));
+			book.setBook_name(rs.getString("book_name"));
+			book.setCategory(rs.getString("category"));
+			book.setCover(rs.getString("cover"));
+			book.setShortIntroduce(rs.getString("shortIntroduce"));
+			book.setStatus(rs.getString("status"));
+			return book;
+		}
+
+	}
 }

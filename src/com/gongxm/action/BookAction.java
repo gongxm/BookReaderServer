@@ -118,7 +118,6 @@ public class BookAction extends BaseAction {
 	@Action("getChapterList")
 	public void getChapterList() {
 		String data = getData();
-		System.out.println("data="+data);
 		ResponseResult resp = new ResponseResult(MyConstants.FAILURE, StringConstants.HTTP_REQUEST_ERROR);
 		try {
 			IDParam param = GsonUtils.fromJson(data, IDParam.class);

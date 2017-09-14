@@ -12,4 +12,6 @@ public interface BookChapterDao extends Dao<BookChapter> {
 
 	List<BookChapter> findUnCollectChapter(int currentPage, int pageSize);
 
+	BookChapter findByChapterLink(String chapterLink);
+
 }

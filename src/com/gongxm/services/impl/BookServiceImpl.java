@@ -18,7 +18,7 @@ public class BookServiceImpl extends BaseService<Book> implements BookService {
 	private static final BookServiceImpl instance = new BookServiceImpl(); 
 	@Autowired
 	@Qualifier("bookDao")
-	private BookDao bdao;
+	private BookDao dao;
 	
 	private BookServiceImpl(){}
 
@@ -28,22 +28,27 @@ public class BookServiceImpl extends BaseService<Book> implements BookService {
 
 	@Override
 	public Dao<Book> getDao() {
-		return bdao;
+		return dao;
 	}
 
 	@Override
 	public List<String> getBookCategory() {
-		return bdao.getBookCategory();
+		return dao.getBookCategory();
 	}
 
 	@Override
 	public List<Book> getCategoryList(String category, int currentPage, int pageSize) {
-		return bdao.getCategoryList(category,currentPage,pageSize);
+		return dao.getCategoryList(category,currentPage,pageSize);
 	}
 
 	@Override
 	public List<Book> findListByKeyword(String keyword, int currentPage, int pageSize) {
-		return bdao.findListByKeyword(keyword,currentPage,pageSize);
+		return dao.findListByKeyword(keyword,currentPage,pageSize);
+	}
+
+	@Override
+	public Book findByBookUrl(String url) {
+		return dao.findByBookUrl(url);
 	}
 
 }

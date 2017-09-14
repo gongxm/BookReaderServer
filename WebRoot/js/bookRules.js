@@ -61,6 +61,7 @@ $(document).ready(function() {
 			type : "POST",
 			data : FormData,
 			success : function(data, textStatus) {
+				alert(textStatus)
 				if ("success" == textStatus) {
 					if (data.errcode == 1) {
 						alert("操作成功!")

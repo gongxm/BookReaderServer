@@ -32,17 +32,7 @@ public class BookInfoAndChapterListRules implements Serializable {
 	@Expose
 	private String shortIntroduceRegex;
 	@Expose
-	private String listLinkRegex;
-	@Expose
-	private String listTitleRegex;
-	@Expose
-	private String startStr;
-	@Expose
-	private String endStr;
-	@Expose
-	private String concatUrl; // 用于把获取到的链接拼接成完整链接
-	@Expose
-	private boolean useBookLink; // 是否使用书籍本身的链接进行拼接
+	private String contentDivClass;
 
 	private int book_list_rules_id;
 
@@ -52,38 +42,6 @@ public class BookInfoAndChapterListRules implements Serializable {
 
 	public void setId(int id) {
 		this.id = id;
-	}
-
-	public String getStartStr() {
-		return startStr;
-	}
-
-	public void setStartStr(String startStr) {
-		this.startStr = startStr;
-	}
-
-	public String getEndStr() {
-		return endStr;
-	}
-
-	public void setEndStr(String endStr) {
-		this.endStr = endStr;
-	}
-
-	public String getConcatUrl() {
-		return concatUrl;
-	}
-
-	public void setConcatUrl(String concatUrl) {
-		this.concatUrl = concatUrl;
-	}
-
-	public boolean isUseBookLink() {
-		return useBookLink;
-	}
-
-	public void setUseBookLink(boolean useBookLink) {
-		this.useBookLink = useBookLink;
 	}
 
 	public String getTitleRegex() {
@@ -134,28 +92,20 @@ public class BookInfoAndChapterListRules implements Serializable {
 		this.shortIntroduceRegex = shortIntroduceRegex;
 	}
 
-	public String getListLinkRegex() {
-		return listLinkRegex;
-	}
-
-	public void setListLinkRegex(String listLinkRegex) {
-		this.listLinkRegex = listLinkRegex;
-	}
-
-	public String getListTitleRegex() {
-		return listTitleRegex;
-	}
-
-	public void setListTitleRegex(String listTitleRegex) {
-		this.listTitleRegex = listTitleRegex;
-	}
-
 	public int getBook_list_rules_id() {
 		return book_list_rules_id;
 	}
 
 	public void setBook_list_rules_id(int book_list_rules_id) {
 		this.book_list_rules_id = book_list_rules_id;
+	}
+
+	public String getContentDivClass() {
+		return contentDivClass;
+	}
+
+	public void setContentDivClass(String contentDivClass) {
+		this.contentDivClass = contentDivClass;
 	}
 
 }

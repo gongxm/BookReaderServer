@@ -3,6 +3,9 @@ package com.gongxm.test;
 import java.io.IOException;
 import java.util.List;
 
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,13 +15,16 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.gongxm.bean.Book;
+import com.gongxm.bean.BookChapter;
 import com.gongxm.bean.BookChapterContentRules;
 import com.gongxm.dao.BookDao;
+import com.gongxm.services.BookChapterService;
 import com.gongxm.services.BookListRulesService;
 import com.gongxm.services.BookListService;
 import com.gongxm.services.BookService;
 import com.gongxm.services.UserService;
 import com.gongxm.utils.CollectUtils;
+import com.gongxm.utils.HtmlParser;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = "classpath:applicationContext.xml")
 public class MyTest {
@@ -42,10 +48,14 @@ public class MyTest {
 	@Qualifier("bookListService")
 	BookListService bookListService;
 	
+	@Autowired
+	BookChapterService chapterService;
+	
 	@Test
 	@Transactional
 	public void test9() {
-	
+		Book book = bookService.findByBookUrl("http://www.88dushu.com/xiaoshuo/89/89900/");
+		System.out.println(book);
 	}
 	
 
@@ -53,7 +63,12 @@ public class MyTest {
 	
 
 	public static void main(String[] args) throws IOException {
-
+		String url="http://www.88dushu.com/xiaoshuo/90/90918/";
+		Document doc = HtmlParser.getDocument(url);
+		String cover = doc.select("meta[property=og:image]").get(0).attr("content");
+		System.out.println(cover);
+		String disc = doc.select("meta[property=og:description]").first().attr("content");
+		System.out.println(disc);
 	}
 
 
@@ -64,7 +79,7 @@ public class MyTest {
 		CollectUtils.collectBookChapter(null,new BookChapterContentRules());
 	}
 
-	public static void demo2() {
+	public static void demo2() throws IOException {
 		String[] regexs={"<meta property=\"og:novel:book_name\" content=\".{1,20}\">",
 				"<meta property=\"og:novel:author\" content=\".{1,10}\">",
 				"<meta property=\"og:novel:category\" content=\".{2,8}\">",
@@ -93,15 +108,9 @@ public class MyTest {
 		
 		String startStr="<div class=\"mulu\">";//<div class="mulu">
 		String endStr="<div id=\"footer\">";//<div id="footer">
-		String charset="gbk";
-		String concatUrl="";
-		boolean useBookLink=true;
-		try {
-			System.out.println("第二步启动");
-		//	CollectUtils.collectBookInfo(bookListService,null,new BookInfoAndChapterListRules());
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		
+
+		
 		
 	}
 
@@ -111,12 +120,8 @@ public class MyTest {
 		String flag="(*)";
 		int startIndex=1;
 		int endIndex=53;
-		String startStr="<div class=\"booklist\">";//<div class="booklist">
-		String endStr="<div class=\"pagelink\" id=\"pagelink\">";//<div class="pagelink" id="pagelink">
 		String regex="<span class=\"sm\"><a href=\"(/xiaoshuo/)[0-9/]*\">";//<span class="sm"><a href="(/xiaoshuo/)[0-9/]*">
 		boolean repeat = true;
-		String charset = "gbk";
-		String concatUrl = "http://www.88dushu.com";
 		System.out.println("第一步启动");
 		//CollectUtils.collectBookList(new BookListRules());
 	}

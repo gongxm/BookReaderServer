@@ -9,6 +9,7 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.nodes.Node;
 import org.jsoup.nodes.TextNode;
+import org.jsoup.select.Elements;
 import org.jsoup.select.NodeTraversor;
 import org.jsoup.select.NodeVisitor;
 
@@ -27,7 +28,7 @@ public class HtmlParser {
 		Document doc = con.get();
 		String html = doc.html();
 		html = html.split(startTag)[1].split(endTag)[0].replace("&nbsp;", " ");
-		Document doc2 = Jsoup.parse(html);
+		Document doc2 = Jsoup.parse(html, path);
 		String plainText = getPlainText(doc2);
 		return plainText;
 	}
@@ -35,11 +36,43 @@ public class HtmlParser {
 	public static String parseToHtml(String path) throws IOException {
 		Connection con = Jsoup.connect(path);
 		con.timeout(30000);
+	
 		con.header("User-Agent",
 				"Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.4; en-US; rv:1.9.2.2) Gecko/20100316 Firefox/3.6.2");
 		Document doc = con.get();
 		String html = doc.html().replace(Jsoup.parse("&nbsp;").text(), " ");
 		return html;
+	}
+	
+	
+	public static void main(String[] args) throws IOException {
+		String path = "http://www.88dushu.com/sort1/2/";
+		String regex = "http://www.88dushu.com/xiaoshuo/[0-9/]+";
+		
+		Document doc = Jsoup.connect(path).timeout(30000).header("User-Agent", "Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.4; en-US; rv:1.9.2.2) Gecko/20100316 Firefox/3.6.2").get();
+		Element element = doc.select("div.booklist").first();
+		
+		Elements elements = element.getElementsByTag("a");
+		for (Element e : elements) {
+			String absUrl = e.absUrl("href");
+			if(absUrl.matches(regex)) {
+			System.out.println(absUrl);
+			}
+		}
+	}
+	
+	
+	/**
+	 * 获取文档对象
+	 * @param url
+	 * @return
+	 * @throws IOException
+	 */
+	public static Document getDocument(String url) throws IOException {
+		Document doc = Jsoup.connect(url).timeout(30000).header("User-Agent",
+				"Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.4; en-US; rv:1.9.2.2) Gecko/20100316 Firefox/3.6.2")
+				.get();
+		return doc;
 	}
 
 	public static String getPlainText(Element element) {

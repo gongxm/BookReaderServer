@@ -109,25 +109,14 @@
 							cols="20" class="insert_data_width" name="endIndex" id="endIndex"></textarea></td>
 				</tr>
 				<tr>
-					<td class="inner_td insert_data_width">请输入开始区域:</td>
+					<td class="inner_td insert_data_width">请输入内容区域class标签:</td>
 					<td class="inner_td insert_data_width"><textarea rows="1"
-							cols="20" name="startStr" id="startStr" class="insert_data_width"></textarea></td>
-				</tr>
-				<tr>
-					<td class="inner_td insert_data_width">请输入结束区域:</td>
-					<td class="inner_td insert_data_width"><textarea rows="1"
-							cols="20" class="insert_data_width" name="endStr" id="endStr"></textarea></td>
+							cols="20" name="contentDivClass" id="contentDivClass" class="insert_data_width"></textarea></td>
 				</tr>
 				<tr>
 					<td class="inner_td insert_data_width">请输入正则表达式:</td>
 					<td class="inner_td insert_data_width"><textarea rows="1"
 							cols="20" class="insert_data_width" name="regex" id="regex"></textarea></td>
-				</tr>
-				<tr>
-					<td class="inner_td insert_data_width">请输入拼接链接:</td>
-					<td class="inner_td insert_data_width"><textarea rows="1"
-							cols="20" class="insert_data_width" name="concatUrl"
-							id="concatUrl"></textarea></td>
 				</tr>
 				<tr>
 					<td class="inner_td insert_data_width">是否循环匹配</td>

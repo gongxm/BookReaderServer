@@ -47,4 +47,9 @@ public class BookChapterServiceImpl extends BaseService<BookChapter> implements 
 		return dao.findUnCollectChapter(currentPage,pageSize);
 	}
 
+	@Override
+	public BookChapter findByChapterLink(String chapterLink) {
+		return dao.findByChapterLink(chapterLink);
+	}
+
 }

@@ -12,4 +12,6 @@ public interface BookService extends Service<Book>{
 
 	List<Book> findListByKeyword(String keyword, int currentPage, int pageSize);
 
+	Book findByBookUrl(String url);
+
 }

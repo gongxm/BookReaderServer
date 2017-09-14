@@ -109,8 +109,8 @@ public class UserAction extends BaseAction {
 	}
 	
 	
-	@Action("openid")
-	public void openid() {
+	@Action("saveUserInfo")
+	public void saveUserInfo() {
 		ResponseResult result = new ResponseResult(MyConstants.FAILURE, "用户信息存储失败!");
 		try {
 			UserInfoParam userInfoParam = GsonUtils.fromJson(getData(), UserInfoParam.class);

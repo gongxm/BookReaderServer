@@ -48,15 +48,9 @@ function checkData(id) {
 		} else {
 			return value;
 		}
-	} else if (id == "startStr") {
+	} else if (id == "contentDivClass") {
 		if (value == "") {
-			alert("请输入开始区域!");
-		} else {
-			return value;
-		}
-	} else if (id == "endStr") {
-		if (value == "") {
-			alert("请输入结束区域!");
+			alert("请输入内容区域class标签!");
 		} else {
 			return value;
 		}
@@ -100,8 +94,7 @@ $(document).ready(function() {
 		$("#flag").val('');
 		$("#startIndex").val('');
 		$("#endIndex").val('');
-		$("#startStr").val('');
-		$("#endStr").val('');
+		$("#contentDivClass").val('');
 		$("#regex").val('');
 		$("#concatUrl").val('');
 		$("#over").show();// 展现遮罩层屏幕
@@ -132,7 +125,7 @@ function editBookRules(thisObj){
 // 表单提交
 $(document).ready(function() {
 
-	$("form").submit(function() { // 
+	$("form[name=rulesform]").submit(function() { // 
 
 		// 表单内容校验
 		var rulesName = checkData("rulesName");
@@ -160,12 +153,8 @@ $(document).ready(function() {
 			return false;
 		}
 
-		var startStr = checkData("startStr");
-		if (startStr == undefined) {
-			return false;
-		}
-		var endStr = checkData("endStr");
-		if (endStr == undefined) {
+		var contentDivClass = checkData("contentDivClass");
+		if (contentDivClass == undefined) {
 			return false;
 		}
 		var regex = checkData("regex");
@@ -226,10 +215,8 @@ function editRules(thisObj) {
 					$("#flag").val(rules.flag);
 					$("#startIndex").val(rules.startIndex);
 					$("#endIndex").val(rules.endIndex);
-					$("#startStr").val(rules.startStr);
-					$("#endStr").val(rules.endStr);
+					$("#contentDivClass").val(rules.contentDivClass);
 					$("#regex").val(rules.regex);
-					$("#concatUrl").val(rules.concatUrl);
 					var repeat = rules.isRepeat
 					$("#repeat").find("option[value='"+repeat+"']").attr("selected",true);
 

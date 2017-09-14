@@ -40,15 +40,11 @@ public class BookListRules implements Serializable {
 	@Expose
 	private int endIndex;
 	@Expose
-	private String startStr;
-	@Expose
-	private String endStr;
+	private String contentDivClass;
 	@Expose
 	private String regex;
 	@Expose
 	private boolean isRepeat;
-	@Expose
-	private String concatUrl;
 
 	@OneToOne(targetEntity = BookInfoAndChapterListRules.class)
 	@Cascade({ CascadeType.SAVE_UPDATE, CascadeType.DELETE })
@@ -120,20 +116,12 @@ public class BookListRules implements Serializable {
 		this.endIndex = endIndex;
 	}
 
-	public String getStartStr() {
-		return startStr;
+	public String getContentDivClass() {
+		return contentDivClass;
 	}
 
-	public void setStartStr(String startStr) {
-		this.startStr = startStr;
-	}
-
-	public String getEndStr() {
-		return endStr;
-	}
-
-	public void setEndStr(String endStr) {
-		this.endStr = endStr;
+	public void setContentDivClass(String contentDivClass) {
+		this.contentDivClass = contentDivClass;
 	}
 
 	public String getRegex() {
@@ -150,14 +138,6 @@ public class BookListRules implements Serializable {
 
 	public void setRepeat(boolean isRepeat) {
 		this.isRepeat = isRepeat;
-	}
-
-	public String getConcatUrl() {
-		return concatUrl;
-	}
-
-	public void setConcatUrl(String concatUrl) {
-		this.concatUrl = concatUrl;
 	}
 
 	public BookInfoAndChapterListRules getRules() {

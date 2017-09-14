@@ -115,9 +115,12 @@ public class BookChapter implements Comparable<BookChapter>,Serializable{
 		this.chapterContent = chapterContent;
 	}
 
+
+
 	@Override
 	public String toString() {
-		return "BookChapter [id=" + id + ", position=" + position + ", chapter_name=" + chapter_name + "]";
+		return "BookChapter [id=" + id + ", position=" + position + ", chapter_name=" + chapter_name + ", chapter_link="
+				+ chapter_link + ", status=" + status + "]";
 	}
 
 	@Override

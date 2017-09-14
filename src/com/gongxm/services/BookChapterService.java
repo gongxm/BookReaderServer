@@ -12,4 +12,6 @@ public interface BookChapterService extends Service<BookChapter> {
 
 	List<BookChapter> findUnCollectChapter(int currentPage, int pageSize);
 
+	BookChapter findByChapterLink(String chapterLink);
+
 }

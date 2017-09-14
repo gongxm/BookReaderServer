@@ -107,8 +107,7 @@ public class CollectUtils {
 						List<BookList> list = service.findUnCollectBookListBySource(book_source, currentPage, pageSize);
 						for (BookList bookList : list) {
 							threadCount++;
-							String concatUrl2 = rules.isUseBookLink() ? bookList.getBook_link() : rules.getConcatUrl();
-							BookInfoRunnable task = new BookInfoRunnable(context, bookList, concatUrl2, rules);
+							BookInfoRunnable task = new BookInfoRunnable(context, bookList, rules);
 							ThreadPoolUtil.executeOnNewThread(task);
 						}
 						currentPage++;
@@ -126,8 +125,7 @@ public class CollectUtils {
 						List<BookList> list = service.findAllUnCollectBookList(currentPage, pageSize);
 						for (BookList bookList : list) {
 							threadCount++;
-							String concatUrl2 = rules.isUseBookLink() ? bookList.getBook_link() : rules.getConcatUrl();
-							BookInfoRunnable task = new BookInfoRunnable(context, bookList, concatUrl2, rules);
+							BookInfoRunnable task = new BookInfoRunnable(context, bookList, rules);
 							ThreadPoolUtil.executeOnNewThread(task);
 						}
 						currentPage++;
