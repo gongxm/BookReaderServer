@@ -16,5 +16,9 @@ public interface BookListDao extends Dao<BookList> {
 
 	BookList findByBookLink(String bookUrl);
 
+	long getBookListCountBySource(String book_source);
+
+	List<BookList> findBookListBySource(String book_source, int currentPage, int pageSize);
+
 
 }

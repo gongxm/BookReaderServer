@@ -3,7 +3,6 @@ package com.gongxm.test;
 import java.io.IOException;
 import java.util.List;
 
-import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.junit.Test;
@@ -15,15 +14,13 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.gongxm.bean.Book;
-import com.gongxm.bean.BookChapter;
-import com.gongxm.bean.BookChapterContentRules;
+import com.gongxm.bean.BookList;
 import com.gongxm.dao.BookDao;
 import com.gongxm.services.BookChapterService;
 import com.gongxm.services.BookListRulesService;
 import com.gongxm.services.BookListService;
 import com.gongxm.services.BookService;
 import com.gongxm.services.UserService;
-import com.gongxm.utils.CollectUtils;
 import com.gongxm.utils.HtmlParser;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = "classpath:applicationContext.xml")
@@ -54,21 +51,25 @@ public class MyTest {
 	@Test
 	@Transactional
 	public void test9() {
-		Book book = bookService.findByBookUrl("http://www.88dushu.com/xiaoshuo/89/89900/");
-		System.out.println(book);
+		List<BookList> list = bookListService.findBookListBySource("88dushu", 1, 5);
+		for (BookList bookList : list) {
+			System.out.println(bookList);
+		}
 	}
 	
 
-	
-	
-
 	public static void main(String[] args) throws IOException {
-		String url="http://www.88dushu.com/xiaoshuo/90/90918/";
+		/*String url="http://www.88dushu.com/xiaoshuo/90/90918/";
 		Document doc = HtmlParser.getDocument(url);
 		String cover = doc.select("meta[property=og:image]").get(0).attr("content");
 		System.out.println(cover);
 		String disc = doc.select("meta[property=og:description]").first().attr("content");
-		System.out.println(disc);
+		System.out.println(disc);*/
+		
+		String url = "http://www.88dushu.com/xiaoshuo/91/91615/29694897.html";
+		Document doc = HtmlParser.getDocument(url);
+		Element e = doc.select("div.yd_text2").first();
+		System.out.println(e.text());
 	}
 
 
@@ -76,7 +77,7 @@ public class MyTest {
 		String startStr = "<div class=\"yd_text2\">";//<div class="yd_text2">
 		String endStr = "<div class=\"yd_ad1\">";//<div class="yd_ad1">
 		System.out.println("第三步启动");
-		CollectUtils.collectBookChapter(null,new BookChapterContentRules());
+//		CollectUtils.collectBookChapter(null,new BookChapterContentRules());
 	}
 
 	public static void demo2() throws IOException {

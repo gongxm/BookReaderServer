@@ -19,7 +19,7 @@
 	<h1>编辑书籍信息规则</h1>
 
 	<div class="edit">
-		<input type="button" value="编辑内容页规则" id="edit" />
+		<input type="button" value="选择数据源" id="edit" />
 	</div>
 
 	<form name="bookRulesForm" id="bookRulesForm">
@@ -31,6 +31,11 @@
 					value="${bookRules.id}" readonly="readonly" /> <input
 					type="hidden" name="book_list_rules_id" id="book_list_rules_id"
 					value="${bookListRulesId}" /></td>
+			</tr>
+			<tr>
+				<td>规则名称</td>
+				<td><textarea rows="1" cols="20" name="rulesName"
+						id="rulesName">${bookRules.rulesName}</textarea></td>
 			</tr>
 			<tr>
 				<td>标题正则</td>
@@ -64,21 +69,16 @@
 				</td>
 			</tr>
 			<tr>
-				<td>目录链接正则</td>
-				<td><textarea rows="1" cols="20" name="listLinkRegex"
-						id="listLinkRegex">${bookRules.listLinkRegex}</textarea></td>
+				<td>目录内容区域正则</td>
+				<td><textarea rows="1" cols="20" name="contentDivClass"
+						id="contentDivClass">${bookRules.contentDivClass}</textarea></td>
 			</tr>
 			<tr>
-				<td>目录标题正则</td>
-				<td><textarea rows="1" cols="20" name="listTitleRegex"
-						id="listTitleRegex">${bookRules.listTitleRegex}</textarea></td>
+				<td>正文内容区域正则</td>
+				<td><textarea rows="1" cols="20" name="contentDivRegex"
+						id="contentDivRegex">${bookRules.contentDivRegex}</textarea></td>
 			</tr>
-			<tr>
-				<td>内容区域正则</td>
-				<td><textarea rows="1" cols="20" name="contentDivClass" id="contentDivClass">${bookRules.contentDivClass}</textarea>
-				</td>
-			</tr>
-	
+
 			<tr>
 				<td colspan="2" class="center"><input type="submit" value="修改" />
 					<input type="button" value="返回" id="cancel" /></td>
@@ -96,35 +96,11 @@
 	<!-- 弹出窗口代码 -->
 	<div id="floatdiv" style="height: 300px">
 		<input class="close" id="close" type="button" value="关闭" />
-		<h2>编辑内容页规则</h2>
-		<form id="contentRules" name="contentRules"
-			action="updateContentRules">
-			<table class="table_inner table_margin table_width"
-				style='margin: 0px auto'>
-				<caption>编辑内容页规则</caption>
-				<tr>
-					<td>ID(无需修改)</td>
-					<td><input type="text" id="c_id" name="id" readonly="readonly" />
-						<input type="hidden" id="c_book_rules_id"
-						name="book_list_rules_id" /></td>
-				</tr>
-				<tr>
-					<td>开始区域</td>
-					<td><textarea rows="1" cols="20" id="c_start" name="startStr"></textarea></td>
-				</tr>
-				<tr>
-					<td>结束区域</td>
-					<td><textarea rows="1" cols="20" id="c_end" name="endStr"></textarea></td>
-				</tr>
+		<h2>选择数据源</h2>
+		<table class="table_inner table_margin"
+			style='margin: 0px auto;width:300px;' id='datasource'>
 
-				<tr>
-					<td align="center" colspan="2"><input type="submit"
-						value="确定修改" id="editContentRules" /> <input type="button"
-						value="取消修改" id="cancelEdit" /></td>
-				</tr>
-
-			</table>
-		</form>
+		</table>
 	</div>
 </body>
 </html>

@@ -1,10 +1,10 @@
-package com.gongxm.dao;
+package com.gongxm.services;
 
 import java.util.List;
 
 import com.gongxm.bean.BookInfoAndChapterListRules;
 
-public interface BookInfoAndChapterListRulesDao extends Dao<BookInfoAndChapterListRules>{
+public interface BookInfoAndChapterListRulesService extends Service<BookInfoAndChapterListRules> {
 
 	List<BookInfoAndChapterListRules> findAll();
 

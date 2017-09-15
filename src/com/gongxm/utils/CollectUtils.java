@@ -7,7 +7,6 @@ import java.util.List;
 import org.springframework.web.context.WebApplicationContext;
 
 import com.gongxm.bean.BookChapter;
-import com.gongxm.bean.BookChapterContentRules;
 import com.gongxm.bean.BookInfoAndChapterListRules;
 import com.gongxm.bean.BookList;
 import com.gongxm.bean.BookListRules;
@@ -25,7 +24,7 @@ public class CollectUtils {
 
 	// 书籍列表
 	public static void collectBookList(WebApplicationContext context, BookListService service,
-			BookChapterService chapterService, BookListRules bookListRules, boolean collectAll) {
+			BookChapterService chapterService, BookListRules bookListRules, boolean collectAll, boolean update) {
 		collecting = true;
 		threadCount = 0;
 		new Thread() {
@@ -65,7 +64,7 @@ public class CollectUtils {
 				collecting = false;
 				if (collectAll) {
 					try {
-						collectBookInfo(context, bookListRules.getBook_source(), bookListRules, true);
+						collectBookInfo(context, bookListRules, true, update);
 					} catch (IOException e) {
 						e.printStackTrace();
 					}
@@ -76,62 +75,24 @@ public class CollectUtils {
 	}
 
 	// 书籍信息和章节列表
-	public static void collectBookInfo(WebApplicationContext context, String book_source, BookListRules bookListRules,
-			boolean collectAll) throws IOException {
+	public static void collectBookInfo(WebApplicationContext context, BookListRules bookListRules, boolean collectAll,
+			boolean update) throws IOException {
 		collecting = true;
 		new Thread() {
 			public void run() {
-				BookListService service = (BookListService) context.getBean("bookListService");
 				threadCount = 1;
+				BookListService service = (BookListService) context.getBean("bookListService");
 				BookInfoAndChapterListRules rules = bookListRules.getRules();
 				if (rules == null) {
 					System.out.println("缺少书籍信息规则!!!!!!!!!!!!!!");
 					threadCount = 0;
 					return;
 				}
-				System.out.println("============================开始采集书籍信息===============================");
-				int currentPage = 1;
-				int pageSize = 20;
-
-				if (TextUtils.notEmpty(book_source)) {
-					long total = service.getUnCollectBookListCountBySource(book_source);
-					long page = 0;
-					if (total % pageSize == 0) {
-						page = total / pageSize;
-					} else {
-						page = total / pageSize + 1;
-					}
-
-					while (currentPage <= page) {
-
-						List<BookList> list = service.findUnCollectBookListBySource(book_source, currentPage, pageSize);
-						for (BookList bookList : list) {
-							threadCount++;
-							BookInfoRunnable task = new BookInfoRunnable(context, bookList, rules);
-							ThreadPoolUtil.executeOnNewThread(task);
-						}
-						currentPage++;
-					}
-
+				if (update) {
+					updateBookInfo(context, bookListRules, service, rules);
 				} else {
-					long total = service.getAllUnCollectBookListCount();
-					long page = 0;
-					if (total % pageSize == 0) {
-						page = total / pageSize;
-					} else {
-						page = total / pageSize + 1;
-					}
-					while (currentPage <= page) {
-						List<BookList> list = service.findAllUnCollectBookList(currentPage, pageSize);
-						for (BookList bookList : list) {
-							threadCount++;
-							BookInfoRunnable task = new BookInfoRunnable(context, bookList, rules);
-							ThreadPoolUtil.executeOnNewThread(task);
-						}
-						currentPage++;
-					}
+					collectBookInfo(context, bookListRules, service, rules);
 				}
-				threadCount--;
 			};
 		}.start();
 
@@ -149,14 +110,15 @@ public class CollectUtils {
 				collecting = false;
 
 				if (collectAll) {
-					collectBookChapter(context, bookListRules.getContentRules());
+					BookInfoAndChapterListRules rules = bookListRules.getRules();
+					collectBookChapter(context, rules.getContentDivRegex());
 				}
 			}
 		}).start();
 	}
 
 	// 书籍章节内容
-	public static void collectBookChapter(WebApplicationContext context, BookChapterContentRules rules) {
+	public static void collectBookChapter(WebApplicationContext context, String contentDivRegex) {
 
 		System.out.println("==============开始采集章节内容====================");
 		collecting = true;
@@ -179,10 +141,17 @@ public class CollectUtils {
 				while (currentPage <= page) {
 					List<BookChapter> chapters = service.findUnCollectChapter(currentPage, pageSize);
 					for (BookChapter chapter : chapters) {
-						BookChapterContentRunnable task = new BookChapterContentRunnable(chapter, rules, context);
+						BookChapterContentRunnable task = new BookChapterContentRunnable(chapter, contentDivRegex,
+								context);
 						ThreadPoolUtil.executeOnNewThread(task);
 					}
 					currentPage++;
+
+					try {
+						Thread.sleep(100);
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
 				}
 				threadCount--;
 			};
@@ -203,6 +172,102 @@ public class CollectUtils {
 				collecting = false;
 			}
 		}).start();
+	}
+
+	// 采集书籍信息
+	private static void collectBookInfo(WebApplicationContext context, BookListRules bookListRules,
+			BookListService service, BookInfoAndChapterListRules rules) {
+		System.out.println("============================开始采集书籍信息===============================");
+		int currentPage = 1;
+		int pageSize = 20;
+
+		String book_source = bookListRules.getBook_source();
+		if (TextUtils.notEmpty(book_source)) {
+			long total = service.getUnCollectBookListCountBySource(book_source);
+			long page = 0;
+			if (total % pageSize == 0) {
+				page = total / pageSize;
+			} else {
+				page = total / pageSize + 1;
+			}
+
+			while (currentPage <= page) {
+
+				List<BookList> list = service.findUnCollectBookListBySource(book_source, currentPage, pageSize);
+				for (BookList bookList : list) {
+					threadCount++;
+					BookInfoRunnable task = new BookInfoRunnable(context, bookList, rules);
+					ThreadPoolUtil.executeOnNewThread(task);
+				}
+				currentPage++;
+
+				try {
+					Thread.sleep(100);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+			}
+
+		} else {
+			long total = service.getAllUnCollectBookListCount();
+			long page = 0;
+			if (total % pageSize == 0) {
+				page = total / pageSize;
+			} else {
+				page = total / pageSize + 1;
+			}
+			while (currentPage <= page) {
+				List<BookList> list = service.findAllUnCollectBookList(currentPage, pageSize);
+				for (BookList bookList : list) {
+					threadCount++;
+					BookInfoRunnable task = new BookInfoRunnable(context, bookList, rules);
+					ThreadPoolUtil.executeOnNewThread(task);
+				}
+				currentPage++;
+
+				try {
+					Thread.sleep(100);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		threadCount--;
+	}
+	// 采集书籍信息
+	private static void updateBookInfo(WebApplicationContext context, BookListRules bookListRules,
+			BookListService service, BookInfoAndChapterListRules rules) {
+		System.out.println("============================开始更新书籍信息===============================");
+		int currentPage = 1;
+		int pageSize = 20;
+		
+		String book_source = bookListRules.getBook_source();
+		if (TextUtils.notEmpty(book_source)) {
+			long total = service.getBookListCountBySource(book_source);
+			long page = 0;
+			if (total % pageSize == 0) {
+				page = total / pageSize;
+			} else {
+				page = total / pageSize + 1;
+			}
+			
+			while (currentPage <= page) {
+				List<BookList> list = service.findBookListBySource(book_source, currentPage, pageSize);
+				for (BookList bookList : list) {
+					threadCount++;
+					BookInfoRunnable task = new BookInfoRunnable(context, bookList, rules);
+					ThreadPoolUtil.executeOnNewThread(task);
+				}
+				currentPage++;
+				try {
+					Thread.sleep(100);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+			}
+			
+		}
+		threadCount--;
 	}
 
 }

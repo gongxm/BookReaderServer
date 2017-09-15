@@ -64,8 +64,15 @@ public class BookInfoRunnable implements Runnable {
 			
 			Book book = bookService.findByBookUrl(url);
 
-			 new Book(title, author, category, status, cover, shortIntroduce, url);
-			bookService.add(book);
+			if(book==null) {
+				book = new Book(title, author, category, status, cover, shortIntroduce, url);
+				bookService.add(book);
+			}else {
+				book.setStatus(status);
+				book.setCover(cover);
+				book.setShortIntroduce(shortIntroduce);
+				bookService.update(book);
+			}
 			System.out.println("采集中.." + book.getBook_name());
 
 			Element contentDiv = doc.select(rules.getContentDivClass()).first();
@@ -81,6 +88,11 @@ public class BookInfoRunnable implements Runnable {
 						if (temp == null) {
 							BookChapter bookChapter = new BookChapter(chapterTitle, chapterLink, i);
 							book.getChapters().add(bookChapter);
+							try {
+								Thread.sleep(100);
+							} catch (InterruptedException e1) {
+								e1.printStackTrace();
+							}
 						}
 					}
 					// 更新书籍状态

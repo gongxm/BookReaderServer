@@ -24,7 +24,7 @@
 					<tr>
 						<td class="inner_td" style="width: 120px">规则ID</td>
 						<td class="inner_td" style="width: 120px">规则名称</td>
-						<td class="inner_td" style="width: 500px" colspan="4">操作</td>
+						<td class="inner_td" style="width: 500px" colspan="5">操作</td>
 					</tr>
 
 					<c:forEach items="${rulesList}" var="rules" varStatus="vs">
@@ -39,6 +39,8 @@
 								onclick="collectBookInfo(this)"></td>
 							<td class="inner_td"><input type="button" value="采集章节内容"
 								onclick="collectChapter(this)"></td>
+							<td class="inner_td"><input type="button" value="更新"
+								onclick="update(this)"></td>
 						</tr>
 					</c:forEach>
 					<tr>

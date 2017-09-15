@@ -92,5 +92,31 @@ public class BookListDaoImpl extends BaseDao<BookList> implements BookListDao {
 			return bookList;
 		}
 	}
+
+	@Override
+	public long getBookListCountBySource(String book_source) {
+		try {
+			String sql = "select count(*) from book_list where book_source=?";
+			Long count =sqlObj.queryForObject(sql, new Object[] {book_source}, Long.class);
+			return count;
+		} catch (DataAccessException e) {
+			e.printStackTrace();
+		}
+		return 0;
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<BookList> findBookListBySource(String book_source, int currentPage, int pageSize) {
+		try {
+			DetachedCriteria criteria = DetachedCriteria.forClass(BookList.class);
+			criteria.add(Restrictions.eq("book_source", book_source));
+			List<BookList> list = (List<BookList>) hqlObj.findByCriteria(criteria, (currentPage - 1) * pageSize,pageSize);
+			return list;
+		} catch (DataAccessException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
 	
 }

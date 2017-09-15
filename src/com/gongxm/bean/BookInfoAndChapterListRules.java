@@ -7,6 +7,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import com.google.gson.annotations.Expose;
 
@@ -18,6 +19,8 @@ public class BookInfoAndChapterListRules implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Expose
 	private int id;
+	@Expose
+	private String rulesName;// 规则名称
 	// 1.标题 2.作者 3.类别 4.状态 5.封面 6.简介7.目录链接正则 8.目录标题正则
 	@Expose
 	private String titleRegex;
@@ -32,8 +35,11 @@ public class BookInfoAndChapterListRules implements Serializable {
 	@Expose
 	private String shortIntroduceRegex;
 	@Expose
-	private String contentDivClass;
+	private String contentDivClass;// 目录内容区域正则
+	@Expose
+	private String contentDivRegex;// 正文内容区域正则
 
+	@Transient // 不需要加入数据库
 	private int book_list_rules_id;
 
 	public int getId() {
@@ -106,6 +112,22 @@ public class BookInfoAndChapterListRules implements Serializable {
 
 	public void setContentDivClass(String contentDivClass) {
 		this.contentDivClass = contentDivClass;
+	}
+
+	public String getContentDivRegex() {
+		return contentDivRegex;
+	}
+
+	public void setContentDivRegex(String contentDivRegex) {
+		this.contentDivRegex = contentDivRegex;
+	}
+
+	public String getRulesName() {
+		return rulesName;
+	}
+
+	public void setRulesName(String rulesName) {
+		this.rulesName = rulesName;
 	}
 
 }

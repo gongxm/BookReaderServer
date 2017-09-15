@@ -7,7 +7,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.Cascade;
@@ -46,19 +46,12 @@ public class BookListRules implements Serializable {
 	@Expose
 	private boolean isRepeat;
 
-	@OneToOne(targetEntity = BookInfoAndChapterListRules.class)
+	@ManyToOne(targetEntity = BookInfoAndChapterListRules.class)
 	@Cascade({ CascadeType.SAVE_UPDATE, CascadeType.DELETE })
 	@JoinColumn(name = "book_info_rules_id")
 	@Fetch(FetchMode.SELECT)
 	@LazyToOne(LazyToOneOption.PROXY)
 	private BookInfoAndChapterListRules rules;
-
-	@OneToOne(targetEntity = BookChapterContentRules.class)
-	@Cascade({ CascadeType.SAVE_UPDATE, CascadeType.DELETE })
-	@JoinColumn(name = "chapter_content_rules_id")
-	@Fetch(FetchMode.SELECT)
-	@LazyToOne(LazyToOneOption.PROXY)
-	private BookChapterContentRules contentRules;
 
 	public int getId() {
 		return id;
@@ -146,14 +139,6 @@ public class BookListRules implements Serializable {
 
 	public void setRules(BookInfoAndChapterListRules rules) {
 		this.rules = rules;
-	}
-
-	public BookChapterContentRules getContentRules() {
-		return contentRules;
-	}
-
-	public void setContentRules(BookChapterContentRules contentRules) {
-		this.contentRules = contentRules;
 	}
 
 }

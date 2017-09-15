@@ -16,4 +16,8 @@ public interface BookListService extends Service<BookList>{
 
 	BookList findByBookLink(String bookUrl);
 
+	long getBookListCountBySource(String book_source);
+
+	List<BookList> findBookListBySource(String book_source, int currentPage, int pageSize);
+
 }

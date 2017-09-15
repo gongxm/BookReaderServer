@@ -1,5 +1,7 @@
 package com.gongxm.action;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -9,12 +11,15 @@ import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
 import com.gongxm.bean.BookInfoAndChapterListRules;
 import com.gongxm.bean.BookListRules;
+import com.gongxm.domain.request.IDParam;
 import com.gongxm.domain.response.ResponseResult;
+import com.gongxm.services.BookInfoAndChapterListRulesService;
 import com.gongxm.services.BookListRulesService;
 import com.gongxm.utils.GsonUtils;
 import com.gongxm.utils.MyConstants;
@@ -33,6 +38,10 @@ public class BookRulesAction extends BaseAction implements ModelDriven<BookInfoA
 
 	@Autowired
 	BookListRulesService rulesService;
+	
+	@Autowired
+	@Qualifier("bookInfoAndChapterListRulesService")
+	BookInfoAndChapterListRulesService bscService;
 
 	// 根据BookListRules的ID获取BookInfoAndChapterListRules的内容
 	@Action(value = "showBookRules", results = { @Result(name = "success", location = "/WEB-INF/bookRules.jsp") })
@@ -52,6 +61,30 @@ public class BookRulesAction extends BaseAction implements ModelDriven<BookInfoA
 		return SUCCESS;
 	}
 
+	@Action("showAllBookRules")
+	public void showAllBookRules() {
+		ResponseResult result = new ResponseResult();
+		List<BookInfoAndChapterListRules> rules = bscService.findAll();
+		result.setResult(rules);
+		result.setSuccess();
+		String json = GsonUtils.parseToJson(result);
+		write(json);
+	}
+	
+	@Action("getBookRules")
+	public void getBookRules() {
+		IDParam param = GsonUtils.fromJson(getData(), IDParam.class);
+		ResponseResult result = new ResponseResult();
+		int id = param.getId();
+		if(id>0) {
+			BookInfoAndChapterListRules rules = bscService.findById(id);
+			result.setResult(rules);
+			result.setSuccess();
+		}
+		String json = GsonUtils.parseToJson(result);
+		write(json);
+	}
+
 	// 更新或者添加新规则
 	@Action("updateBookRules")
 	public void updateBookRules() {
@@ -67,7 +100,6 @@ public class BookRulesAction extends BaseAction implements ModelDriven<BookInfoA
 		}
 		String json = GsonUtils.toJson(result);
 		write(json);
-
 	}
 
 	@Override
