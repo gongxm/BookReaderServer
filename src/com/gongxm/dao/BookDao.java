@@ -14,4 +14,6 @@ public interface BookDao extends Dao<Book> {
 
 	Book findByBookUrl(String url);
 
+	void deleteById(int id);
+
 }

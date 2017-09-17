@@ -21,7 +21,7 @@ $(document).ready(function() {
 	$("#close").click(function() {
 		$("#floatdiv").hide();
 		$("#over").hide();
-		window.location.reload();
+		$("#datasource tr").empty(""); 
 	});
 
 	$("#edit").click(function() {
@@ -132,9 +132,19 @@ function selectSource(){
 					var rules = data.result;
 					if(rules){
 						$("#id").val(rules.id);
+						$("#rulesName").val(rules.rulesName);
+						$("#titleRegex").val(rules.titleRegex);
+						$("#authorRegex").val(rules.authorRegex);
+						$("#categoryRegex").val(rules.categoryRegex);
+						$("#statusRegex").val(rules.statusRegex);
+						$("#coverRegex").val(rules.coverRegex);
+						$("#shortIntroduceRegex").val(rules.shortIntroduceRegex);
+						$("#contentDivClass").val(rules.contentDivClass);
+						$("#contentDivRegex").val(rules.contentDivRegex);
 					}
 					$("#floatdiv").hide();
 					$("#over").hide();
+					$("#datasource tr").empty(""); 
 				} else {
 					alert("请求失败!")
 				}

@@ -84,15 +84,14 @@ public class BookInfoRunnable implements Runnable {
 						Element e = elements.get(i);
 						String chapterLink = e.absUrl("href");
 						String chapterTitle = e.text();
+						long start = System.currentTimeMillis();
 						BookChapter temp = chapterService.findByChapterLink(chapterLink);
+						long end = System.currentTimeMillis();
+						System.out.println("耗时:"+(end-start));
 						if (temp == null) {
+							System.out.println("----采集章节目录-------"+chapterTitle);
 							BookChapter bookChapter = new BookChapter(chapterTitle, chapterLink, i);
 							book.getChapters().add(bookChapter);
-							try {
-								Thread.sleep(100);
-							} catch (InterruptedException e1) {
-								e1.printStackTrace();
-							}
 						}
 					}
 					// 更新书籍状态

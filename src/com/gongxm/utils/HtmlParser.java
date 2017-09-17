@@ -52,11 +52,11 @@ public class HtmlParser {
 		FormattingVisitor formatter = new FormattingVisitor();
 		NodeTraversor traversor = new NodeTraversor(formatter);
 		traversor.traverse(element);
-		return formatter.toString();
+		return formatter.toString().replace(Jsoup.parse("&nbsp;").text(), " ");
 	}
 
 	private static class FormattingVisitor implements NodeVisitor {
-		private String lineSeparator = System.getProperty("line.separator", "\n");
+		private String lineSeparator = "\n";
 		private static final int maxWidth = 80;
 		private int width = 0;
 		private StringBuilder accum = new StringBuilder();

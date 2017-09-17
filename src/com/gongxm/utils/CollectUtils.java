@@ -45,6 +45,11 @@ public class CollectUtils {
 					threadCount++;
 					BookListRunnable task = new BookListRunnable(context, bookListRules, url);
 					ThreadPoolUtil.executeOnNewThread(task);
+					try {
+						Thread.sleep(MyConstants.BOOK_COLLECT_INTERVAL);
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
 				}
 				threadCount--;
 			};
@@ -148,7 +153,7 @@ public class CollectUtils {
 					currentPage++;
 
 					try {
-						Thread.sleep(100);
+						Thread.sleep(MyConstants.BOOK_COLLECT_INTERVAL);
 					} catch (InterruptedException e) {
 						e.printStackTrace();
 					}
@@ -202,7 +207,7 @@ public class CollectUtils {
 				currentPage++;
 
 				try {
-					Thread.sleep(100);
+					Thread.sleep(MyConstants.BOOK_COLLECT_INTERVAL);
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
@@ -226,7 +231,7 @@ public class CollectUtils {
 				currentPage++;
 
 				try {
-					Thread.sleep(100);
+					Thread.sleep(MyConstants.BOOK_COLLECT_INTERVAL);
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
@@ -260,7 +265,7 @@ public class CollectUtils {
 				}
 				currentPage++;
 				try {
-					Thread.sleep(100);
+					Thread.sleep(MyConstants.BOOK_COLLECT_INTERVAL);
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}

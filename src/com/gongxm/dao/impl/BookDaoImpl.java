@@ -50,6 +50,7 @@ public class BookDaoImpl extends BaseDao<Book> implements BookDao {
 			DetachedCriteria criteria = DetachedCriteria.forClass(Book.class);
 			criteria.add(Restrictions.or(Restrictions.like("book_name", keyword, MatchMode.ANYWHERE),
 					Restrictions.like("author", keyword, MatchMode.ANYWHERE)));
+//			 criteria.add(Restrictions.like("book_name", keyword, MatchMode.ANYWHERE));
 			List<Book> list = (List<Book>) hqlObj.findByCriteria(criteria, (currentPage - 1) * pageSize, pageSize);
 			return list;
 		} catch (DataAccessException e) {
@@ -84,5 +85,11 @@ public class BookDaoImpl extends BaseDao<Book> implements BookDao {
 			return book;
 		}
 
+	}
+
+	@Override
+	public void deleteById(int id) {
+		String sql = "delete from books where id=?";
+		sqlObj.update(sql, new Object[] { id }, new int[] { java.sql.Types.INTEGER });
 	}
 }

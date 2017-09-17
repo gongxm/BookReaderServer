@@ -28,8 +28,6 @@
 							<td class="inner_td" style="width: 120px">规则ID</td>
 							<td class="inner_td" style="width: 120px">规则名称</td>
 							<td class="inner_td" style="width: 120px">数据源</td>
-							<td class="inner_td" style="width: 180px">正则表达式</td>
-							<td class="inner_td" style="width: 80px">重复匹配</td>
 							<td class="inner_td" style="width: 200px">操作</td>
 						</tr>
 
@@ -38,9 +36,6 @@
 								<td class="inner_td">${rules.id}</td>
 								<td class="inner_td">${rules.rulesName}</td>
 								<td class="inner_td">${rules.book_source}</td>
-								<td class="inner_td">${rules.regex}</td>
-								<td class="inner_td"><c:if test="${rules.repeat}">是</c:if>
-									<c:if test="${rules.repeat==false}">否</c:if></td>
 								<td class="inner_td"><input type="button" value="编辑"
 									onclick="editRules(this)"> <input type="button"
 									value="删除" onclick="deleteRules(this)"> <input
@@ -49,7 +44,7 @@
 						</c:forEach>
 
 						<tr>
-							<td colspan="7" align="center"><a class="href_none"
+							<td colspan="4" align="center"><a class="href_none"
 								href="${pageContext.request.contextPath}/">回到主页</a> <a
 								class="href_none"
 								href="${pageContext.request.contextPath}/admin">后台管理</a></td>

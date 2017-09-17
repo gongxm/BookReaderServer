@@ -1,7 +1,7 @@
 package com.gongxm.test;
 
 import java.io.IOException;
-import java.util.List;
+import java.util.Set;
 
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -14,7 +14,8 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.gongxm.bean.Book;
-import com.gongxm.bean.BookList;
+import com.gongxm.bean.BookChapter;
+import com.gongxm.bean.BookListRules;
 import com.gongxm.dao.BookDao;
 import com.gongxm.services.BookChapterService;
 import com.gongxm.services.BookListRulesService;
@@ -51,10 +52,21 @@ public class MyTest {
 	@Test
 	@Transactional
 	public void test9() {
-		List<BookList> list = bookListService.findBookListBySource("88dushu", 1, 5);
-		for (BookList bookList : list) {
-			System.out.println(bookList);
-		}
+	/*	List<Book> list = bookDao.findListByKeyword("西游称雄", 1, 20);
+		System.out.println("size = "+list.size());
+		for (Book book : list) {
+//			book.setChapters(null);
+			bookDao.delete(book);
+//			System.out.println(book);
+		}*/
+//		Book book = bookDao.findById(1);
+//		bookDao.delete(book);
+//		bookDao.delete(book);
+		
+		BookListRules rules = service.findById(1);
+		System.out.println(rules.getRulesName());
+		service.delete(rules.getId());
+		
 	}
 	
 
@@ -69,7 +81,8 @@ public class MyTest {
 		String url = "http://www.88dushu.com/xiaoshuo/91/91615/29694897.html";
 		Document doc = HtmlParser.getDocument(url);
 		Element e = doc.select("div.yd_text2").first();
-		System.out.println(e.text());
+		String text = HtmlParser.getPlainText(e);
+		System.out.println(text);
 	}
 
 

@@ -21,4 +21,7 @@ public class MyConstants {
 	public static final int BOOK_UNCOLLECT = 0;// 未采集
 	public static final int BOOK_COLLECTED = 1;// 已采集
 	public static final int BOOK_COLLECT_FAILURE = 2;// 采集失败
+	
+	public static final int BOOK_COLLECT_INTERVAL = 10;// 采集时间间隔
+	
 }

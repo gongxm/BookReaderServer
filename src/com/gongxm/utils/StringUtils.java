@@ -14,7 +14,7 @@ public class StringUtils {
             while((len = is.read(buffer))!=-1){
                 baos.write(buffer, 0, len);
             }
-            is.close();
+//            is.close();//不要关闭流
             return new String(baos.toByteArray(),encoding);
         } catch (IOException e) {
             e.printStackTrace();

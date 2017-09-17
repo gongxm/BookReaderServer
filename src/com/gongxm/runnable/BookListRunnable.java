@@ -47,6 +47,7 @@ public class BookListRunnable implements Runnable {
 						if (temp == null) {
 							BookList list = new BookList(book_source, bookUrl, MyConstants.BOOK_UNCOLLECT);
 							service.add(list);
+							Thread.sleep(10);
 						}
 						if (!repeat) {
 							break;

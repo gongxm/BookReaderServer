@@ -2,7 +2,6 @@ package com.gongxm.runnable;
 
 import java.io.IOException;
 
-import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.springframework.web.context.WebApplicationContext;
@@ -35,7 +34,7 @@ public class BookChapterContentRunnable implements Runnable {
 			Document doc = HtmlParser.getDocument(url);
 			Element e = doc.select(contentDivRegex).first();
 			if (e != null) {
-				String text = e.text().replace(Jsoup.parse("&nbsp;").text(), " ") ;
+				String text = HtmlParser.getPlainText(e);
 				BookChapterContent content = new BookChapterContent(text);
 				chapter.setChapterContent(content);
 				chapter.setStatus(MyConstants.BOOK_COLLECTED);
