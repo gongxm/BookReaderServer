@@ -1,7 +1,5 @@
 package com.gongxm.runnable;
 
-import java.io.IOException;
-
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
@@ -68,6 +66,7 @@ public class BookInfoRunnable implements Runnable {
 				book = new Book(title, author, category, status, cover, shortIntroduce, url);
 				bookService.add(book);
 			}else {
+				book = bookService.findById(book.getId());
 				book.setStatus(status);
 				book.setCover(cover);
 				book.setShortIntroduce(shortIntroduce);
@@ -104,7 +103,7 @@ public class BookInfoRunnable implements Runnable {
 				service.update(bookList);
 			}
 
-		} catch (IOException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		CollectUtils.threadCount--;

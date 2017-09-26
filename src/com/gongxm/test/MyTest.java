@@ -1,7 +1,6 @@
 package com.gongxm.test;
 
 import java.io.IOException;
-import java.util.Set;
 
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -11,11 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.transaction.annotation.Transactional;
 
 import com.gongxm.bean.Book;
 import com.gongxm.bean.BookChapter;
-import com.gongxm.bean.BookListRules;
 import com.gongxm.dao.BookDao;
 import com.gongxm.services.BookChapterService;
 import com.gongxm.services.BookListRulesService;
@@ -30,8 +27,6 @@ public class MyTest {
 	@Autowired
 	@Qualifier("bookDao")
 	protected BookDao bookDao;  
-	
-	
 	
 	@Autowired
 	UserService userService;
@@ -50,94 +45,38 @@ public class MyTest {
 	BookChapterService chapterService;
 	
 	@Test
-	@Transactional
+	public void test1() {
+		/*Book book = new Book("测试版", "我", "测试", "完本", "http://www.baidu.com", "暂无", "http://www.gongxm.com");
+		BookChapter ch = new BookChapter("第一章", "http://www.gongxm.com/001", 1);
+		book.getChapters().add(ch);
+		bookService.add(book);*/
+		Book book = bookService.findById(1);
+		System.out.println(book);
+		
+		BookChapter ch = new BookChapter("第三章", "http://www.gongxm.com/003", 3);
+		book.getChapters().add(ch);
+		bookService.update(book);
+	}
+	
+	@Test
 	public void test9() {
-	/*	List<Book> list = bookDao.findListByKeyword("西游称雄", 1, 20);
-		System.out.println("size = "+list.size());
-		for (Book book : list) {
-//			book.setChapters(null);
-			bookDao.delete(book);
-//			System.out.println(book);
-		}*/
-//		Book book = bookDao.findById(1);
-//		bookDao.delete(book);
-//		bookDao.delete(book);
-		
-		BookListRules rules = service.findById(1);
-		System.out.println(rules.getRulesName());
-		service.delete(rules.getId());
-		
+		long start = System.currentTimeMillis();
+		for (int i = 0; i < 100; i++) {
+			BookChapter chapter = chapterService.findByChapterLink("http://www.88dushu.com/xiaoshuo/90/90918/31584051.html");
+			System.out.println(chapter);
+		}
+		long end = System.currentTimeMillis();
+		System.out.println("耗时:"+(end-start));
 	}
 	
 
 	public static void main(String[] args) throws IOException {
-		/*String url="http://www.88dushu.com/xiaoshuo/90/90918/";
-		Document doc = HtmlParser.getDocument(url);
-		String cover = doc.select("meta[property=og:image]").get(0).attr("content");
-		System.out.println(cover);
-		String disc = doc.select("meta[property=og:description]").first().attr("content");
-		System.out.println(disc);*/
 		
 		String url = "http://www.88dushu.com/xiaoshuo/91/91615/29694897.html";
 		Document doc = HtmlParser.getDocument(url);
 		Element e = doc.select("div.yd_text2").first();
 		String text = HtmlParser.getPlainText(e);
 		System.out.println(text);
-	}
-
-
-	public static void demo3() {
-		String startStr = "<div class=\"yd_text2\">";//<div class="yd_text2">
-		String endStr = "<div class=\"yd_ad1\">";//<div class="yd_ad1">
-		System.out.println("第三步启动");
-//		CollectUtils.collectBookChapter(null,new BookChapterContentRules());
-	}
-
-	public static void demo2() throws IOException {
-		String[] regexs={"<meta property=\"og:novel:book_name\" content=\".{1,20}\">",
-				"<meta property=\"og:novel:author\" content=\".{1,10}\">",
-				"<meta property=\"og:novel:category\" content=\".{2,8}\">",
-				"<meta property=\"og:novel:status\" content=\".{2,5}\">",
-				"<meta property=\"og:image\" content=\".{5,100}\">",
-				"og:description\" content=\".{10,1500}",
-				"<li><a href=\"\\d+\\.(html){1}\">",
-				"html\">.{1,100}</a></li>"
-				};
-		
-		//<meta property="og:novel:book_name" content=".{1,20}">
-		
-		//<meta property="og:novel:author" content=".{1,10}">
-		
-		//<meta property="og:novel:category" content=".{2,8}">
-		
-		//<meta property="og:novel:status" content=".{2,5}">
-		
-		//<meta property="og:image" content=".{5,100}">
-		
-		//og:description" content=".{10,1500}
-		
-		//<li><a href="\d+\.(html){1}">
-		
-		//html">.{1,100}</a></li>
-		
-		String startStr="<div class=\"mulu\">";//<div class="mulu">
-		String endStr="<div id=\"footer\">";//<div id="footer">
-		
-
-		
-		
-	}
-
-	public static void demo1() {
-		String book_source="www.88dushu.com";
-		String baseUrl="http://www.88dushu.com/sort2/(*)/";
-		String flag="(*)";
-		int startIndex=1;
-		int endIndex=53;
-		String regex="<span class=\"sm\"><a href=\"(/xiaoshuo/)[0-9/]*\">";//<span class="sm"><a href="(/xiaoshuo/)[0-9/]*">
-		boolean repeat = true;
-		System.out.println("第一步启动");
-		//CollectUtils.collectBookList(new BookListRules());
 	}
 	
 	//查询重复记录

@@ -3,6 +3,8 @@ package com.gongxm.utils;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import org.springframework.web.context.WebApplicationContext;
 
@@ -83,7 +85,8 @@ public class CollectUtils {
 	public static void collectBookInfo(WebApplicationContext context, BookListRules bookListRules, boolean collectAll,
 			boolean update) throws IOException {
 		collecting = true;
-		new Thread() {
+		
+		Runnable bookListTask = new Runnable() {
 			public void run() {
 				threadCount = 1;
 				BookListService service = (BookListService) context.getBean("bookListService");
@@ -98,10 +101,13 @@ public class CollectUtils {
 				} else {
 					collectBookInfo(context, bookListRules, service, rules);
 				}
-			};
-		}.start();
+			}
+		};
+		
+		ThreadPoolUtil.executeOnNewThread(bookListTask);
+		
 
-		new Thread(new Runnable() {
+		Runnable task = new Runnable() {
 			@Override
 			public void run() {
 				while (threadCount > 0) {
@@ -119,7 +125,9 @@ public class CollectUtils {
 					collectBookChapter(context, rules.getContentDivRegex());
 				}
 			}
-		}).start();
+		};
+		
+		ThreadPoolUtil.executeOnNewThread(task);
 	}
 
 	// 书籍章节内容
@@ -128,7 +136,7 @@ public class CollectUtils {
 		System.out.println("==============开始采集章节内容====================");
 		collecting = true;
 
-		new Thread() {
+		Runnable chapterTask = new Runnable() {
 			public void run() {
 				threadCount++;
 				BookChapterService service = (BookChapterService) context.getBean("bookChapterService");
@@ -160,23 +168,27 @@ public class CollectUtils {
 				}
 				threadCount--;
 			};
-		}.start();
-
-		new Thread(new Runnable() {
-
+		};
+		
+		ThreadPoolUtil.executeOnNewThread(chapterTask);
+		
+		
+		Timer timer = new Timer();
+		TimerTask timerTask = new TimerTask() {
+			
 			@Override
 			public void run() {
-				while (threadCount > 0) {
-					try {
-						Thread.sleep(2000);
-					} catch (InterruptedException e) {
-						e.printStackTrace();
-					}
+				if (threadCount > 0) {
 					System.out.println("还在采集章节内容中.......");
+				}else {
+					System.out.println("................................章节内容采集完成................................");
+					collecting = false;
+					this.cancel();
+					timer.cancel();
 				}
-				collecting = false;
 			}
-		}).start();
+		};
+		timer.schedule(timerTask, MyConstants.DELAY_TIME);
 	}
 
 	// 采集书籍信息

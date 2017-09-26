@@ -9,14 +9,14 @@ import java.util.concurrent.Executors;
  */
 public class ThreadPoolUtil {
 	
-	private static ExecutorService threadPool = Executors.newFixedThreadPool(10);
+	private static ExecutorService threadPool = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
 	
 	/**
 	 * 从线程池中取一个线程执行这个任务
 	 * @param task
 	 */
 	public static void executeOnNewThread(Runnable task){
-		threadPool.submit(task);
+		threadPool.execute(task);
 	}
 
 }

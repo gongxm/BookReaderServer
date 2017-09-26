@@ -21,17 +21,9 @@ import com.gongxm.services.BookListService;
 @Service("bookListService")
 @Transactional
 public class BookListServiceImpl extends BaseService<BookList> implements BookListService {
-	private static final BookListServiceImpl instance = new BookListServiceImpl();
 	@Autowired
 	@Qualifier("bookListDao")
 	private BookListDao dao;
-
-	private BookListServiceImpl() {
-	}
-
-	public static BookListService getInstance() {
-		return instance;
-	}
 
 	@Override
 	public Dao<BookList> getDao() {

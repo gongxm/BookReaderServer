@@ -23,15 +23,6 @@ public class BookChapterServiceImpl extends BaseService<BookChapter> implements 
 		return dao;
 	}
 
-	private static final BookChapterServiceImpl instance = new BookChapterServiceImpl();
-
-	private BookChapterServiceImpl() {
-	}
-
-	public static BookChapterService getInstance() {
-		return instance;
-	}
-
 	@Override
 	public List<BookChapter> findByBookId(int bookid) {
 		return dao.findByBookId(bookid);

@@ -1,7 +1,5 @@
 package com.gongxm.runnable;
 
-import java.io.IOException;
-
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.springframework.web.context.WebApplicationContext;
@@ -45,7 +43,7 @@ public class BookChapterContentRunnable implements Runnable {
 				service.update(chapter);
 				System.out.println("collect success...");
 			}
-		} catch (IOException e) {
+		} catch (Exception e) {
 			System.out.println("collect error....");
 			e.printStackTrace();
 			chapter.setStatus(MyConstants.BOOK_COLLECT_FAILURE);

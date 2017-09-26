@@ -15,17 +15,10 @@ import com.gongxm.services.BookService;
 @Transactional
 public class BookServiceImpl extends BaseService<Book> implements BookService {
 	
-	private static final BookServiceImpl instance = new BookServiceImpl(); 
 	@Autowired
 	@Qualifier("bookDao")
 	private BookDao dao;
 	
-	private BookServiceImpl(){}
-
-	public static BookService getInstance() {
-		return instance;
-	}
-
 	@Override
 	public Dao<Book> getDao() {
 		return dao;

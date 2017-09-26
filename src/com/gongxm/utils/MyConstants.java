@@ -22,6 +22,9 @@ public class MyConstants {
 	public static final int BOOK_COLLECTED = 1;// 已采集
 	public static final int BOOK_COLLECT_FAILURE = 2;// 采集失败
 	
-	public static final int BOOK_COLLECT_INTERVAL = 10;// 采集时间间隔
+	public static final int BOOK_COLLECT_INTERVAL = 1000;// 采集时间间隔
+	public static final String SOLR_QUERY_BOOK_URL = "http://127.0.0.1:8080/solr/book_core";
+	public static final String SOLR_QUERY_CHAPTER_URL = "http://127.0.0.1:8080/solr/chapter_core";
+	public static final int DELAY_TIME = 2000;
 	
 }

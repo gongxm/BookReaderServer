@@ -3,6 +3,8 @@ package com.gongxm.dao.impl;
 import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;
 
+import org.apache.solr.client.solrj.SolrClient;
+import org.apache.solr.client.solrj.impl.HttpSolrClient.Builder;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -52,6 +54,11 @@ public class BaseDao<T> extends HibernateDaoSupport implements Dao<T> {
 	@SuppressWarnings("unchecked")
 	public T findById(Serializable id) {
 		return (T) hqlObj.get(clazz, id);
+	}
+	
+	public SolrClient getSolrClient(String url) {
+		Builder builder =new Builder(url);
+		return builder.build();
 	}
 
 }

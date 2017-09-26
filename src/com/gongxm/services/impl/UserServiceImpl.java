@@ -21,14 +21,6 @@ public class UserServiceImpl extends BaseService<User> implements UserService {
 	@Qualifier("userDao")
 	private UserDao udao;
 	
-	private static UserService instance = new UserServiceImpl();
-	
-	private UserServiceImpl() {}
-	
-	public static UserService getInstance() {
-		return instance;
-	}
-
 	@Override
 	public User findUserByName(String username) {
 		return udao.findUserByName(username);

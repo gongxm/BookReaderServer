@@ -4,6 +4,12 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
+import org.apache.solr.client.solrj.SolrClient;
+import org.apache.solr.client.solrj.SolrQuery;
+import org.apache.solr.client.solrj.response.QueryResponse;
+import org.apache.solr.client.solrj.util.ClientUtils;
+import org.apache.solr.common.SolrDocument;
+import org.apache.solr.common.SolrDocumentList;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.dao.DataAccessException;
@@ -58,13 +64,28 @@ public class BookChapterDaoImpl extends BaseDao<BookChapter> implements BookChap
 
 	@Override
 	public BookChapter findByChapterLink(String chapterLink) {
-		String sql = "select * from book_chapters where chapter_link=?";
-		BookChapter chapter = null;
 		try {
-			chapter = sqlObj.queryForObject(sql, new BookChapterMap(), chapterLink);
-		} catch (DataAccessException e) {
+			SolrClient solrClient = getSolrClient(MyConstants.SOLR_QUERY_CHAPTER_URL);
+			String escapedKw = ClientUtils.escapeQueryChars(chapterLink);
+			SolrQuery query = new SolrQuery();
+			query.set("shards", MyConstants.SOLR_QUERY_CHAPTER_URL);
+			query.setQuery("chapter_link:" + escapedKw);
+			QueryResponse response = solrClient.query(query);
+			SolrDocumentList results = response.getResults();
+			if (results != null && results.size() > 0) {
+				SolrDocument document = results.get(0);
+				BookChapter chapter = new BookChapter();
+				chapter.setId(Integer.parseInt((String) document.get("id")));
+				chapter.setChapter_link((String) document.get("chapter_link"));
+				chapter.setChapter_name((String) document.get("chapter_name"));
+				chapter.setPosition((int) document.get("position"));
+				chapter.setStatus((int) document.get("status"));
+				return chapter;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
-		return chapter;
+		return null;
 	}
 	
 	class BookChapterMap  implements RowMapper<BookChapter> {
