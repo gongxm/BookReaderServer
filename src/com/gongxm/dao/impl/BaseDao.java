@@ -2,8 +2,11 @@ package com.gongxm.dao.impl;
 
 import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.apache.solr.client.solrj.SolrClient;
+import org.apache.solr.client.solrj.impl.HttpSolrClient;
 import org.apache.solr.client.solrj.impl.HttpSolrClient.Builder;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +22,8 @@ public class BaseDao<T> extends HibernateDaoSupport implements Dao<T> {
 	protected HibernateTemplate hqlObj; // hql执行对象
 	@Autowired
 	protected JdbcTemplate sqlObj; // 普通sql执行对象
+	
+	private static Map<String,SolrClient> clients = new HashMap<String,SolrClient>();
 
 	public BaseDao() {
 		ParameterizedType type = (ParameterizedType) this.getClass().getGenericSuperclass();
@@ -57,8 +62,14 @@ public class BaseDao<T> extends HibernateDaoSupport implements Dao<T> {
 	}
 	
 	public SolrClient getSolrClient(String url) {
-		Builder builder =new Builder(url);
-		return builder.build();
+		SolrClient solrClient = clients.get(url);
+		if(solrClient==null) {
+			Builder builder =new Builder(url);
+			HttpSolrClient client = builder.build();
+			clients.put(url, client);
+			return client;
+		}
+		return solrClient;
 	}
 
 }

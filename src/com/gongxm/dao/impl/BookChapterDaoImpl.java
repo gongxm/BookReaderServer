@@ -1,5 +1,6 @@
 package com.gongxm.dao.impl;
 
+import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
@@ -64,8 +65,9 @@ public class BookChapterDaoImpl extends BaseDao<BookChapter> implements BookChap
 
 	@Override
 	public BookChapter findByChapterLink(String chapterLink) {
+		SolrClient solrClient = getSolrClient(MyConstants.SOLR_QUERY_CHAPTER_URL);
 		try {
-			SolrClient solrClient = getSolrClient(MyConstants.SOLR_QUERY_CHAPTER_URL);
+			
 			String escapedKw = ClientUtils.escapeQueryChars(chapterLink);
 			SolrQuery query = new SolrQuery();
 			query.set("shards", MyConstants.SOLR_QUERY_CHAPTER_URL);
@@ -84,6 +86,12 @@ public class BookChapterDaoImpl extends BaseDao<BookChapter> implements BookChap
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
+		}finally {
+			/*try {
+				solrClient.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}*/
 		}
 		return null;
 	}

@@ -25,12 +25,13 @@ import com.google.gson.annotations.Expose;
 
 @Entity
 @Table(name = "books")
-public class Book implements Serializable{
+public class Book implements Serializable {
 	private static final long serialVersionUID = 1L;
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	//@Expose(serialize = true, deserialize = false)  	// serialize: 可以被序列化,deserialize:可以被反序列化
-	@Expose												//@Expose:默认为同时可以序列化和反序列化
+	// @Expose(serialize = true, deserialize = false) // serialize:
+	// 可以被序列化,deserialize:可以被反序列化
+	@Expose // @Expose:默认为同时可以序列化和反序列化
 	private int id;
 	@Column
 	@Expose
@@ -51,7 +52,7 @@ public class Book implements Serializable{
 	@Expose
 	private String book_link;
 	@Column
-	@Type(type="text")
+	@Type(type = "text")
 	@Expose
 	private String shortIntroduce;
 
@@ -59,7 +60,7 @@ public class Book implements Serializable{
 	@Fetch(FetchMode.SELECT)
 	@LazyCollection(LazyCollectionOption.EXTRA)
 	@JoinColumn(name = "book_id")
-	@Cascade({CascadeType.SAVE_UPDATE,CascadeType.DELETE})
+	@Cascade({ CascadeType.SAVE_UPDATE, CascadeType.DELETE })
 	private Set<BookChapter> chapters = new HashSet<BookChapter>();
 
 	public Book() {
@@ -148,6 +149,7 @@ public class Book implements Serializable{
 	public void setChapters(Set<BookChapter> chapters) {
 		this.chapters = chapters;
 	}
+
 
 	@Override
 	public String toString() {

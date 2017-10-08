@@ -22,7 +22,7 @@ import com.google.gson.annotations.Expose;
 
 @Entity
 @Table(name = "book_chapters")
-public class BookChapter implements Comparable<BookChapter>,Serializable{
+public class BookChapter implements Comparable<BookChapter>, Serializable {
 	private static final long serialVersionUID = 1L;
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -37,7 +37,7 @@ public class BookChapter implements Comparable<BookChapter>,Serializable{
 	@Column
 	@Expose
 	private String chapter_link;
-	
+
 	@Column
 	@Expose
 	private int status;// 采集状态
@@ -47,17 +47,26 @@ public class BookChapter implements Comparable<BookChapter>,Serializable{
 	@LazyToOne(LazyToOneOption.PROXY)
 	@OneToOne(targetEntity = BookChapterContent.class)
 	@JoinColumn(name = "content_id")
-	@Cascade({CascadeType.SAVE_UPDATE,CascadeType.DELETE})
+	@Cascade({ CascadeType.SAVE_UPDATE, CascadeType.DELETE })
 	private BookChapterContent chapterContent;
+
+	// 关联内容
+	@Fetch(FetchMode.SELECT)
+	@LazyToOne(LazyToOneOption.PROXY)
+	@OneToOne(targetEntity = BookInfoAndChapterListRules.class)
+	@JoinColumn(name = "rules_id")
+	@Cascade({ CascadeType.SAVE_UPDATE, CascadeType.DELETE })
+	private BookInfoAndChapterListRules rules;
 
 	public BookChapter() {
 	}
 
-	public BookChapter(String chapter_name, String chapter_link, int position) {
+	public BookChapter(String chapter_name, String chapter_link, int position, BookInfoAndChapterListRules rules) {
 		super();
 		this.chapter_name = chapter_name;
 		this.chapter_link = chapter_link;
 		this.position = position;
+		this.rules=rules;
 	}
 
 	public BookChapter(int id, String chapter_name, String chapter_link) {
@@ -115,7 +124,13 @@ public class BookChapter implements Comparable<BookChapter>,Serializable{
 		this.chapterContent = chapterContent;
 	}
 
+	public BookInfoAndChapterListRules getRules() {
+		return rules;
+	}
 
+	public void setRules(BookInfoAndChapterListRules rules) {
+		this.rules = rules;
+	}
 
 	@Override
 	public String toString() {
@@ -125,7 +140,7 @@ public class BookChapter implements Comparable<BookChapter>,Serializable{
 
 	@Override
 	public int compareTo(BookChapter chapter) {
-		return this.position-chapter.position;
+		return this.position - chapter.position;
 	}
 
 }

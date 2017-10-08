@@ -11,14 +11,18 @@ import org.apache.struts2.convention.annotation.ParentPackage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.context.ContextLoader;
+import org.springframework.web.context.WebApplicationContext;
 
 import com.gongxm.bean.Book;
 import com.gongxm.bean.BookChapter;
 import com.gongxm.bean.BookChapterContent;
+import com.gongxm.bean.BookInfoAndChapterListRules;
 import com.gongxm.domain.CategoryItem;
 import com.gongxm.domain.request.GetCategoryListParam;
 import com.gongxm.domain.request.IDParam;
 import com.gongxm.domain.response.ResponseResult;
+import com.gongxm.runnable.BookChapterContentRunnable;
 import com.gongxm.services.BookChapterService;
 import com.gongxm.services.BookService;
 import com.gongxm.utils.GsonUtils;
@@ -94,7 +98,21 @@ public class BookAction extends BaseAction {
 							result.setErrcode(MyConstants.SUCCESS);
 							result.setErrmsg(StringConstants.HTTP_REQUEST_SUCCESS);
 						} else {
-							result.setErrmsg(StringConstants.BOOK_CHAPTER_UNCOLLECT);
+							WebApplicationContext context = ContextLoader.getCurrentWebApplicationContext();
+							BookInfoAndChapterListRules rules = chapter.getRules();
+							BookChapterContentRunnable task = new BookChapterContentRunnable(chapter, rules.getContentDivRegex(), context);
+							task.run();
+							chapter = chapterService.findById(id);
+							if (chapter != null) {
+								BookChapterContent content = chapter.getChapterContent();
+								String text = content.getText();
+								if (TextUtils.isEmpty(text)) {
+									text = "";
+								}
+								result.setResult(text);
+								result.setErrcode(MyConstants.SUCCESS);
+								result.setErrmsg(StringConstants.HTTP_REQUEST_SUCCESS);
+							}
 						}
 					} else {
 						result.setErrmsg(StringConstants.BOOK_CHAPTER_NOT_FOUND);

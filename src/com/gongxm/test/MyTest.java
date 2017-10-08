@@ -11,7 +11,6 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import com.gongxm.bean.Book;
 import com.gongxm.bean.BookChapter;
 import com.gongxm.dao.BookDao;
 import com.gongxm.services.BookChapterService;
@@ -50,12 +49,6 @@ public class MyTest {
 		BookChapter ch = new BookChapter("第一章", "http://www.gongxm.com/001", 1);
 		book.getChapters().add(ch);
 		bookService.add(book);*/
-		Book book = bookService.findById(1);
-		System.out.println(book);
-		
-		BookChapter ch = new BookChapter("第三章", "http://www.gongxm.com/003", 3);
-		book.getChapters().add(ch);
-		bookService.update(book);
 	}
 	
 	@Test

@@ -1,5 +1,6 @@
 package com.gongxm.dao.impl;
 
+import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
@@ -40,19 +41,26 @@ public class BookDaoImpl extends BaseDao<Book> implements BookDao {
 		doc.setField("cover", book.getCover());
 		doc.setField("shortIntroduce", book.getShortIntroduce());
 		doc.setField("status", book.getStatus());
+		SolrClient solrClient = getSolrClient(MyConstants.SOLR_QUERY_BOOK_URL);
 		try {
-			SolrClient solrClient = getSolrClient(MyConstants.SOLR_QUERY_BOOK_URL);
 			solrClient.add(doc);
 			solrClient.commit();
 			updateChapters(book);
 		} catch (Exception e) {
 			e.printStackTrace();
+		}finally {
+			/*try {
+				solrClient.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}*/
 		}
 	}
 	
 	@Override
 	public void update(Book book) {
-		super.update(book);
+		Book merge = hqlObj.merge(book);
+		super.update(merge);
 		//更新对应的章节索引
 		updateChapters(book);
 	}
@@ -61,8 +69,8 @@ public class BookDaoImpl extends BaseDao<Book> implements BookDao {
 	private void updateChapters(Book book) {
 		Set<BookChapter> chapters = book.getChapters();
 		if(chapters!=null && chapters.size()>0) {
+			SolrClient solrClient = getSolrClient(MyConstants.SOLR_QUERY_CHAPTER_URL);
 			try {
-				SolrClient solrClient = getSolrClient(MyConstants.SOLR_QUERY_CHAPTER_URL);
 				for (BookChapter chapter : chapters) {
 					SolrInputDocument doc = new SolrInputDocument();
 					doc.setField("id", chapter.getId());
@@ -75,6 +83,12 @@ public class BookDaoImpl extends BaseDao<Book> implements BookDao {
 				solrClient.commit();
 			} catch (Exception e) {
 				e.printStackTrace();
+			}finally {
+				/*try {
+					solrClient.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}*/
 			}
 		}
 	}
@@ -123,8 +137,8 @@ public class BookDaoImpl extends BaseDao<Book> implements BookDao {
 
 	@Override
 	public Book findByBookUrl(String url) {
+		SolrClient solrClient = getSolrClient(MyConstants.SOLR_QUERY_BOOK_URL);
 		try {
-			SolrClient solrClient = getSolrClient(MyConstants.SOLR_QUERY_BOOK_URL);
 			String escapedKw = ClientUtils.escapeQueryChars(url);
 			SolrQuery query = new SolrQuery();
 			query.setQuery("book_link:" + escapedKw);
@@ -145,6 +159,12 @@ public class BookDaoImpl extends BaseDao<Book> implements BookDao {
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
+		}finally {
+			/*try {
+				solrClient.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}*/
 		}
 		return null;
 	}
@@ -175,6 +195,12 @@ public class BookDaoImpl extends BaseDao<Book> implements BookDao {
 			solrClient.deleteById(id+"");
 		} catch (Exception e) {
 			e.printStackTrace();
+		}finally {
+			/*try {
+				solrClient.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}*/
 		}
 	}
 }

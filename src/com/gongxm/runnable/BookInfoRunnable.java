@@ -89,7 +89,7 @@ public class BookInfoRunnable implements Runnable {
 						System.out.println("耗时:"+(end-start));
 						if (temp == null) {
 							System.out.println("----采集章节目录-------"+chapterTitle);
-							BookChapter bookChapter = new BookChapter(chapterTitle, chapterLink, i);
+							BookChapter bookChapter = new BookChapter(chapterTitle, chapterLink, i,rules);
 							book.getChapters().add(bookChapter);
 						}
 					}
